@@ -1,0 +1,7 @@
+.consign
+main.cxx
+main.h
+err/
+input/
+out/
+root/
