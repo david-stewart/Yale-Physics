@@ -14,11 +14,11 @@
         <!-- #Then your stuff goes here, and you pass the $FILELIST as normal -->
 		<!-- cons -->
         set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/runId
-        root4star -l -q -b jetTrees.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\)
+        root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\)
 	</command>
 	<SandBox installer="ZIP">
 		<Package>
-            <File>file:./jetTrees.C</File>
+            <File>file:./basicRunQA.C</File>
 			<File>file:./StRoot</File>
             <File>file:./.sl73_gcc485</File>
 		</Package>		
