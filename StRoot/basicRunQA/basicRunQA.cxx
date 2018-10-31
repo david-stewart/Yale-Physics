@@ -157,7 +157,11 @@ Int_t basicRunQA::Make() {
         StThreeVectorF Ptrack = track->pMom();
         float pt  = Ptrack.perp();
         float eta { Ptrack.pseudoRapidity() };
-        if (pt > 30)   return kStOK; // cut out this event
+        if (pt > 30) {
+            fprintf(flog, "Run(%i) Event(%i) cut b/c track > 30 GeV at (%f GeV)\n",
+                    fevent.runId, mevent->eventId(), pt);
+            return kStOK; // cut out this event
+        }
         float nhit_ratio = ((float)track->nHitsFit()) / (float)track->nHitsMax();
         if (   pt < 0.2 
             || (track->dcaPoint() - mevent->primaryVertex()).mag() > 1.0
@@ -226,7 +230,11 @@ Int_t basicRunQA::Make() {
         double eta { towLoc.pseudoRapidity() };
         double phi { towLoc.phi() };
         float towEt = bTowHit->energy() / ((double)TMath::CosH(towLoc.pseudoRapidity()));
-        if (towEt > 30) return kStOk;
+        if (towEt > 30) {
+            fprintf(flog, "Run(%i) Event(%i) cut b/c tower > 30 GeV at (%f GeV)\n",
+                    fevent.runId, mevent->eventId(), towEt);
+            return kStOK; // cut out this event
+        }
         sumEt += towEt;
         sumTowAdc += bTowHit->adc();
 
