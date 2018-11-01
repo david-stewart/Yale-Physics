@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<job maxFilesPerProcess="200" simulateSubmission="false" >
+<job maxFilesPerProcess="100" simulateSubmission="false" >
 	<command>
         foreach file (`cat $FILELIST | awk '{printf($1"\n")}'`)
              echo copying $file to $SCRATCH
