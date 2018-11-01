@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job >
+    <ResourceUsage>
+        <Times>
+            <MaxWallTime>24</MaxWallTime>
+        </Times>
+    </ResourceUsage>
+	<command>
+        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA 
+        $MYPATH/eventQA_loop/main 1 -1 $MYPATH/eventQA_loop/out_1.log $MYPATH/eventQA_tree/results/raw.root
+        <!-- root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\) -->
+	</command>
+	<SandBox installer="ZIP">
+		<Package>
+            <File>file:./main</File>
+			<File>file:./StRoot</File>
+            <File>file:./.sl73_gcc485</File>
+		</Package>		
+	</SandBox>
+	
+	<Generator>
+        <Location>./input</Location>
+        <ScriptLocation>./input</ScriptLocation>
+        <ListLocation>./input</ListLocation>
+	</Generator>
+
+    <!-- <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" /> -->
+
+    <stdout URL="file:./out/loop_1.out" />	
+    <stderr URL="file:./err/loop_1.err" />
+</job>
