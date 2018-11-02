@@ -8,12 +8,14 @@
 #ifndef tree_h
 #define tree_h
 
-#include "map_vals_per_line.h"
+/* #include "map_vals_per_line.h" */
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-#include <map>
-#include "TriggerCount.h"
+#include <vector>
+#include <TString.h>
+/* #include <map> */
+/* #include "TriggerCount.h" */
 
 // Header file for the classes stored in the TTree if any.
 #include <TObject.h>
@@ -22,14 +24,16 @@
 
 class tree {
     public :
-    tree(  vector<TString> options, 
-           TTree *tree=0, 
-           long long int=-1, 
-           const TString& log_name="log"
+    tree(  std::vector<TString> options, 
+           TTree *tree, 
+           long long int, 
+           FILE* flog,
+           bool is_test
     );
-    vector<TString> options;
-    long long int event_limit;
+    std::vector<TString> options;
+    long long int nEvents;
     FILE* flog;
+    bool is_test;
 
     int n_count; 
     TTree          *fChain;   //!pointer to the analyzed TTree or TChain
@@ -156,23 +160,24 @@ class tree {
    virtual void     Show(Long64_t entry = -1);
 
 };
-#endif
 
-#ifdef tree_cxx
-tree::tree(vector<TString> in_options,
+tree::tree(std::vector<TString> options_,
            TTree *tree, 
-           long long int in_event_limit, 
-           const TString& log_name) :
-    options( in_options ),
+           long long int nEvents_, 
+           FILE* flog_,
+           bool is_test_) :
+    options( options_ ),
     fChain(0), 
-    event_limit{in_event_limit}
+    nEvents{nEvents_},
+    flog { flog_ },
+    is_test { is_test_ }
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
     /* cout << "d0" << endl; */
     /* for (auto i : options) cout << " > " << i << "<|" << endl; */
 
-    flog = fopen(log_name.Data(),"w");
+    /* flog = fopen(log_name.Data(),"w"); */
    if (tree == 0) {
       TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("temp.root");
       if (!f || !f->IsOpen()) {

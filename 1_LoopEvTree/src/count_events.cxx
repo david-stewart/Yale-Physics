@@ -1,46 +1,33 @@
 #define tree_cxx
+// generally required
+#include "std_inputs.h"
 #include "tree.h"
-#include <TH2.h>
-#include <TStyle.h>
-#include <TCanvas.h>
 #include <iostream>
+
+// locally required for tree::Loop()
 #include <vector>
+#include <map>
+#include "TriggerCount.h"
 
 using namespace std;
 
 int main(int argc, const char** argv) {
-    // arguments:
-    // 1 : how many events to run
-    // 2 : output log file name
-    // 3 : which input file to use
-    // more than 4 : optional inputs
-
-    // [1] 
-    long long int event_limit { argc > 1 ? atoi(argv[1]) : 10 };
-    TString log_name  { argc > 2 ? argv[2] : TString::Format("count_events").Data() };
-    TString file_name { argc > 3 ? argv[3] : TString::Format("raw").Data() };
-    vector<TString> opts;
-    for (int i{4}; i < argc; ++i) { opts.push_back(TString{argv[i]}); cout << " added option: " << argv[i] << endl; }
-    /* for (auto i : opts) cout << " -a-d-d- " << i << endl; */
-    
-    // process the file name
-    if (!file_name.EndsWith(".root")) file_name.Append(".root");
-
-    // process log name
-    if(!log_name.EndsWith(".log")) log_name.Append(".log");
-    cout << " -- Sending output to " << log_name << endl;
-
-    TFile* file = new TFile(file_name.Data(),"read");
-    TTree *ttree;
-    file->GetObject("tree",ttree);
-    tree theTree(opts, ttree, event_limit, log_name);
-    theTree.Loop();
+    std_inputs input{ 
+        argc, 
+        argv, 
+        true, // default is_test value
+        100,  // default number of runs
+        "test.log", // default output_log
+        "short.root" // default input file
+    };
+    input.event_tree->Loop();
 };
 
 void tree::Loop()
 {
+    if (is_test) cout << "Entering tree::Loop() in count! " << endl;
     if (fChain == 0) return;
-    Long64_t nentries = { event_limit == -1 ? fChain->GetEntriesFast() : event_limit };
+    Long64_t nentries = { nEvents == -1 ? fChain->GetEntriesFast() : nEvents };
     printf(       " * running Loop_1, count #events w/ each trigger in %li events\n", nentries);
     fprintf(flog, " # running Loop_1, count #events w/ each trigger in %li events\n", nentries);
     Long64_t nbytes = 0, nb = 0;
