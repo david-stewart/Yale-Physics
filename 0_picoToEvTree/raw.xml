@@ -13,7 +13,7 @@
 
         <!-- #Then your stuff goes here, and you pass the $FILELIST as normal -->
 		<!-- cons -->
-        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/runId
+        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree
         root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\)
 	</command>
 	<SandBox installer="ZIP">

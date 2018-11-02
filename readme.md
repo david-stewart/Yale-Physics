@@ -3,5 +3,5 @@ notes:
 * The same is true for triggers with Et > 30 GeV
 
 Directories:
-* `eventQA_tree` : Make tree from all picoDst files
-* `eventQA_loop` : Loop through tree
+* `0_picoToEvTree` : Make tree from all picoDst files
+* `1_LoopEvTree`   : Set a files that loop through the event tree files.mv 

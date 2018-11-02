@@ -151,9 +151,7 @@ class tree {
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
-   void     Loop_0(); // test loop
-   void     Loop_1();
-   void     Loop_2();
+   void     Loop(); 
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 
