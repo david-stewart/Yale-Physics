@@ -32,6 +32,7 @@ struct QA_event  : public TObject {
     bool   trig_500904;
     bool   trig_510009;
 
+    int    refmult;
     int    nGlobalTracks;
     int    nTracks;
     int    nPrimaryTracks;

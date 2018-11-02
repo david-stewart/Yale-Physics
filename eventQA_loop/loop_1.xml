@@ -7,7 +7,7 @@
     </ResourceUsage>
 	<command>
         set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA 
-        $MYPATH/eventQA_loop/main 1 -1 $MYPATH/eventQA_loop/out_1.log $MYPATH/eventQA_tree/results/raw.root
+        $MYPATH/eventQA_loop/main 1 -1 $MYPATH/eventQA_loop/xml_out_1.log $MYPATH/eventQA_tree/results/raw.root
         <!-- root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\) -->
 	</command>
 	<SandBox installer="ZIP">

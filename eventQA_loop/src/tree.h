@@ -8,67 +8,32 @@
 #ifndef tree_h
 #define tree_h
 
+#include "map_vals_per_line.h"
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
 #include <map>
+#include "TriggerCount.h"
 
 // Header file for the classes stored in the TTree if any.
 #include <TObject.h>
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
-struct Tcount {
-    // BHT1*VPDMB-30_nobsmd
-    long int n500206;
-    
-    // BHT1*VPDMB-30
-    long int n470202;
-    long int n480202;
-    long int n490202;
-    long int n500202;
-    long int n510202;
-
-    // BHT2*BBCMB
-    long int n470205;
-    long int n480205;
-    long int n490205;
-    long int n500215;
-
-    // VPDMB-5-ssd
-    long int n500001;
-
-    // VPDMB-30
-    long int n500904;
-
-    // VPDMB-5
-    long int n510009;
-
-    Tcount () :
-        n500206{0},
-        n470202{0},
-        n480202{0},
-        n490202{0},
-        n500202{0},
-        n510202{0},
-        n470205{0},
-        n480205{0},
-        n490205{0},
-        n500215{0},
-        n500001{0},
-        n500904{0},
-        n510009{0}
-    {};
-};
 
 class tree {
-    FILE* flog;
     public :
-    // for Loop_1
-        std::map<int, Tcount> emap;
+    tree(  vector<TString> options, 
+           TTree *tree=0, 
+           long long int=-1, 
+           const TString& log_name="log"
+    );
+    vector<TString> options;
+    long long int event_limit;
+    FILE* flog;
 
-   int n_count; 
-   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   Int_t           fCurrent; //!current Tree number in a TChain
+    int n_count; 
+    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+    Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
    //QA_event        *event;
@@ -181,7 +146,6 @@ class tree {
    TBranch        *b_event_etaEtMean;   //!
    TBranch        *b_event_maxEt_is_maxAdc;   //!
 
-   tree(TTree *tree=0, long long int=-1, const TString& log_name="log");
    virtual ~tree();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -189,22 +153,27 @@ class tree {
    virtual void     Init(TTree *tree);
    void     Loop_0(); // test loop
    void     Loop_1();
+   void     Loop_2();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 
-   long long int event_limit;
 };
-
 #endif
 
 #ifdef tree_cxx
-tree::tree(TTree *tree, long long int in_event_limit, const TString& log_name) : 
+tree::tree(vector<TString> in_options,
+           TTree *tree, 
+           long long int in_event_limit, 
+           const TString& log_name) :
+    options( in_options ),
     fChain(0), 
     event_limit{in_event_limit}
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
-//
+    /* cout << "d0" << endl; */
+    /* for (auto i : options) cout << " > " << i << "<|" << endl; */
+
     flog = fopen(log_name.Data(),"w");
    if (tree == 0) {
       TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("temp.root");
@@ -219,7 +188,7 @@ tree::tree(TTree *tree, long long int in_event_limit, const TString& log_name) :
 
 tree::~tree()
 {
-    fprintf(flog, "#Ending Program\n");
+    fprintf(flog, "# Ending Program\n");
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }

@@ -129,6 +129,7 @@ Int_t basicRunQA::Make() {
     fevent.zdcSumAdcWest = mevent->ZdcSumAdcWest();
 
     fevent.nGlobalTracks = mevent->numberOfGlobalTracks();
+    fevent.refmult       = mevent->refMult(); 
     /* cout << "nGlobal " << mevent->numberOfGlobalTracks() << endl; */
     fevent.nTracks = mPicoDst->numberOfTracks();
     /* cout << "nPrimaryTracks " << mPicoDst->numberOfTracks(); */
