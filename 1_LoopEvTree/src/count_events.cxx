@@ -18,7 +18,7 @@ int main(int argc, const char** argv) {
         true, // default is_test value
         100,  // default number of runs
         "test.log", // default output_log
-        "short.root" // default input file
+        "whole.root" // default input file
     };
     input.event_tree->Loop();
 };
@@ -36,6 +36,7 @@ void tree::Loop()
     for (Long64_t jentry=0; jentry<nentries; jentry++) {
         Long64_t ientry = LoadTree(jentry);
         if (ientry < 0) break;
+        ++n_calc_events;
         nb = fChain->GetEntry(jentry);
         /* cout << "event:  " << jentry << endl; */   
         /* if (jentry > event_limit) break; */
@@ -63,21 +64,80 @@ void tree::Loop()
         if (trig_510009) ++emap[runId].n510009;
     }
     // print results
+    fprintf(flog, "%8s  %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "# ------", "--------", "--------", "--------", "--------", "--------", "--------",
+            "--------", "--------", "--------", "--------", "--------", "--------", "--------");
+    fprintf(flog, "%8s: %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "#TrgName", "1vpd30nb", "HT1vpd30", "HT1vpd30", "HT1vpd30", "HT1vpd30", "HT1vpd30",
+            "HT2bbc30", "HT2bbc30", "HT2bbc30", "HT2bbc30", 
+            "Mvpd5ssd",
+            "MBvpd30",
+            "MBvpd5"
+    );
+    fprintf(flog, "%8s: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
+            "#TrigId ", 500206, 470202, 480202, 490202, 500202, 510202, 470205, 480205,
+            490205, 500215, 500001, 500904, 510009
+    );
+    fprintf(flog, "%8s  %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "# ------", "--------", "--------", "--------", "--------", "--------", "--------",
+            "--------", "--------", "--------", "--------", "--------", "--------", "--------");
+    long long int sums[13]{0,0,0,0,0,0,0,0,0,0,0,0,0};
     for (auto i : emap) {
-        printf("%5i: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
+        printf("%8i: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
         i.first,
         i.second.n500206, i.second.n470202, i.second.n480202, i.second.n490202,
         i.second.n500202, i.second.n510202, i.second.n470205, i.second.n480205,
         i.second.n490205, i.second.n500215, i.second.n500001, i.second.n500904,
         i.second.n510009
         );
-        fprintf(flog, "%5i: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
+        fprintf(flog, "%8i: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
         i.first,
         i.second.n500206, i.second.n470202, i.second.n480202, i.second.n490202,
         i.second.n500202, i.second.n510202, i.second.n470205, i.second.n480205,
         i.second.n490205, i.second.n500215, i.second.n500001, i.second.n500904,
         i.second.n510009
         );
+        sums[0] += i.second.n500206;
+        sums[1] += i.second.n470202;
+        sums[2] += i.second.n480202;
+        sums[3] += i.second.n490202;
+
+        sums[4] += i.second.n500202;
+        sums[5] += i.second.n510202;
+        sums[6] += i.second.n470205;
+        sums[7] += i.second.n480205;
+
+        sums[8] += i.second.n490205;
+        sums[9] += i.second.n500215;;
+        sums[10] += i.second.n500001;
+        sums[11] += i.second.n500904;
+
+        sums[12] += i.second.n510009;
     }
+    fprintf(flog, "%8s  %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "# ------", "--------", "--------", "--------", "--------", "--------", "--------",
+            "--------", "--------", "--------", "--------", "--------", "--------", "--------");
+    fprintf(flog, "%8s: %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "#TrgName", "1vpd30nb", "HT1vpd30", "HT1vpd30", "HT1vpd30", "HT1vpd30", "HT1vpd30",
+            "HT2bbc30", "HT2bbc30", "HT2bbc30", "HT2bbc30", 
+            "Mvpd5ssd",
+            "MBvpd30",
+            "MBvpd5"
+    );
+    fprintf(flog, "%8s: %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i %8i\n",
+            "#TrigId ", 500206, 470202, 480202, 490202, 500202, 510202, 470205, 480205,
+            490205, 500215, 500001, 500904, 510009
+
+    );
+    fprintf(flog, "%8s  %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "# ------", "--------", "--------", "--------", "--------", "--------", "--------",
+            "--------", "--------", "--------", "--------", "--------", "--------", "--------");
+    fprintf(flog, "%8s: %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli %8lli\n",
+            "#<sum> ", sums[0], 
+            sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7],
+            sums[8], sums[9], sums[10], sums[11], sums[12]);
+    fprintf(flog, "%8s  %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s\n",
+            "# ------", "--------", "--------", "--------", "--------", "--------", "--------",
+            "--------", "--------", "--------", "--------", "--------", "--------", "--------");
 }
 

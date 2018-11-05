@@ -14,6 +14,8 @@
 #include <TFile.h>
 #include <vector>
 #include <TString.h>
+#include <time.h>
+#include <iostream>
 /* #include <map> */
 /* #include "TriggerCount.h" */
 
@@ -23,6 +25,10 @@
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
 class tree {
+    private:
+        time_t start_time;
+        time_t end_time;
+        long long int n_calc_events;
     public :
     tree(  std::vector<TString> options, 
            TTree *tree, 
@@ -166,6 +172,7 @@ tree::tree(std::vector<TString> options_,
            long long int nEvents_, 
            FILE* flog_,
            bool is_test_) :
+    n_calc_events{0},
     options( options_ ),
     fChain(0), 
     nEvents{nEvents_},
@@ -186,12 +193,29 @@ tree::tree(std::vector<TString> options_,
       f->GetObject("tree",tree);
 
    }
+
+   time(&start_time);
+   fprintf(flog, " # running Init(tree), starting clock\n");
    Init(tree);
 }
 
 tree::~tree()
 {
-    fprintf(flog, "# Ending Program\n");
+    fprintf(flog, "# Ending program\n");
+    time(&end_time);
+    double f_seconds { difftime(end_time, start_time) };
+    int seconds { (int) f_seconds };
+    int hr { seconds/3600 };
+    int min { (seconds - 3600*hr)/60 };
+    int sec { seconds - 3600*hr - 60*min };
+    fprintf(flog," # Time ellapsed: %9i seconds or (in hr:min:sec) %02i:%02i:%02i\n",
+            seconds, hr, min, sec);
+    fprintf(flog, " # finished %lli events, for %8.4f sec/(1M events) \n", n_calc_events,
+            1.E6 * f_seconds / n_calc_events);
+
+    /* fprintf(flog, " # %8.4f sec/(1M events) \n", 1E6* f_seconds / (float) n_calc_events); */
+    /* std::cout << "n_calc_events " << n_calc_events << " " << difftime(end_time, start_time) << std::endl; */
+
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }

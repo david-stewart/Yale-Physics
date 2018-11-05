@@ -67,10 +67,19 @@ struct std_inputs{
 
         // set up tfile and ttree
         if (!in_file_name.EndsWith(".root")) in_file_name.Append(".root");
-        TFile* tfile = new TFile(in_file_name.Data(),"read");
+        tfile = new TFile(in_file_name.Data(),"read");
         tfile->GetObject("tree",ttree);
 
         event_tree = new tree(options, ttree, nEvents, flog, is_test);
+    };
+    ~std_inputs() {
+        /* event_tree->Close(); */
+        /* tfile->Close(); */
+        delete event_tree;
+        fclose(flog);
+        /* tfile->Close(); */
+
+        /* delete tfile; */
     };
 };
 
