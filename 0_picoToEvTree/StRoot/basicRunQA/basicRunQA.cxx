@@ -1,15 +1,4 @@
 // Process:
-//      * Measure the ranking
-//      * cut on ranking
-//      * cut on Vz
-//      * measure the Vz
-//      * cut on Vz-vpd
-//      * measure Vpd
-//      * fill numberPrimaryTracks
-//      * fill numberGLobalTracks
-//      * fill hit ratio
-//
-//
 // Includes code from (1) Joel Mazer from https://github.com/joelmazer/star-jetframework in July 2018
 //                    (2) Tong Liu from ARCAS, also July 2018
 //
@@ -85,19 +74,16 @@ Int_t basicRunQA::Make() {
     // check for the triggers
     bool has_trig{false};
 
-    if (mevent->isTrigger(500206)) { fevent.trig_500206 = true; has_trig = true; } else { fevent.trig_500206 = false; }
-    if (mevent->isTrigger(470202)) { fevent.trig_470202 = true; has_trig = true; } else { fevent.trig_470202 = false; }
-    if (mevent->isTrigger(480202)) { fevent.trig_480202 = true; has_trig = true; } else { fevent.trig_480202 = false; }
-    if (mevent->isTrigger(490202)) { fevent.trig_490202 = true; has_trig = true; } else { fevent.trig_490202 = false; }
-    if (mevent->isTrigger(500202)) { fevent.trig_500202 = true; has_trig = true; } else { fevent.trig_500202 = false; }
-    if (mevent->isTrigger(510202)) { fevent.trig_510202 = true; has_trig = true; } else { fevent.trig_510202 = false; }
-    if (mevent->isTrigger(470205)) { fevent.trig_470205 = true; has_trig = true; } else { fevent.trig_470205 = false; }
-    if (mevent->isTrigger(480205)) { fevent.trig_480205 = true; has_trig = true; } else { fevent.trig_480205 = false; }
-    if (mevent->isTrigger(490205)) { fevent.trig_490205 = true; has_trig = true; } else { fevent.trig_490205 = false; }
-    if (mevent->isTrigger(500215)) { fevent.trig_500215 = true; has_trig = true; } else { fevent.trig_500215 = false; }
     if (mevent->isTrigger(500001)) { fevent.trig_500001 = true; has_trig = true; } else { fevent.trig_500001 = false; }
+    if (mevent->isTrigger(500006)) { fevent.trig_500006 = true; has_trig = true; } else { fevent.trig_500006 = false; }
+    if (mevent->isTrigger(500018)) { fevent.trig_500018 = true; has_trig = true; } else { fevent.trig_500018 = false; }
+    if (mevent->isTrigger(500202)) { fevent.trig_500202 = true; has_trig = true; } else { fevent.trig_500202 = false; }
+    if (mevent->isTrigger(500206)) { fevent.trig_500206 = true; has_trig = true; } else { fevent.trig_500206 = false; }
+    if (mevent->isTrigger(500215)) { fevent.trig_500215 = true; has_trig = true; } else { fevent.trig_500215 = false; }
+    if (mevent->isTrigger(500808)) { fevent.trig_500808 = true; has_trig = true; } else { fevent.trig_500808 = false; }
+    if (mevent->isTrigger(500809)) { fevent.trig_500809 = true; has_trig = true; } else { fevent.trig_500809 = false; }
     if (mevent->isTrigger(500904)) { fevent.trig_500904 = true; has_trig = true; } else { fevent.trig_500904 = false; }
-    if (mevent->isTrigger(510009)) { fevent.trig_510009 = true; has_trig = true; } else { fevent.trig_510009 = false; }
+
 
     if (!has_trig) return kStOK;
 
@@ -240,7 +226,7 @@ Int_t basicRunQA::Make() {
         sumTowAdc += bTowHit->adc();
 
 
-        bool isEtMax{false};
+        bool isEtMax {false};
         bool isAdcMax{false};
 
         phi_sum += phi;

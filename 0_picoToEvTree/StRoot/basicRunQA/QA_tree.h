@@ -16,21 +16,15 @@ struct QA_event  : public TObject {
     int    runId;
     int    eventId;
 
-    bool   trig_500206;
-    bool   trig_470202;
-    bool   trig_480202;
-    bool   trig_490202;
-    bool   trig_500202;
-    bool   trig_510202;
-
-    bool   trig_470205;
-    bool   trig_480205;
-    bool   trig_490205;
-    bool   trig_500215;
-
     bool   trig_500001;
+    bool   trig_500006;
+    bool   trig_500018;
+    bool   trig_500202;
+    bool   trig_500206;
+    bool   trig_500215;
+    bool   trig_500808;
+    bool   trig_500809;
     bool   trig_500904;
-    bool   trig_510009;
 
     int    refmult;
     int    nGlobalTracks;

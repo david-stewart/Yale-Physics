@@ -51,19 +51,15 @@ class tree {
    UInt_t          fBits;
    Int_t           runId;
    Int_t           eventId;
-   Bool_t          trig_500206;
-   Bool_t          trig_470202;
-   Bool_t          trig_480202;
-   Bool_t          trig_490202;
-   Bool_t          trig_500202;
-   Bool_t          trig_510202;
-   Bool_t          trig_470205;
-   Bool_t          trig_480205;
-   Bool_t          trig_490205;
-   Bool_t          trig_500215;
    Bool_t          trig_500001;
+   Bool_t          trig_500006;
+   Bool_t          trig_500018;
+   Bool_t          trig_500202;
+   Bool_t          trig_500206;
+   Bool_t          trig_500215;
+   Bool_t          trig_500808;
+   Bool_t          trig_500809;
    Bool_t          trig_500904;
-   Bool_t          trig_510009;
    Int_t           nGlobalTracks;
    Int_t           nTracks;
    Int_t           nPrimaryTracks;
@@ -106,19 +102,15 @@ class tree {
    TBranch        *b_event_fBits;   //!
    TBranch        *b_event_runId;   //!
    TBranch        *b_event_eventId;   //!
-   TBranch        *b_event_trig_500206;   //!
-   TBranch        *b_event_trig_470202;   //!
-   TBranch        *b_event_trig_480202;   //!
-   TBranch        *b_event_trig_490202;   //!
-   TBranch        *b_event_trig_500202;   //!
-   TBranch        *b_event_trig_510202;   //!
-   TBranch        *b_event_trig_470205;   //!
-   TBranch        *b_event_trig_480205;   //!
-   TBranch        *b_event_trig_490205;   //!
-   TBranch        *b_event_trig_500215;   //!
-   TBranch        *b_event_trig_500001;   //!
-   TBranch        *b_event_trig_500904;   //!
-   TBranch        *b_event_trig_510009;   //!
+   TBranch        *b_event_trig_500001;
+   TBranch        *b_event_trig_500006;
+   TBranch        *b_event_trig_500018;
+   TBranch        *b_event_trig_500202;
+   TBranch        *b_event_trig_500206;
+   TBranch        *b_event_trig_500215;
+   TBranch        *b_event_trig_500808;
+   TBranch        *b_event_trig_500809;
+   TBranch        *b_event_trig_500904;
    TBranch        *b_event_nGlobalTracks;   //!
    TBranch        *b_event_nTracks;   //!
    TBranch        *b_event_nPrimaryTracks;   //!
@@ -259,19 +251,17 @@ void tree::Init(TTree *tree)
    fChain->SetBranchAddress("fBits", &fBits, &b_event_fBits);
    fChain->SetBranchAddress("runId", &runId, &b_event_runId);
    fChain->SetBranchAddress("eventId", &eventId, &b_event_eventId);
-   fChain->SetBranchAddress("trig_500206", &trig_500206, &b_event_trig_500206);
-   fChain->SetBranchAddress("trig_470202", &trig_470202, &b_event_trig_470202);
-   fChain->SetBranchAddress("trig_480202", &trig_480202, &b_event_trig_480202);
-   fChain->SetBranchAddress("trig_490202", &trig_490202, &b_event_trig_490202);
-   fChain->SetBranchAddress("trig_500202", &trig_500202, &b_event_trig_500202);
-   fChain->SetBranchAddress("trig_510202", &trig_510202, &b_event_trig_510202);
-   fChain->SetBranchAddress("trig_470205", &trig_470205, &b_event_trig_470205);
-   fChain->SetBranchAddress("trig_480205", &trig_480205, &b_event_trig_480205);
-   fChain->SetBranchAddress("trig_490205", &trig_490205, &b_event_trig_490205);
-   fChain->SetBranchAddress("trig_500215", &trig_500215, &b_event_trig_500215);
+
    fChain->SetBranchAddress("trig_500001", &trig_500001, &b_event_trig_500001);
+   fChain->SetBranchAddress("trig_500006", &trig_500006, &b_event_trig_500006);
+   fChain->SetBranchAddress("trig_500018", &trig_500018, &b_event_trig_500018);
+   fChain->SetBranchAddress("trig_500202", &trig_500202, &b_event_trig_500202);
+   fChain->SetBranchAddress("trig_500206", &trig_500206, &b_event_trig_500206);
+   fChain->SetBranchAddress("trig_500215", &trig_500215, &b_event_trig_500215);
+   fChain->SetBranchAddress("trig_500808", &trig_500808, &b_event_trig_500808);
+   fChain->SetBranchAddress("trig_500809", &trig_500809, &b_event_trig_500809);
    fChain->SetBranchAddress("trig_500904", &trig_500904, &b_event_trig_500904);
-   fChain->SetBranchAddress("trig_510009", &trig_510009, &b_event_trig_510009);
+
    fChain->SetBranchAddress("nGlobalTracks", &nGlobalTracks, &b_event_nGlobalTracks);
    fChain->SetBranchAddress("nTracks", &nTracks, &b_event_nTracks);
    fChain->SetBranchAddress("nPrimaryTracks", &nPrimaryTracks, &b_event_nPrimaryTracks);

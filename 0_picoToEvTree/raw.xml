@@ -30,7 +30,7 @@
         <ListLocation>./input/raw</ListLocation>
 	</Generator>
 
-    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" />
+    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/list/pico.list" />
 
     <stdout URL="file:./out/raw/$JOBID" />	
     <stderr URL="file:./err/raw/$JOBID" />
