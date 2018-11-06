@@ -18,7 +18,7 @@ int main(int argc, const char** argv) {
         true, // default is_test value
         100,  // default number of runs
         "test.log", // default output_log
-        "short.root" // default input file
+        "/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/raw/good_links/*.root" // default input file
     };
     input.event_tree->Loop();
 };

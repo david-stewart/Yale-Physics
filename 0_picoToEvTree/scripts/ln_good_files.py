@@ -62,7 +62,7 @@ fout.write("  -- %i files with no 'We END':\n" % len(no_WeEND))
 for L in no_WeEND:
     fout.write("  %s\n"%L)
 
-fout.write("  -- %i files with no 'bad_alloc':\n" % len(bad_alloc))
+fout.write("  -- %i files with 'bad_alloc':\n" % len(bad_alloc))
 for L in bad_alloc:
     fout.write("  %s\n"%L)
 

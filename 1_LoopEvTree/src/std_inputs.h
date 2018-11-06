@@ -27,7 +27,8 @@ struct std_inputs{
 
     // derived values:
     TFile* tfile;
-    TTree* ttree;
+    /* TTree* ttree; */
+    TChain* tchain;
     FILE*  flog; //output log file
 
     tree*   event_tree;
@@ -37,7 +38,7 @@ struct std_inputs{
             bool is_test_         = false,
             int nEvents_          = 10,
             TString log_name_     = "out.log",
-            TString in_file_name_ = "short.root") :
+            TString in_file_name_ = "/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/raw/good_links/*.root") :
         argc     { argc_ },
         is_test  { is_test_ },
         nEvents  { nEvents_ },
@@ -66,11 +67,14 @@ struct std_inputs{
         if (is_test) std::cout << " -- Sending output to " << log_name << std::endl;
 
         // set up tfile and ttree
-        if (!in_file_name.EndsWith(".root")) in_file_name.Append(".root");
-        tfile = new TFile(in_file_name.Data(),"read");
-        tfile->GetObject("tree",ttree);
+        /* if (!in_file_name.EndsWith(".root")) in_file_name.Append(".root"); */
+        /* tfile = new TFile(in_file_name.Data(),"read"); */
+        /* tfile->GetObject("tree",ttree); */
 
-        event_tree = new tree(options, ttree, nEvents, flog, is_test);
+        tchain = new TChain("tree");
+        tchain->Add(in_file_name.Data());
+
+        event_tree = new tree(options, tchain, nEvents, flog, is_test);
     };
     ~std_inputs() {
         /* event_tree->Close(); */
