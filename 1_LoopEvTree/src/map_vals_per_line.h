@@ -9,6 +9,9 @@
 #include <TString.h>
 using namespace std;
 
+// input: file location
+// output: map which uses the first word as keys, the second as a vector of the remaining values.
+
 //------------------------------------------------------------------------
 // Provides a function that makes a c++ map of values per line (the first
 // value is the key)

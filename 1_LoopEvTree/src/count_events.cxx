@@ -8,17 +8,20 @@
 #include <vector>
 #include <map>
 #include "TriggerCount.h"
+#include "MinMaxMeanVar.h"
+#include "MinMax.h"
 
 using namespace std;
 
 int main(int argc, const char** argv) {
+    /* MyTree* in_tree; */
     std_inputs input{ 
         argc, 
         argv, 
         true, // default is_test value
         100,  // default number of runs
         "test.log", // default output_log
-        "/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/raw/good_links/*.root" // default input file
+        "/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P16id/good_links/*.root" // default input file
     };
     input.event_tree->Loop();
 };
@@ -31,6 +34,42 @@ void tree::Loop()
     printf(       " * running Loop_1, count #events w/ each trigger in %li events\n", nentries);
     fprintf(flog, " # running Loop_1, count #events w/ each trigger in %li events\n", nentries);
     Long64_t nbytes = 0, nb = 0;
+
+    MinMaxMeanVar s_nGlobalTracks{};
+    MinMaxMeanVar s_nTracks{};
+    MinMaxMeanVar s_nPrimaryTracks{};
+    MinMaxMeanVar s_nGoodPrimaryTracks{};
+    MinMaxMeanVar s_nTofMatch{};
+    MinMaxMeanVar s_ranking{};
+    MinMaxMeanVar s_xPV{};
+    MinMaxMeanVar s_yPV{};
+    MinMaxMeanVar s_zPV{};
+    MinMaxMeanVar s_zdcX{};
+    MinMaxMeanVar s_bbcAdcES{};
+    MinMaxMeanVar s_bbcAdcEL{};
+    MinMaxMeanVar s_bbcAdcWS{};
+    MinMaxMeanVar s_bbcAdcWL{};
+    MinMaxMeanVar s_zdcSumAdcEast{};
+    MinMaxMeanVar s_zdcSumAdcWest{};
+    MinMaxMeanVar s_goodTrkRatio{};
+    MinMaxMeanVar s_phiTrkMean{};
+    MinMaxMeanVar s_etaTrkMean{};
+    MinMaxMeanVar s_phiTrkLead{};
+    MinMaxMeanVar s_etaTrkLead{};
+    MinMaxMeanVar s_maxpt{};
+    MinMaxMeanVar s_sumpt{};
+    MinMaxMeanVar s_trigId{};
+    MinMaxMeanVar s_ntowTriggers{};
+    MinMaxMeanVar s_nHT1trigs{};
+    MinMaxMeanVar s_nHT2trigs{};
+    MinMaxMeanVar s_maxEt{};
+    MinMaxMeanVar s_sumEt{};
+    MinMaxMeanVar s_maxTowAdc{};
+    MinMaxMeanVar s_sumTowAdc{};
+    MinMaxMeanVar s_phiEt{};
+    MinMaxMeanVar s_etaEt{};
+    MinMaxMeanVar s_phiEtMean{};
+    MinMaxMeanVar s_etaEtMean{};
 
     std::map<int, TriggerCount> emap;
     for (Long64_t jentry=0; jentry<nentries; jentry++) {
@@ -46,6 +85,9 @@ void tree::Loop()
             fprintf(flog, " # finished event : %i\n", jentry);
         };
 
+        /* cout << " nGlobalTracks " << nGlobalTracks << */ 
+            /* " " << s_nGlobalTracks.min() << "  " << s_nGlobalTracks.max() << endl; */
+
         // unique loop work
         if (!emap.count(runId)) emap[runId] = {};
 
@@ -58,6 +100,42 @@ void tree::Loop()
         if (trig_500808) ++emap[runId].n500808;
         if (trig_500809) ++emap[runId].n500809;
         if (trig_500904) ++emap[runId].n500904;
+
+        cout << "ntracks " << nTracks << endl;
+        s_nTracks(nTracks);
+        s_nPrimaryTracks(nPrimaryTracks);
+        s_nGoodPrimaryTracks(nGoodPrimaryTracks);
+        s_nTofMatch(nTofMatch);
+        s_ranking(ranking);
+        s_xPV(xPV);
+        s_yPV(yPV);
+        s_zPV(zPV);
+        s_zdcX(zdcX);
+        s_bbcAdcES(bbcAdcES);
+        s_bbcAdcEL(bbcAdcEL);
+        s_bbcAdcWS(bbcAdcWS);
+        s_bbcAdcWL(bbcAdcWL);
+        s_zdcSumAdcEast(zdcSumAdcEast);
+        s_zdcSumAdcWest(zdcSumAdcWest);
+        s_goodTrkRatio(goodTrkRatio);
+        s_phiTrkMean(phiTrkMean);
+        s_etaTrkMean(etaTrkMean);
+        s_phiTrkLead(phiTrkLead);
+        s_etaTrkLead(etaTrkLead);
+        s_maxpt(maxpt);
+        s_sumpt(sumpt);
+        s_trigId(trigId);
+        s_ntowTriggers(ntowTriggers);
+        s_nHT1trigs(nHT1trigs);
+        s_nHT2trigs(nHT2trigs);
+        s_maxEt(maxEt);
+        s_sumEt(sumEt);
+        s_maxTowAdc(maxTowAdc);
+        s_sumTowAdc(sumTowAdc);
+        s_phiEt(phiEt);
+        s_etaEt(etaEt);
+        s_phiEtMean(phiEtMean);
+        s_etaEtMean(etaEtMean);
 
     }
     // print results
@@ -122,4 +200,46 @@ void tree::Loop()
             sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7],
             sums[8], sums[9]);
     printf( "%s", dash);
+
+    printf(" Global tracks: n:min:max:mean:std  %i:%f:%f:%f:%f\n",
+            s_nGlobalTracks.get_n(),s_nGlobalTracks.min(), s_nGlobalTracks.max(), 
+            s_nGlobalTracks.mean(), s_nGlobalTracks.std());
+
+    // print the MinMaxMeanStd
+    s_nTracks.print(NULL, "nTracks");
+    s_nPrimaryTracks.print(NULL, "nPrimaryTracks");
+    s_nGoodPrimaryTracks.print(NULL, "nGoodPrimaryTracks");
+    s_nTofMatch.print(NULL, "nTofMatch");
+    s_ranking.print(NULL, "ranking");
+    s_xPV.print(NULL, "xPV");
+    s_yPV.print(NULL, "yPV");
+    s_zPV.print(NULL, "zPV");
+    s_zdcX.print(NULL, "zdcX");
+    s_bbcAdcES.print(NULL, "bbcAdcES");
+    s_bbcAdcEL.print(NULL, "bbcAdcEL");
+    s_bbcAdcWS.print(NULL, "bbcAdcWS");
+    s_bbcAdcWL.print(NULL, "bbcAdcWL");
+    s_zdcSumAdcEast.print(NULL, "zdcSumAdcEast");
+    s_zdcSumAdcWest.print(NULL, "zdcSumAdcWest");
+    s_goodTrkRatio.print(NULL, "goodTrkRatio");
+    s_phiTrkMean.print(NULL, "phiTrkMean");
+    s_etaTrkMean.print(NULL, "etaTrkMean");
+    s_phiTrkLead.print(NULL, "phiTrkLead");
+    s_etaTrkLead.print(NULL, "etaTrkLead");
+    s_maxpt.print(NULL, "maxpt");
+    s_sumpt.print(NULL, "sumpt");
+    s_trigId.print(NULL, "trigId");
+    s_ntowTriggers.print(NULL, "ntowTriggers");
+    s_nHT1trigs.print(NULL, "nHT1trigs");
+    s_nHT2trigs.print(NULL, "nHT2trigs");
+    s_maxEt.print(NULL, "maxEt");
+    s_sumEt.print(NULL, "sumEt");
+    s_maxTowAdc.print(NULL, "maxTowAdc");
+    s_sumTowAdc.print(NULL, "sumTowAdc");
+    s_phiEt.print(NULL, "phiEt");
+    s_etaEt.print(NULL, "etaEt");
+    s_phiEtMean.print(NULL, "phiEtMean");
+    s_etaEtMean.print(NULL, "etaEtMean");
+
+    
 };

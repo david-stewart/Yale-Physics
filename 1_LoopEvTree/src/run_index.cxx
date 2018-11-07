@@ -4,20 +4,12 @@
 
 using namespace std;
 int main(int argc, const char** argv) {
-   // arguments:
-   // 1 : log file from which to build the index
-   // 2 : the output file where to put the index
-    if (argc < 3) {
-        cout << "required arguments: [1] log input file [2] output file name" << endl;
-        return 1;
-    }
-    /* map<int, vector<int>> myMap { map_vals_per_line(argv[1], NULL, true) }; */
-    auto myMap =  map_vals_per_line(argv[1], NULL, true) ;
 
-    FILE* fout = fopen(argv[2],"w");
-    fprintf(fout, "Something in here!\n");
-    int index{0};
-    for (auto i : myMap) fprintf(fout,"%i %i\n", i.first, index++);
-    fclose(fout);
-    cout << "finished running" << endl;
+    auto myMap = map_vals_per_line("logs/test.log");
+    for (auto i : myMap) {
+        cout << i.first << " : ";
+        char num[100];
+        for (auto e : i.second) printf(" %10i",e);
+        cout << endl;
+    }
 }
