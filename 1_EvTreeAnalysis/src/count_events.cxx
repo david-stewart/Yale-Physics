@@ -110,7 +110,7 @@ void MyTree::MyLoop(){
 
         if (!emap.count(runId)) emap[runId] = {};
 
-        cout << " refmult " << refmult << endl;
+        /* cout << " refmult " << refmult << endl; */
 
         if (trig_500001) ++emap[runId].n500001;
         if (trig_500006) ++emap[runId].n500006;

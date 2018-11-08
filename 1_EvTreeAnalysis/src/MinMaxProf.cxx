@@ -17,21 +17,21 @@ MinMaxProf_double::MinMaxProf_double(double& val_, TProfile& prof_e_, TProfile& 
 {};
 
 TString MinMaxProf_int::getstats() {
-    cout << "name " << name << " " << minVal << " " << maxVal << " " << prof_e.GetBinContent(i_bin) << " " << prof_e.GetBinError(i_bin) << " " << prof_s.GetBinError(i_bin) << endl;
+    /* cout << "name " << name << " " << minVal << " " << maxVal << " " << prof_e.GetBinContent(i_bin) << " " << prof_e.GetBinError(i_bin) << " " << prof_s.GetBinError(i_bin) << endl; */
 
-    cout << TString::Format(" %12i %12i %12.4g %12.4g %12.4g", minVal, maxVal,
-            prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin)) << endl;
+    /* cout << TString::Format(" %12i %12i %12.5g %12.5g %12.5g", minVal, maxVal, */
+    /*         prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin)) << endl; */
     if (is_first) return TString::Format("# Error! No values entered for %s", name);
-    else return TString::Format(" %12i %12i %12.4g %12.4g %12.4g", minVal, maxVal, 
+    else return TString::Format(" %12i %12i %12.5g %12.5g %12.5g", minVal, maxVal, 
             prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin));
 };
 
 TString MinMaxProf_double::getstats() {
-    cout << "name " << name << " " <<  minVal << " " << maxVal << " " << prof_e.GetBinContent(i_bin) << " " << prof_e.GetBinError(i_bin) << " " << prof_s.GetBinError(i_bin) << endl;
-    cout << TString::Format(" %12i %12i %12.4g %12.4g %12.4g", minVal, maxVal,
-            prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin)) << endl;
+    /* cout << "name " << name << " " <<  minVal << " " << maxVal << " " << prof_e.GetBinContent(i_bin) << " " << prof_e.GetBinError(i_bin) << " " << prof_s.GetBinError(i_bin) << endl; */
+    /* cout << TString::Format(" %12i %12i %12.5g %12.5g %12.5g", minVal, maxVal, */
+            /* prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin)) << endl; */
     if (is_first) return TString::Format("# Error! No values entered for %s", name);
-    else return TString::Format(" %12.4g %12.4g %12.4g %12.4g %12.4g", minVal, maxVal, 
+    else return TString::Format(" %12.5g %12.5g %12.5g %12.5g %12.5g", minVal, maxVal, 
             prof_e.GetBinContent(i_bin), prof_e.GetBinError(i_bin), prof_s.GetBinError(i_bin));
 };
 
@@ -46,7 +46,7 @@ void MinMaxProf_int::fill() {
         if (val < minVal) minVal = val;
         if (val > maxVal) maxVal = val;
     }
-    cout << " updating " << name << " with " << val << "  min: " <<minVal << "  max: " << maxVal << endl;
+    /* cout << " updating " << name << " with " << val << "  min: " <<minVal << "  max: " << maxVal << endl; */
 };
 
 void MinMaxProf_double::fill() {
@@ -60,5 +60,5 @@ void MinMaxProf_double::fill() {
         if (val < minVal) minVal = val;
         if (val > maxVal) maxVal = val;
     }
-    cout << " updating " << name << " with " << val << "  min: " <<minVal << "  max: " << maxVal << endl;
+    /* cout << " updating " << name << " with " << val << "  min: " <<minVal << "  max: " << maxVal << endl; */
 };
