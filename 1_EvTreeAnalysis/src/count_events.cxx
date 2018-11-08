@@ -50,9 +50,10 @@ struct TriggerCount {
 void MyTree::MyLoop(){
     if (fChain == 0) return;
 
-    Long64_t nentries {
-        input.nEvents == -1 ? fChain->GetEntriesFast() : input.nEvents
-    };
+    long long int nentries = fChain->GetEntriesFast();
+    fprintf(input.flog, "# total available events: %lli\n", nentries);
+    if (input.nEvents != -1) nentries = input.nEvents;
+    fprintf(input.flog, "# Starting to read %lli events\n", input.nEvents);
 
     Long64_t nbytes = 0, nb = 0;
 
@@ -99,7 +100,10 @@ void MyTree::MyLoop(){
     dvals.push_back( MinMaxProf_double{phiEtMean, prof_e, prof_s, "phiEtMean", 35} );
     dvals.push_back( MinMaxProf_double{etaEtMean, prof_e, prof_s, "etaEtMean", 36} );
 
-    for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    bool runAll{input.nEvents == -1};
+    Long64_t jentry{0};
+    while (runAll || jentry < input.nEvents){
+    /* for (Long64_t jentry=0; jentry<nentries;jentry++) { */
         Long64_t ientry = LoadTree(jentry);
         if (ientry < 0) break;
 
@@ -121,6 +125,7 @@ void MyTree::MyLoop(){
         if (trig_500808) ++emap[runId].n500808;
         if (trig_500809) ++emap[runId].n500809;
         if (trig_500904) ++emap[runId].n500904;
+        ++jentry;
     }
 
     print_header(input.flog);
