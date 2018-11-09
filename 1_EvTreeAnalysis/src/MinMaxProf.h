@@ -6,6 +6,8 @@
 
 class MinMaxProf {
     public:
+    TString stats_header();
+    TString stats_dashes();
     virtual TString getstats() = 0; // return the line:  # [min] [max] [mean] [std dev]
     virtual void fill() = 0;
 

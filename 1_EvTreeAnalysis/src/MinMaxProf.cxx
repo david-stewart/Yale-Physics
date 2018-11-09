@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+
 MinMaxProf::MinMaxProf(TProfile& prof_e_, TProfile& prof_s_, const char* name_, Int_t i_bin_) :
     prof_e(prof_e_), prof_s(prof_s_), name{name_}, i_bin{i_bin_} 
 {
@@ -15,6 +16,13 @@ MinMaxProf_int::MinMaxProf_int(Int_t& val_, TProfile& prof_e_, TProfile& prof_s_
 MinMaxProf_double::MinMaxProf_double(double& val_, TProfile& prof_e_, TProfile& prof_s_, const char* name_, Int_t i_bin_) :
     val{val_}, is_first{true}, MinMaxProf{prof_e_, prof_s_, name_, i_bin_}
 {};
+
+TString MinMaxProf::stats_header(){
+    return TString::Format(" %12s %12s %12s %12s %12s", "min","max","mean","std_mean","std_distr");
+};
+TString MinMaxProf::stats_dashes(){
+    return TString::Format(" %12s %12s %12s %12s %12s", "------------","------------","------------","------------","------------");
+};
 
 TString MinMaxProf_int::getstats() {
     /* cout << "name " << name << " " << minVal << " " << maxVal << " " << prof_e.GetBinContent(i_bin) << " " << prof_e.GetBinError(i_bin) << " " << prof_s.GetBinError(i_bin) << endl; */

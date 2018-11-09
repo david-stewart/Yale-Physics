@@ -10,6 +10,11 @@
 
 using namespace std;
 
+TString makeM(long int i){
+    int mval = i/1000000;
+    int rval = i%1000000; 
+    return TString::Format("%i.%i", mval, rval/1000);
+};
 void print_header(FILE* flog){
     char dash[200];
     char nstr[200];
@@ -164,10 +169,25 @@ void MyTree::MyLoop(){
             "#<sum> ", sums[0], 
             sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7],
             sums[8], sums[9]);
+    fprintf(input.flog,"%-10s  %8s M %8s M %8s M %8s M %8s M %8s M %8s M %8s M %8s M\n",
+            "#<sum> ", 
+            makeM(sums[0]).Data(), makeM(sums[1]).Data(), makeM(sums[2]).Data(), 
+            makeM(sums[3]).Data(), makeM(sums[4]).Data(), makeM(sums[5]).Data(), 
+            makeM(sums[6]).Data(), makeM(sums[7]).Data(), makeM(sums[8]).Data(), 
+            makeM(sums[9]).Data());
     printf("%-10s  %10li %10li %10li %10li %10li %10li %10li %10li %10li\n",
             "#<sum> ", sums[0], 
             sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7],
             sums[8], sums[9]);
+    printf("%-10s  %8s M %8s M %8s M %8s M %8s M %8s M %8s M %8s M %8s M\n",
+            "#<sum> ", 
+            makeM(sums[0]).Data(), makeM(sums[1]).Data(), makeM(sums[2]).Data(), 
+            makeM(sums[3]).Data(), makeM(sums[4]).Data(), makeM(sums[5]).Data(), 
+            makeM(sums[6]).Data(), makeM(sums[7]).Data(), makeM(sums[8]).Data(), 
+            makeM(sums[9]).Data());
+    fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data());
+    fprintf(input.flog, " #      %-19s %s\n", "name", ivals[0].stats_header().Data());
+    fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data());
     for (auto& x : ivals) fprintf(input.flog, " #!val: %-19s %s\n", x.name, x.getstats().Data());
     for (auto& x : dvals) fprintf(input.flog, " #!val: %-19s %s\n", x.name, x.getstats().Data());
     // print out the numbers for each runId
