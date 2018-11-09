@@ -79,6 +79,8 @@ StdInp::StdInp (
                 fprintf(flog, " # chain->Add(%s)\n", root_files[i].Data());
                 printf(" # chain->Add(%s)\n", root_files[i].Data());
             }
+        } else {
+            for (auto file : root_files) chain->AddFile(file.Data());
         };
     } else {
         fprintf(flog, " # adding file(s) from %s\n", in_file_name.Data());

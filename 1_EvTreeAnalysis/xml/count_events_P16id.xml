@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job >
+    <ResourceUsage>
+        <Times>
+            <MaxWallTime>24</MaxWallTime>
+        </Times>
+    </ResourceUsage>
+	<command>
+        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis
+        set INPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links
+        $MYPATH/bin/count_events -1 $MYPATH/logs/count_events_P17id.log $INPATH/\*
+	</command>
+	<SandBox installer="ZIP">
+		<Package>
+            <File>file:./bin/count_events</File>
+			<!-- <File>file:./StRoot</File> -->
+            <!-- <File>file:./.sl73_gcc485</File> -->
+		</Package>		
+	</SandBox>
+	
+	<Generator>
+        <Location>./input</Location>
+        <ScriptLocation>./input</ScriptLocation>
+        <ListLocation>./input</ListLocation>
+	</Generator>
+
+    <!-- <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" /> -->
+
+    <stdout URL="file:./out/count_events.out" />	
+    <stderr URL="file:./err/count_events.err" />
+</job>
