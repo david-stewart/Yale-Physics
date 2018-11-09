@@ -8,7 +8,7 @@
 	<command>
         set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis
         set INPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P16id/good_links
-        $MYPATH/bin/count_events 100 $MYPATH/logs/count_events.log $INPATH/\*
+        $MYPATH/bin/count_events -1 $MYPATH/logs/count_events.log $INPATH/\*
         <!-- root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\) -->
 	</command>
 	<SandBox installer="ZIP">
