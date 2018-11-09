@@ -6,6 +6,8 @@
 #include <iostream>
 #include <TProfile.h>
 
+/* #include <unistd.h> */
+
 using namespace std;
 
 void print_header(FILE* flog){
@@ -54,6 +56,7 @@ void MyTree::MyLoop(){
     fprintf(input.flog, "# total available events: %lli\n", nentries);
     if (input.nEvents != -1) nentries = input.nEvents;
     fprintf(input.flog, "# Starting to read %lli events\n", input.nEvents);
+    input.update_log();
 
     Long64_t nbytes = 0, nb = 0;
 
@@ -105,6 +108,11 @@ void MyTree::MyLoop(){
     while (runAll || jentry < input.nEvents){
     /* for (Long64_t jentry=0; jentry<nentries;jentry++) { */
         Long64_t ientry = LoadTree(jentry);
+        if (jentry % 500000 == 0) {
+            /* usleep(3000000); */
+            fprintf(input.flog, "# ! finished %lli events\n", jentry);
+            input.update_log();
+        }
         if (ientry < 0) break;
 
         nb = fChain->GetEntry(jentry);   nbytes += nb;

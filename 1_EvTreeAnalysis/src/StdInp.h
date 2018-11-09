@@ -18,7 +18,9 @@ class StdInp {
     bool is_test;
     long long int nEvents;
     TChain* chain;
+    const char* fname;
     FILE*   flog;
+    void    update_log();
     TFile*  file;
     std::vector<TString> options; // all options from the command line after 
                                   // [0] is this a test?

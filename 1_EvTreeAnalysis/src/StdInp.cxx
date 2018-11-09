@@ -3,6 +3,11 @@
 
 using namespace std;
 // implrement class StdInp
+void StdInp::update_log() {
+    fclose(flog);
+    flog = fopen(fname, "a");
+};
+
 StdInp::StdInp ( 
        int argc, 
        const char** argv_, 
@@ -30,7 +35,8 @@ StdInp::StdInp (
     if (argc > 4) for (int i{4}; i < argc; ++i) options.push_back(argv_[i]);
 
     // initialize log and file
-    flog = fopen(log_name.Data(), "w");
+    fname = log_name.Data();
+    flog = fopen(fname, "w");
     if (flog == NULL) cout << "fatal: couldn't open output log file \""<< log_name <<"\""<<endl;
 
     time(&start_time);
@@ -38,6 +44,8 @@ StdInp::StdInp (
 
     // initalize the tchain
     fprintf(flog, " # starting TChain from file(s): %s\n", in_file_name.Data());
+    update_log();
+    
     chain = new TChain("tree");
     chain->Add(in_file_name.Data());
 };
