@@ -1,0 +1,279 @@
+ # Starting log on (local time):  Mon Nov 12 15:24:15 2018
+ # reading list of input files from /gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis/list/P17.list
+ # Notice: skipping file readme.md is not a "\*.root" file.
+ # dividing the 879 input files into 20 groups; reading group 19 for this run
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_7.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_800.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_801.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_802.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_803.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_804.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_806.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_807.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_808.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_809.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_80.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_810.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_811.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_812.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_813.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_814.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_815.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_816.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_817.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_818.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_819.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_81.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_820.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_821.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_822.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_823.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_824.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_825.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_826.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_827.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_828.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_829.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_82.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_830.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_831.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_832.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_833.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_834.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_835.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_836.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_837.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_838.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_839.root)
+# total available events: 1234567890
+# Starting to read -1 events
+TESTING!
+# ! finished 0 events
+# ! finished 500000 events
+# ! finished 1000000 events
+# ! finished 1500000 events
+# ! finished 2000000 events
+# ! finished 2500000 events
+# ! finished 3000000 events
+# ! finished 3500000 events
+# ! finished 4000000 events
+# ! finished 4500000 events
+# ! finished 5000000 events
+# ! finished 5500000 events
+# ! finished 6000000 events
+# ! finished 6500000 events
+# ! finished 7000000 events
+# ! finished 7500000 events
+# ! finished 8000000 events
+# ! finished 8500000 events
+# ! finished 9000000 events
+# ! finished 9500000 events
+# ! finished 10000000 events
+# ! finished 10500000 events
+# ! finished 11000000 events
+# ! finished 11500000 events
+# ! finished 12000000 events
+# ! finished 12500000 events
+# ! finished 13000000 events
+# ! finished 13500000 events
+# ! finished 14000000 events
+# ! finished 14500000 events
+# ! finished 15000000 events
+# ! finished 15500000 events
+# ! finished 16000000 events
+# ! finished 16500000 events
+# ! finished 17000000 events
+# ! finished 17500000 events
+# ! finished 18000000 events
+# ! finished 18500000 events
+# ! finished 19000000 events
+# ! finished 19500000 events
+# ! finished 20000000 events
+# ! finished 20500000 events
+# ! finished 21000000 events
+# ! finished 21500000 events
+# ! finished 22000000 events
+# ! finished 22500000 events
+# ! finished 23000000 events
+# ! finished 23500000 events
+# ! finished 24000000 events
+# ! finished 24500000 events
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#TrigName   vpdMB5-ssd vpdMB5nosd BBCMB      HT1vpdMB30 HT1vpd30_n BHT2*BBCMB FMS-JP2    FMS-JP1    VPDMB-30  
+#TrigNum        500001     500006     500018     500202     500206     500215     500808     500809     500904
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+  16130034       10942          0          0         24         66          5          5          2          3
+  16130035      448270          0         17       1010       2279        116         67         67        167
+  16133007        3837          0          0          9         18          0          0          1          3
+  16133008      989326          0         99       2203       4722        221        114        445       1242
+  16133009     1013042          0        134       2320       4894        242        102        458       1323
+  16133010      134056          0         21        297        657         43         12         67        199
+  16149005       89512          0          6        191        405         17          4         20         48
+  16149007       21187          0          0         44         89          6          2          7         11
+  16149008       18523          0          0         36         78          1          3          6         18
+  16149009       14071          0          2         36         69          2          0          6          9
+  16149010      284109          0         23        613       1297         67         12        115        252
+  16149011      278951          0         35        567       1188         61         22        118        360
+  16149013      368201          0         40        784       1617         79         10        130        471
+  16149014      295818          0         55        611       1287         72         13        106        474
+  16149024       73357          0          3        147        341         18          5         19         40
+  16149025       12446          0          0         32         66          2          1          2          8
+  16149049      237514          0         10        483       1104         56         11         61        128
+  16149050      147138          0          9        279        638         35         15         43         66
+  16149051       46770          0          3        106        225         11          4         16         22
+  16149052      236910          0         15        488       1125         57         18         71        120
+  16149053      253776          0         17        527       1159         65         25         77        189
+  16149054      243451          0         10        499       1085         59         17         90        163
+  16149055      199707          0         13        425        915         37         10         66        124
+  16150004      134683          0         11        265        581         27          9         59        151
+  16150011      250565          0          9        522       1180         64         23         51         98
+  16150012      248641          0         11        494       1169         55         15         53        107
+  16150013      135008          0          5        260        573         22          8         31         66
+  16150014      228952          0         10        477       1024         62         13         55        105
+  16150015      231536          0         11        495       1041         53         10         58        120
+  16150019      383906          0         30        759       1655         81         24        134        280
+  16150020      347846          0         27        647       1555         79         25        140        255
+  16150021      316591          0         28        651       1370         56         15        113        253
+  16150022      342730          0         16        706       1511         80         19        136        304
+  16150023      377024          0         34        735       1608         75         27        149        359
+  16150024      205884          0         12        416        925         35          8         80        167
+  16150048      211471          0          8        406        965         35         15         56         94
+  16150049      223417          0          3        481       1010         44         15         61        108
+  16150050       49112          0          1        108        247          9          5         16         27
+  16150052      122316          0          5        247        540         28          6         35         58
+  16150054      402224          0         18        782       1813         90         37        122        241
+  16150055      238866          0         18        493       1037         49         23         86        136
+  16150056      364184          0         27        727       1620         82         17        128        218
+  16150057      282765          0         18        574       1276         64         23        102        199
+  16150058       98001          0          6        187        401         15          9         36         76
+  16150059      417932          0         25        802       1799         91         35        201        322
+  16150061      143657          0         14        284        623         29         10         79        117
+  16151002      210452          0          6        444        975         43         17         48         88
+  16151024       77957          0          2        163        356         15          6         16         25
+  16151025      182241          0          7        388        854         44         14         45         68
+  16151026      124251          0          3        281        575         26          6         26         63
+  16151027      241782          0          6        447       1044         56         15         64         99
+  16151028      313825          0         20        607       1364         60         22         82        157
+  16151029      308095          0         14        630       1368         67         24         94        174
+  16151030      134821          0          8        299        653         30          9         43         81
+  16151031      319263          0         13        644       1386         63         16        107        235
+  16151032      365610          0         22        733       1580         76         17        125        269
+  16151034      321929          0         31        639       1416         64         17        122        270
+  16151035      249727          0         29        493       1072         52         12        109        220
+  16151043      147139          0          5        275        672         38         12         32         70
+  16151044      152906          0          7        274        645         36         12         34         55
+  16151045      155599          0          9        315        717         41         17         28         70
+  16151046      108450          0          3        261        489         28          7         25         54
+  16151048      148764          0          9        274        642         44          9         36         83
+  16151049      182111          0         10        369        820         34         12         46        103
+  16151050      245371          0         11        467       1061         42         21         76        152
+  16151053      158168          0         12        299        662         27         11         39         83
+  16151054        8712          0          0         14         29          1          1          0          5
+  16151055      359616          0         26        622       1506         66         14         93        196
+  16151056      342600          0         26        691       1518         74         23        115        222
+  16151062      226959          0         27        463        998         54         16         82        165
+  16152024      141511          0          4        324        685         30         15         35         63
+  16152025      133427          0          4        265        595         28         12         35         55
+  16152028      202782          0          9        385        872         55         23         73         87
+  16152029      221101          0         11        457       1021         48          9         80        124
+  16152030      209777          0         14        398        887         47         25         77        121
+  16152031      242360          0         21        553       1165         59         20         79        133
+  16152032       80152          0          4        154        355         13          3         27         63
+  16152034      193665          0         18        387        847         34         15         86        154
+  16152035      266490          0         21        570       1153         53         21        124        218
+  16152047      186572          0          8        370        821         43         12         45         92
+  16152049      167990          0          8        303        741         33         19         46         81
+  16152051       66790          0          1        150        292         22          6         27         41
+  16152052      170083          0          7        334        787         42         11         50         96
+  16152054      141277          0          6        300        675         32         12         45         76
+  16152057      192591          0         12        411        874         39         12         58        142
+  16152058      255334          0         17        511       1126         62         21         91        203
+  16152059      182016          0         15        392        829         37         16         81        148
+  16153001      104653          0          6        193        442         28          6         36         80
+  16153011      135327          0          6        271        678         32         17         38         57
+  16153012       50093          0          3        108        240          7          3         11         22
+  16153013       99818          0          6        197        456         22          6         22         51
+  16153014      158076          0         10        321        727         43         13         43         76
+  16153015      160301          0          7        324        705         28         12         38         70
+  16153016      199978          0         15        369        900         41         15         76        120
+  16153019      172689          0         11        318        714         40         17         58        128
+  16153020       15904          0          1         32         83          4          1         11         14
+  16153021      232828          0         23        489       1044         71         16         78        161
+  16153022      156829          0         13        317        706         36         11         65        125
+  16153033       17968          0          2         40         91          7          5          4          9
+  16153034       76378          0          2        149        331         19          6         17         25
+  16154009       36018          0          1         91        165          5          6          9         12
+  16154011       26460          0          0         56        126          5          1          4         11
+  16155006       42561          0          1         83        196          9          4          9         12
+  16155007       89749          0          2        184        425         23          6         20         37
+  16155008      144202          0          5        298        673         35         12         31         75
+  16155011       63071          0          3        119        257         18         11         20         27
+  16155012      190141          0         11        353        810         38         21         57        105
+  16155013      118243          0          7        227        501         26          9         35         70
+  16155014      192004          0          5        400        836         33         21         72        108
+  16155015      144018          0         11        275        586         26         18         48        103
+  16155016      182488          0         10        375        802         31         12         61        116
+  16155018        8624          0          1         16         31          2          1          1          5
+  16155019      176468          0          8        335        725         40         16         77        146
+  16155032      100744          0          1        196        454         16          5         14         38
+  16155034       72323          0          3        144        355         16         12         22         34
+  16155035        8240          0          0         19         39          1          0          1          6
+  16155036       13585          0          2         32         63          6          1          2          4
+  16155038       70737          0          2        161        326         21          2         18         44
+  16155041       96501          0          5        162        393         21         10         30         70
+  16155042      126754          0          8        267        587         30         16         59         86
+  16155047       95878          0         10        187        401         17          4         38         77
+  16155048       77143          0          4        158        344         16          4         25         54
+  16156009      244834          0          5        473       1135         50         26         50        118
+  16156011      204015          0          9        400        914         58         16         48         90
+  16156012       87680          0          5        174        422         28          5         26         37
+  16156013      271180          0         11        539       1194         57         21         62        140
+  16156014      280243          0         14        563       1229         69         17         87        125
+  16156015      370294          0         18        728       1648         86         24         97        199
+  16156017      169390          0         13        311        699         24         17         51         93
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#TrigName   vpdMB5-ssd vpdMB5nosd BBCMB      HT1vpdMB30 HT1vpd30_n BHT2*BBCMB FMS-JP2    FMS-JP1    VPDMB-30  
+#TrigNum        500001     500006     500018     500202     500206     500215     500808     500809     500904
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#<sum>        24602921          0       1625      50059     110427       5440       1891       8091      17185
+#<sum>        24.602 M      0.0 M      0.1 M     0.50 M    0.110 M      0.5 M      0.1 M      0.8 M     0.17 M
+ #      --------------       ------------ ------------ ------------ ------------ ------------
+ #      name                          min          max         mean     std_mean    std_distr
+ #      --------------       ------------ ------------ ------------ ------------ ------------
+ #!val: refmult                         0           72       10.163    0.0011734       5.8201
+ #!val: nGlobalTracks                  63         2481       1025.5     0.058573       290.53
+ #!val: nTracks                        52         2425       997.78     0.057892       287.15
+ #!val: nPrimaryTracks                  0          134       24.543    0.0024095       11.951
+ #!val: nGoodPrimaryTracks              0           64       8.6493    0.0011158       5.5343
+ #!val: nTofMatch                       0           43       4.2938   0.00078097       3.8737
+ #!val: ntowTriggers                    0          107       1.8975   0.00049754       2.4679
+ #!val: nHT1trigs                       0            5     0.019235   2.7879e-05      0.13828
+ #!val: nHT2trigs                       0            2     0.015036   2.4544e-05      0.12174
+ #!val: ranking               -9.9999e+05   1.0835e+06   4.6701e+05       178.82   8.8698e+05
+ #!val: xPV                      -0.73179      0.92379      0.07593   2.3524e-05      0.11668
+ #!val: yPV                      -0.35398     -0.19002     -0.27001   2.3297e-06     0.011555
+ #!val: zPV                       -199.95       199.95       4.8478    0.0056821       28.184
+ #!val: zdcX                         4951        22251        13360      0.76345       3786.8
+ #!val: bbcAdcES                        0        60355        14661       2.4676        12240
+ #!val: bbcAdcEL                        0        32227       6981.5       1.1796         5851
+ #!val: bbcAdcWS                        0        60283       2033.1       0.5717       2835.7
+ #!val: bbcAdcWL                        0        23183        472.6      0.15486       768.14
+ #!val: zdcSumAdcEast                   0         4068       1103.7      0.16836        835.1
+ #!val: zdcSumAdcWest                   0         2341       0.7719    0.0008783       4.3565
+ #!val: goodTrkRatio                    0            1         -nan          nan          nan
+ #!val: phiTrkMean                -3.1416       3.1416         -nan          nan          nan
+ #!val: etaTrkMean                     -1            1         -nan          nan          nan
+ #!val: phiTrkLead                -3.1416       3.1416     0.012958   0.00036688       1.8198
+ #!val: etaTrkLead                     -1            1    -0.015355   0.00011099      0.55053
+ #!val: maxpt                           0       29.645       1.2381   0.00012927      0.64119
+ #!val: sumpt                           0       51.304       5.2815   0.00075132       3.7267
+ #!val: maxEt                           0       26.178     0.012587   4.0413e-05      0.20045
+ #!val: sumEt                     -1.4162       26.178    0.0028022   4.4457e-05      0.22051
+ #!val: maxTowAdc                       0         2005       1.4214    0.0033367       16.551
+ #!val: sumTowAdc                       0         2005        1.437    0.0034132        16.93
+ #!val: phiEt                     -3.1183       3.1159  -0.00018562   2.4307e-05      0.12057
+ #!val: etaEt                     -1.4206       1.3423  -0.00019191   7.3621e-06     0.036517
+ #!val: phiEtMean                    -nan         -nan         -nan          nan          nan
+ #!val: etaEtMean                    -nan         -nan         -nan          nan          nan
+ # Ending log on (local time):   Mon Nov 12 15:34:00 2018
+ # Time ellapsed: 585 seconds or (in hr:min:sec) 00:09:45

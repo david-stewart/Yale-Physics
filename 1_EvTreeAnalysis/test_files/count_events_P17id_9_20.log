@@ -1,0 +1,189 @@
+ # Starting log on (local time):  Mon Nov 12 15:23:12 2018
+ # reading list of input files from /gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis/list/P17.list
+ # Notice: skipping file readme.md is not a "\*.root" file.
+ # dividing the 879 input files into 20 groups; reading group 9 for this run
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_410.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_411.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_412.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_413.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_414.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_415.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_416.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_417.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_418.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_419.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_41.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_420.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_421.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_422.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_423.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_424.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_425.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_426.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_427.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_428.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_429.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_42.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_430.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_431.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_432.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_433.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_434.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_435.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_436.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_437.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_438.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_439.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_43.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_440.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_441.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_442.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_443.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_444.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_445.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_446.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_447.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_448.root)
+ # chain->Add(/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree/root/P17id/good_links/AF63CBBC2FC9907DCF25A181629C289B_449.root)
+# total available events: 1234567890
+# Starting to read -1 events
+TESTING!
+# ! finished 0 events
+# ! finished 500000 events
+# ! finished 1000000 events
+# ! finished 1500000 events
+# ! finished 2000000 events
+# ! finished 2500000 events
+# ! finished 3000000 events
+# ! finished 3500000 events
+# ! finished 4000000 events
+# ! finished 4500000 events
+# ! finished 5000000 events
+# ! finished 5500000 events
+# ! finished 6000000 events
+# ! finished 6500000 events
+# ! finished 7000000 events
+# ! finished 7500000 events
+# ! finished 8000000 events
+# ! finished 8500000 events
+# ! finished 9000000 events
+# ! finished 9500000 events
+# ! finished 10000000 events
+# ! finished 10500000 events
+# ! finished 11000000 events
+# ! finished 11500000 events
+# ! finished 12000000 events
+# ! finished 12500000 events
+# ! finished 13000000 events
+# ! finished 13500000 events
+# ! finished 14000000 events
+# ! finished 14500000 events
+# ! finished 15000000 events
+# ! finished 15500000 events
+# ! finished 16000000 events
+# ! finished 16500000 events
+# ! finished 17000000 events
+# ! finished 17500000 events
+# ! finished 18000000 events
+# ! finished 18500000 events
+# ! finished 19000000 events
+# ! finished 19500000 events
+# ! finished 20000000 events
+# ! finished 20500000 events
+# ! finished 21000000 events
+# ! finished 21500000 events
+# ! finished 22000000 events
+# ! finished 22500000 events
+# ! finished 23000000 events
+# ! finished 23500000 events
+# ! finished 24000000 events
+# ! finished 24500000 events
+# ! finished 25000000 events
+# ! finished 25500000 events
+# ! finished 26000000 events
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#TrigName   vpdMB5-ssd vpdMB5nosd BBCMB      HT1vpdMB30 HT1vpd30_n BHT2*BBCMB FMS-JP2    FMS-JP1    VPDMB-30  
+#TrigNum        500001     500006     500018     500202     500206     500215     500808     500809     500904
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+  16131043      631484          0         41       1453       3129        153         58        151        536
+  16131044      801942          0         66       1901       4094        178         62        196        675
+  16131045      144900          0         12        405        838         34         18         37        134
+  16131046      126864          0          6        305        658         30          9         33        116
+  16143021        7703          0          2         14         28          1          0          4         14
+  16143022      817830          0        140       1664       3561        150         58        369       1532
+  16143032      541986          0         27       1179       2625        140         45         14        174
+  16143033      596435          0         25       1265       2818        140         58         73        211
+  16143034      713681          0         27       1535       3290        153         52        114        292
+  16143035      714841          0         38       1461       3181        156         49        151        311
+  16143036      762309          0         42       1596       3499        183         64        171        409
+  16143038      685185          0         49       1453       3064        139         49        157        403
+  16143039      799805          0         47       1628       3566        171         64        236        541
+  16143040     1064357          0         83       2223       4717        229         69        349        883
+  16143041     1047699          0         81       2159       4571        215         68        409        911
+  16143042      995944          0         89       2031       4267        197         70        429        840
+  16143043      764050          0         72       1429       3109        165         50        333        744
+  16143044     1053993          0        106       2144       4584        214         74        455       1089
+  16143045     1027894          0        100       2080       4435        209         72        480       1138
+  16143053      623384          0         26       1305       2883        144         53         81        240
+  16143054      670345          0         22       1384       3043        151         54        120        273
+  16143055      754013          0         38       1527       3524        167         64        162        332
+  16143056      747032          0         50       1493       3394        167         59        179        367
+  16143057      723102          0         40       1485       3287        165         60        179        383
+  16143058      911766          0         67       1838       4041        187         80        309        538
+  16143059      957416          0         86       1884       4217        200         70        369        679
+  16144001      993404          0         80       2005       4295        185         91        420        764
+  16144002      998364          0         87       2009       4363        204         89        438        800
+  16144003     1030814          0        110       2113       4543        217         87        497        957
+  16144004      710319          0         55       1348       2997        138         45        347        640
+  16144005     1087428          0         12       2242       4770        228         79        605       1188
+  16144007      565385          0          0       1188       2501        114         47        343        674
+  16144013      495281          0          6       1038       2285        106         54          9        139
+  16144014      578616          0         11       1240       2715        155         50         66        194
+  16144015      636299          0         11       1281       2898        149         53         99        273
+  16144016      409679          0         12        882       1950         83         37         86        174
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#TrigName   vpdMB5-ssd vpdMB5nosd BBCMB      HT1vpdMB30 HT1vpd30_n BHT2*BBCMB FMS-JP2    FMS-JP1    VPDMB-30  
+#TrigNum        500001     500006     500018     500202     500206     500215     500808     500809     500904
+#---------  ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+#<sum>        26191549          0       1766      54187     117740       5617       2061       8470      19568
+#<sum>        26.191 M      0.0 M      0.1 M     0.54 M    0.117 M      0.5 M      0.2 M      0.8 M     0.19 M
+ #      --------------       ------------ ------------ ------------ ------------ ------------
+ #      name                          min          max         mean     std_mean    std_distr
+ #      --------------       ------------ ------------ ------------ ------------ ------------
+ #!val: refmult                         0           68        9.848    0.0011268       5.7669
+ #!val: nGlobalTracks                  31         2542       948.73     0.059373       303.86
+ #!val: nTracks                        30         2490       922.67     0.058261       298.17
+ #!val: nPrimaryTracks                  0          135       24.065    0.0023531       12.043
+ #!val: nGoodPrimaryTracks              0           69       8.7591    0.0011197       5.7303
+ #!val: nTofMatch                       0           43       4.4234   0.00078362       4.0104
+ #!val: ntowTriggers                    1          142       14.649    0.0010467       5.3565
+ #!val: nHT1trigs                       0           15       7.7999   0.00081343        4.163
+ #!val: nHT2trigs                       0           13       7.7957   0.00081338       4.1627
+ #!val: ranking                    -1e+06   1.0888e+06   6.0639e+05       156.04   7.9859e+05
+ #!val: xPV                      -0.73179      0.93083     0.090337   2.1791e-05      0.11152
+ #!val: yPV                      -0.35468     -0.19002     -0.27144    2.158e-06     0.011044
+ #!val: zPV                       -201.65       199.95       1.3678    0.0052635       26.937
+ #!val: zdcX                         4677        22611        12181      0.78287       4006.6
+ #!val: bbcAdcES                        0        60354        14340         2.37        12129
+ #!val: bbcAdcEL                        0        32225       6774.4       1.1281       5773.6
+ #!val: bbcAdcWS                        0        60282       2010.2      0.57391       2937.1
+ #!val: bbcAdcWL                        0        22742       465.31      0.16459       842.35
+ #!val: zdcSumAdcEast                   0         4029       1366.9      0.17192       879.84
+ #!val: zdcSumAdcWest                   0         2666       1.4749    0.0012664       6.4814
+ #!val: goodTrkRatio                    0            1         -nan          nan          nan
+ #!val: phiTrkMean                -3.1416       3.1416         -nan          nan          nan
+ #!val: etaTrkMean                     -1            1         -nan          nan          nan
+ #!val: phiTrkLead                -3.1416       3.1416      0.02963    0.0003506       1.7943
+ #!val: etaTrkLead                     -1            1    -0.028407   0.00010765      0.55093
+ #!val: maxpt                           0       29.883       1.2233    0.0001244      0.63666
+ #!val: sumpt                           0       54.507       5.3122   0.00074801       3.8282
+ #!val: maxEt                           0       28.157     0.012425   3.8903e-05      0.19909
+ #!val: sumEt                       -6.23       28.157      -3.0332   0.00032293       1.6527
+ #!val: maxTowAdc                       0         2038       1.0505    0.0031465       16.103
+ #!val: sumTowAdc                       0         2038        1.064    0.0032157       16.457
+ #!val: phiEt                     -3.1184       3.1158   7.4943e-05   2.3035e-05      0.11789
+ #!val: etaEt                     -1.4191       1.3962  -0.00017652   7.1903e-06     0.036798
+ #!val: phiEtMean                 -3.1182       3.1158         -nan          nan          nan
+ #!val: etaEtMean                 -1.3832       1.3478         -nan          nan          nan
+ # Ending log on (local time):   Mon Nov 12 15:34:55 2018
+ # Time ellapsed: 703 seconds or (in hr:min:sec) 00:11:43
