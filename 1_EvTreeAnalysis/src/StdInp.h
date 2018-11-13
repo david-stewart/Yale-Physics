@@ -5,6 +5,7 @@
 #include "TString.h"
 #include <time.h>
 #include "TChain.h"
+/* #include <iostream> */
 
 // Author David Stewart
 // Thu Nov  8 09:30:56 EST 2018
@@ -12,13 +13,15 @@
 //    -- an output log
 //    -- a chain to the input root file
 //    -- number of events to run
+using namespace std;
 
 class StdInp {
     public:
     bool is_test;
     long long int nEvents;
     TChain* chain;
-    const char* fname;
+    string fname;
+    /* const char* fname; */
     FILE*   flog;
     void    update_log();
     TFile*  file;

@@ -9,16 +9,16 @@
         set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis
         set PROG=$MYPATH/bin/count_events
         set LOG=$MYPATH/logs/count_events_P17id_&n;_&k;.log
-        set LIST=$MYPATH/list/P17id.list
+        set LIST=$MYPATH/list/P17.list
         $PROG -1 $LOG $LIST &n; &k;
 	</command>
-	<SandBox installer="ZIP">
-		<Package>
-            <File>file:./bin/count_events</File>
+	<!-- <SandBox installer="ZIP"> -->
+		<!-- <Package> -->
+            <!-- <File>file:./bin/count_events</File> -->
 			<!-- <File>file:./StRoot</File> -->
             <!-- <File>file:./.sl73_gcc485</File> -->
-		</Package>		
-	</SandBox>
+		<!-- </Package> -->		
+	<!-- </SandBox> -->
 	
 	<Generator>
         <Location>./input</Location>
@@ -28,6 +28,6 @@
 
     <!-- <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" /> -->
 
-    <stdout URL="file:./out/count_events.out" />	
-    <stderr URL="file:./err/count_events.err" />
+    <stdout URL="file:./out/P17_&n;_&k;" />	
+    <stderr URL="file:./err/P17_&n;_&k;" />
 </job>

@@ -6,7 +6,7 @@ using namespace std;
 // implrement class StdInp
 void StdInp::update_log() {
     fclose(flog);
-    flog = fopen(fname, "a");
+    flog = fopen(fname.c_str(), "a");
 };
 
 StdInp::StdInp ( 
@@ -43,7 +43,7 @@ StdInp::StdInp (
     chain = new TChain("tree");
 
     fname = log_name.Data();
-    flog = fopen(fname, "w");
+    flog = fopen(fname.c_str(), "w");
     if (flog == NULL) cout << "fatal: couldn't open output log file \""<< log_name <<"\""<<endl;
 
     time(&start_time);

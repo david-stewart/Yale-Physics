@@ -42,7 +42,6 @@ void print_header(FILE* flog){
 
 // how to use MyLoop : derive tree to MyTree to use this new class with StdInp
 MyTree::MyTree( StdInp& inp ) : input(inp), tree{inp.chain} {};
-
 struct TriggerCount {
     long int n500001, n500006, n500018, n500202, n500206, n500215, n500808, n500809, n500904;
 
@@ -61,7 +60,8 @@ void MyTree::MyLoop(){
     fprintf(input.flog, "# total available events: %lli\n", nentries);
     if (input.nEvents != -1) nentries = input.nEvents;
     fprintf(input.flog, "# Starting to read %lli events\n", input.nEvents);
-    input.update_log();
+    /* input.update_log(); */
+    fprintf(input.flog,"TESTING!\n");
 
     Long64_t nbytes = 0, nb = 0;
 
@@ -95,18 +95,18 @@ void MyTree::MyLoop(){
     dvals.push_back( MinMaxProf_double{etaTrkLead, prof_e, prof_s, "etaTrkLead", 22} );
     dvals.push_back( MinMaxProf_double{maxpt, prof_e, prof_s, "maxpt", 23} );
     dvals.push_back( MinMaxProf_double{sumpt, prof_e, prof_s, "sumpt", 24} );
-    ivals.push_back( MinMaxProf_int{trigId, prof_e, prof_s, "trigId", 25} );
-    ivals.push_back( MinMaxProf_int{ntowTriggers, prof_e, prof_s, "ntowTriggers", 26} );
-    ivals.push_back( MinMaxProf_int{nHT1trigs, prof_e, prof_s, "nHT1trigs", 27} );
-    ivals.push_back( MinMaxProf_int{nHT2trigs, prof_e, prof_s, "nHT2trigs", 28} );
-    dvals.push_back( MinMaxProf_double{maxEt, prof_e, prof_s, "maxEt", 29} );
-    dvals.push_back( MinMaxProf_double{sumEt, prof_e, prof_s, "sumEt", 30} );
-    dvals.push_back( MinMaxProf_double{maxTowAdc, prof_e, prof_s, "maxTowAdc", 31} );
-    dvals.push_back( MinMaxProf_double{sumTowAdc, prof_e, prof_s, "sumTowAdc", 32} );
-    dvals.push_back( MinMaxProf_double{phiEt, prof_e, prof_s, "phiEt", 33} );
-    dvals.push_back( MinMaxProf_double{etaEt, prof_e, prof_s, "etaEt", 34} );
-    dvals.push_back( MinMaxProf_double{phiEtMean, prof_e, prof_s, "phiEtMean", 35} );
-    dvals.push_back( MinMaxProf_double{etaEtMean, prof_e, prof_s, "etaEtMean", 36} );
+    /* ivals.push_back( MinMaxProf_int{trigId, prof_e, prof_s, "trigId", 25} ); */
+    ivals.push_back( MinMaxProf_int{ntowTriggers, prof_e, prof_s, "ntowTriggers", 25} );
+    ivals.push_back( MinMaxProf_int{nHT1trigs, prof_e, prof_s, "nHT1trigs", 26} );
+    ivals.push_back( MinMaxProf_int{nHT2trigs, prof_e, prof_s, "nHT2trigs", 27} );
+    dvals.push_back( MinMaxProf_double{maxEt, prof_e, prof_s, "maxEt", 28} );
+    dvals.push_back( MinMaxProf_double{sumEt, prof_e, prof_s, "sumEt", 29} );
+    dvals.push_back( MinMaxProf_double{maxTowAdc, prof_e, prof_s, "maxTowAdc", 30} );
+    dvals.push_back( MinMaxProf_double{sumTowAdc, prof_e, prof_s, "sumTowAdc", 31} );
+    dvals.push_back( MinMaxProf_double{phiEt, prof_e, prof_s, "phiEt", 32} );
+    dvals.push_back( MinMaxProf_double{etaEt, prof_e, prof_s, "etaEt", 33} );
+    dvals.push_back( MinMaxProf_double{phiEtMean, prof_e, prof_s, "phiEtMean", 34} );
+    dvals.push_back( MinMaxProf_double{etaEtMean, prof_e, prof_s, "etaEtMean", 35} );
 
     bool runAll{input.nEvents == -1};
     Long64_t jentry{0};
@@ -116,7 +116,9 @@ void MyTree::MyLoop(){
         if (jentry % 500000 == 0) {
             /* usleep(3000000); */
             fprintf(input.flog, "# ! finished %lli events\n", jentry);
+    cout << "b0"<<endl;
             input.update_log();
+    cout << "b1"<<endl;
         }
         if (ientry < 0) break;
 

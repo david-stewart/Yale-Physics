@@ -18,3 +18,6 @@ count_events_ofiles = count_events.o tree.o StdInp.o MinMaxProf.o
 
 count_events.o : count_events.cxx MyLoop.h
 	${CC} -c count_events.cxx ${INC_LIBS}
+
+test : MapFromText.o
+	${CC} -o ../bin/test MapFromText.o test.cxx ${INC_LIBS}
