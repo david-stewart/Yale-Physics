@@ -13,13 +13,13 @@ using namespace std;
 
 // read through the text file and fill a map with all the lines that start with an integer and fill 
 // a vector with more ints
-map <int, vector<int>> map_int_v_int (const char* file_name, FILE* flog, bool debug){
+map <int, vector<int>> map_int_v_int (const char* file_name, bool debug){
     // open the input file
     ifstream file;
     file.open(file_name);
     map <int, vector<int>> rmap {};
     if (!file.is_open()) {
-        if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name);
+        /* if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name); */
          printf(     "# Warning: input file %s could not be opened\n", file_name);
     } else {
         string line;
@@ -36,7 +36,7 @@ map <int, vector<int>> map_int_v_int (const char* file_name, FILE* flog, bool de
                 if (!key) {
                     key = value; 
                     if (rmap.count(key)) { 
-                        if (flog != NULL) fprintf(flog,"# Warning: key %i present twice in file %s.\n", key, file_name);
+                        /* if (flog != NULL) fprintf(flog,"# Warning: key %i present twice in file %s.\n", key, file_name); */
                         printf (     "# Warning: key %i present twice in file %s\n.", key, file_name);
                     }
                     continue;
@@ -47,30 +47,30 @@ map <int, vector<int>> map_int_v_int (const char* file_name, FILE* flog, bool de
         }
     }
     if (debug) {
-		if (flog != NULL) fprintf(flog, "# Read in following values:\n");
+		/* if (flog != NULL) fprintf(flog, "# Read in following values:\n"); */
         for (auto i : rmap) {
             cout << " || " << i.first << " ";
             for (auto j : i.second) cout << " " << j;
             cout << endl;
 
-			if (flog != NULL) {
-				fprintf(flog, "%10i ", i.first);
-				for (auto j : i.second) fprintf(flog, "%10i ", j);
-				fprintf(flog, "\n");
-			}
+			/* if (flog != NULL) { */
+			/* 	fprintf(flog, "%10i ", i.first); */
+			/* 	for (auto j : i.second) fprintf(flog, "%10i ", j); */
+			/* 	fprintf(flog, "\n"); */
+			/* } */
         }
     }
     file.close();
     return rmap;
 };
 
-map <int, vector<double>> map_int_v_double (const char* file_name, FILE* flog, bool debug){
+map <int, vector<double>> map_int_v_double (const char* file_name, bool debug){
     // open the input file
     ifstream file;
     file.open(file_name);
     map <int, vector<double>> rmap {};
     if (!file.is_open()) {
-        if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name);
+        /* if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name); */
          printf(     "# Warning: input file %s could not be opened\n", file_name);
     } else {
         string line;
@@ -87,7 +87,7 @@ map <int, vector<double>> map_int_v_double (const char* file_name, FILE* flog, b
                     first = false; 
                     key = value; 
                     if (rmap.count(key)) { 
-                        if (flog != NULL) fprintf(flog,"# Warning: key %i present twice in file %s\n.", key, file_name);
+                        /* if (flog != NULL) fprintf(flog,"# Warning: key %i present twice in file %s\n.", key, file_name); */
                         printf (     "# Warning: key %i present twice in file %s\n.", key, file_name);
                     }
                     continue;
@@ -98,31 +98,31 @@ map <int, vector<double>> map_int_v_double (const char* file_name, FILE* flog, b
         }
     }
     if (debug) {
-		if (flog != NULL) fprintf(flog, "# Read in following values:\n");
+		/* if (flog != NULL) fprintf(flog, "# Read in following values:\n"); */
         for (auto i : rmap) {
             cout << " || " << i.first << " ";
             for (auto j : i.second) cout << " " << j;
             cout << endl;
 
-			if (flog != NULL) {
-				fprintf(flog, "%10i ", i.first);
-				for (auto j : i.second) fprintf(flog, "%8.2f ", j);
-				fprintf(flog, "\n");
-			}
+			/* if (flog != NULL) { */
+			/* 	fprintf(flog, "%10i ", i.first); */
+			/* 	for (auto j : i.second) fprintf(flog, "%8.2f ", j); */
+			/* 	fprintf(flog, "\n"); */
+			/* } */
         }
     }
     file.close();
     return rmap;
 };
 
-map <TString, vector<double>> map_string_v_double (const char* file_name, FILE* flog, bool debug){
+map <TString, vector<double>> map_string_v_double (const char* file_name, bool debug){
     // open the input file
     ifstream file;
     file.open(file_name);
     map <TString, vector<double>> rmap {};
     if (!file.is_open()) {
-        if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name);
-         printf(     "# Warning: input file %s could not be opened\n", file_name);
+        /* if (flog!=NULL) fprintf(flog,"# Warning: input file %s could not be opened\n", file_name); */
+        /*  printf(     "# Warning: input file %s could not be opened\n", file_name); */
     } else {
         string line;
         while (getline(file,line)) {
@@ -137,7 +137,7 @@ map <TString, vector<double>> map_string_v_double (const char* file_name, FILE* 
             words >> key;
 
             if (rmap.count(key)) {
-                if (flog != NULL) fprintf(flog,"# Warning: key %s present twice in file %s\n.", key.Data(), file_name);
+                /* if (flog != NULL) fprintf(flog,"# Warning: key %s present twice in file %s\n.", key.Data(), file_name); */
                 printf (     "# Warning: key %s present twice in file %s\n.", key.Data(), file_name);
             }
 
@@ -148,17 +148,17 @@ map <TString, vector<double>> map_string_v_double (const char* file_name, FILE* 
         }
     }
     if (debug) {
-		if (flog != NULL) fprintf(flog, "# Read in following values:\n");
+		/* if (flog != NULL) fprintf(flog, "# Read in following values:\n"); */
         for (auto i : rmap) {
             cout << " || " << i.first << " ";
             for (auto j : i.second) cout << " " << j;
             cout << endl;
 
-			if (flog != NULL) {
-				fprintf(flog, "%-14s ", i.first.Data());
-				for (auto j : i.second) fprintf(flog, "%8.2f ", j);
-				fprintf(flog, "\n");
-			}
+			/* if (flog != NULL) { */
+			/* 	fprintf(flog, "%-14s ", i.first.Data()); */
+			/* 	for (auto j : i.second) fprintf(flog, "%8.2f ", j); */
+			/* 	fprintf(flog, "\n"); */
+			/* } */
         }
     }
     file.close();

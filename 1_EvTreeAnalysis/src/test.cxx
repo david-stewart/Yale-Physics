@@ -18,17 +18,20 @@ map<int, vector<int>>& operator+=(map<int, vector<int>>& lhs, const map<int, vec
             lhs[v.first] = v.second;
         }
     }
+    return lhs;
 };
 
-map<TString, vector<double>>& operator*= (map<int, vector<double>>& lhs, const map<int, vector<double>> rhs) {
+map<TString, vector<double>>& operator*= (map<TString, vector<double>>& lhs, const map<TString, vector<double>> rhs) {
     // will update the min and max values of the lhs, while zero-ing out it's std-dev's
     for (auto & v : lhs) { v.second[3] = 0; v.second[4] = 0; }
     for (const auto& v : rhs) {
         if (lhs.count(v.first)) {
-            auto& lv = lhs[v.first].second;
+            auto& lv = lhs[v.first];
             lv[0] = min(lv[0], v.second[0]);
             lv[1] = max(lv[1], v.second[1]);
-            lhs
+        }
+    }
+    return lhs;
 };
 
 

@@ -21,3 +21,6 @@ count_events.o : count_events.cxx MyLoop.h
 
 test : MapFromText.o
 	${CC} -o ../bin/test MapFromText.o test.cxx ${INC_LIBS}
+
+StdInp.o : StdInp.cxx StdInp.h
+	${CC} -c StdInp.cxx ${INC_LIBS}

@@ -1,0 +1,26 @@
+Things that I want to do (even though I may not have time to actually do them):
+
+1.  Switch from C style strings and formatters for C++ ifstream and ofstreams;
+    #include<iomanip>
+    Formatting includes: 
+    * cout.precision([int i]) (sets number of decimales to use in scientific notation)
+      or cout << setprecision([int i])
+    * cout << scientific
+    * cout << setw([int i]) (set the field width
+      || cout.width([int i])
+    * cout << left | right
+
+    Note: all manipulators *except*  setw are persistent. 
+
+    Magic incantation to unset all formatters:
+    cout.unsetf(ios::fixed | ios::scientific);
+
+    good resource for formatters:
+    http://faculty.cs.niu.edu/~mcmahon/CS241/c241man/node83.html
+
+    basic resource for io files:
+    https://www.learncpp.com/cpp-tutorial/186-basic-file-io/
+
+
+
+2. For the parameters, keep track of min, max, number of inputs, sum, sum2

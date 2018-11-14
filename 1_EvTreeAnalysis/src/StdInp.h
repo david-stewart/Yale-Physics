@@ -1,6 +1,8 @@
 #ifndef StdInp__H
 #define StdInp__H
 
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include "TString.h"
 #include <time.h>
@@ -22,7 +24,8 @@ class StdInp {
     TChain* chain;
     string fname;
     /* const char* fname; */
-    FILE*   flog;
+    ofstream flog;
+    /* FILE*   flog; */
     void    update_log();
     TFile*  file;
     std::vector<TString> options; // all options from the command line after 
