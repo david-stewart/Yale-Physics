@@ -8,7 +8,8 @@
 
 using namespace std;
 
-OneVarStats::OneVarStats(string name_) :
+OneVarStats::OneVarStats(int runId_, string name_) :
+    runId{runId_},
     name{name_},
     nEntries{0},
     sum{0},
@@ -17,17 +18,25 @@ OneVarStats::OneVarStats(string name_) :
     max{0}
 {};
 
-OneVarStats::OneVarStats(string name_, int* val_) :
-    OneVarStats(name_)
+OneVarStats::OneVarStats(int runId_, string name_, int* val_) :
+    OneVarStats(runId_, name_)
 {
   v_int = val_;
   v_double = nullptr;
 };
-OneVarStats::OneVarStats(string name_, double* val_) :
-    OneVarStats(name_)
+OneVarStats::OneVarStats(int runId_, string name_, double* val_) :
+    OneVarStats(runId_, name_)
 {
   v_int = nullptr;
   v_double = val_;
+};
+
+// copy constructor for a new run
+OneVarStats::OneVarStats(int runId_, const OneVarStats& cp) :
+    OneVarStats(runId_, cp.name)
+{
+    v_int = cp.v_int;
+    v_double = cp.v_double;
 };
 
 void OneVarStats::fill() {
@@ -50,11 +59,11 @@ void OneVarStats::operator()(double val){
 };
 
 ostream& OneVarStats::print_header(ostream& os){
-    cout << "CAUGHT!" << endl;
     os 
        << setfill(' ')
-       << " #      " 
+       << " #  "  
        << setfill('-')
+       << setw(8) << "-" << " "
        << left << setw(19) << "-" << " "
        << setw(11) << "-" << " "
        << setw(11) << "-" << " "
@@ -67,7 +76,9 @@ ostream& OneVarStats::print_header(ostream& os){
        << setw(13) << "-" << " "
        << endl
        << setfill(' ')
-       << " #      " << left << setw(19) << "variable name" << " " 
+       << " #  " << setw(8) << "runId" << " "
+       << left << setw(19) << "variable" << " " 
+       /* << setw(8)  << "runId" << " " */
        << setw(11) << "min" << " " 
        << setw(11) << "max" << " " 
        << setw(13) << "mean" << " "
@@ -80,7 +91,8 @@ ostream& OneVarStats::print_header(ostream& os){
        << setw(13) << "sum2"
        << endl
        << setfill('-')
-       << " #      " 
+       << " #  " 
+       << setw(8) << "-" << " "
        << setfill('-')
        << left << setw(19) << "-" << " "
        << setw(11) << "-" << " "
@@ -102,7 +114,9 @@ ostream& operator<<(ostream& os, OneVarStats const& stats) {
     double mean  { static_cast<double>(stats.sum / stats.nEntries) };
     double stdev { static_cast<double>(sqrt(stats.sum2/stats.nEntries - mean*mean)) };
     double stdev_mean { stdev / sqrt(stats.nEntries) };
-    os << " #!val: " << left << setw(19) << stats.name << " " << right;
+    os << " :  " << setfill('0') << setw(8) << stats.runId << setfill(' ')  << " "
+       << left << setw(19) << stats.name << " " << right;
+    /* os << " #!v 1615819 " << left << setw(19) << stats.name << " " << right; */
     if (stats.v_int) {
         os << setw(11) << static_cast<int>(stats.min) << " " 
            << setw(11) << static_cast<int>(stats.max) << " " 

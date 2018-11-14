@@ -8,6 +8,7 @@
 using namespace std;
 class OneVarStats {
     private:
+        int    runId;
         string name;
         int*    v_int;
         double* v_double;
@@ -20,13 +21,13 @@ class OneVarStats {
         /* bool is_int; */
         void operator()(double);
     public:
-        OneVarStats(string name);
-        OneVarStats(string name, int*    val);
-        OneVarStats(string name, double* val);
+        OneVarStats(int runId, string name);
+        OneVarStats(int runId, string name, int*    val);
+        OneVarStats(int runId, string name, double* val);
+        OneVarStats(int runId, const OneVarStats& cp);
         void fill();
         friend ostream& operator<<(ostream&, OneVarStats const&);
         ostream& print_header(ostream& os);
 };
-
 
 #endif
