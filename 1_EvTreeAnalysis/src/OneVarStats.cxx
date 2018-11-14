@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cfloat>
 
 
 using namespace std;
@@ -35,6 +36,7 @@ void OneVarStats::fill() {
 };
 
 void OneVarStats::operator()(double val){
+    if (val != val) return; // this is the condition that the input is NAN
     if (nEntries == 0) {
         min = val;
         max = val;
@@ -48,47 +50,48 @@ void OneVarStats::operator()(double val){
 };
 
 ostream& OneVarStats::print_header(ostream& os){
+    cout << "CAUGHT!" << endl;
     os 
        << setfill(' ')
        << " #      " 
        << setfill('-')
        << left << setw(19) << "-" << " "
-       << setw(10) << "-" << " "
-       << setw(10) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(10) << "-" << " "
+       << setw(11) << "-" << " "
+       << setw(11) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(11) << "-" << " "
        /* << general */
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
        << endl
        << setfill(' ')
        << " #      " << left << setw(19) << "variable name" << " " 
-       << setw(10) << "min" << " " 
-       << setw(10) << "max" << " " 
-       << setw(12) << "mean" << " "
-       << setw(12) << "stdev" << " " 
-       << setw(12) << "stdev_mean" << " " 
-       << setw(10) << "nEntries" << " "
+       << setw(11) << "min" << " " 
+       << setw(11) << "max" << " " 
+       << setw(13) << "mean" << " "
+       << setw(13) << "stdev" << " " 
+       << setw(13) << "stdev_mean" << " " 
+       << setw(11) << "nEntries" << " "
        << setfill(' ')
        /* << general */
-       << setw(12) << "sum" << " "
-       << setw(12) << "sum2"
+       << setw(13) << "sum" << " "
+       << setw(13) << "sum2"
        << endl
        << setfill('-')
        << " #      " 
        << setfill('-')
        << left << setw(19) << "-" << " "
-       << setw(10) << "-" << " "
-       << setw(10) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
-       << setw(10) << "-" << " "
+       << setw(11) << "-" << " "
+       << setw(11) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(11) << "-" << " "
        /* << general */
-       << setw(12) << "-" << " "
-       << setw(12) << "-" << " "
+       << setw(13) << "-" << " "
+       << setw(13) << "-" << " "
        << setfill(' ')
        << endl;
     return os;
@@ -101,27 +104,27 @@ ostream& operator<<(ostream& os, OneVarStats const& stats) {
     double stdev_mean { stdev / sqrt(stats.nEntries) };
     os << " #!val: " << left << setw(19) << stats.name << " " << right;
     if (stats.v_int) {
-        os << setw(10) << static_cast<int>(stats.min) << " " 
-           << setw(10) << static_cast<int>(stats.max) << " " 
-           << scientific << setprecision(6) << setw(12) << mean << " "
-           << setw(12) << stdev << " " 
-           << setw(12) << stdev_mean << " " 
-           << setw(10) << stats.nEntries << " "
+        os << setw(11) << static_cast<int>(stats.min) << " " 
+           << setw(11) << static_cast<int>(stats.max) << " " 
+           << scientific << setprecision(6) << setw(13) << mean << " "
+           << setw(13) << stdev << " " 
+           << setw(13) << stdev_mean << " " 
+           << setw(11) << stats.nEntries << " "
            /* << general */
-           << setw(12) << static_cast<long long int>(stats.sum) << " "
-           << setw(12) << static_cast<long long int>(stats.sum2);
+           << setw(13) << static_cast<long long int>(stats.sum) << " "
+           << setw(13) << static_cast<long long int>(stats.sum2);
     } else {
         os.unsetf(ios::fixed | ios::scientific);
         /* os << general; */
-        os << setw(10) << stats.min << " " 
-           << setw(10) << stats.max << " " 
-           << scientific << setprecision(6) << setw(12) << mean << " "
-           << setw(12) << stdev << " " 
-           << setw(12) << stdev_mean << " " 
-           << setw(10) << stats.nEntries << " "
+        os << setw(11) << stats.min << " " 
+           << setw(11) << stats.max << " " 
+           << scientific << setprecision(6) << setw(13) << mean << " "
+           << setw(13) << stdev << " " 
+           << setw(13) << stdev_mean << " " 
+           << setw(11) << stats.nEntries << " "
            /* << general */
-           << setw(12) << stats.sum  << " "
-           << setw(12) << stats.sum2;
+           << setw(13) << stats.sum  << " "
+           << setw(13) << stats.sum2;
     }
     return os;
 };

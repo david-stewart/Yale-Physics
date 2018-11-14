@@ -45,6 +45,10 @@ StdInp::StdInp (
     // initialize log and file
     chain = new TChain("tree");
 
+    if (log_name.EndsWith(".root")) {
+        cout << "fatal: log file name ends with '.root'. Terminating program." << endl;
+        exit(2);
+    }
     fname = log_name.Data();
     flog.open(fname.c_str(), ios::trunc);
     if (!flog) cout << "fatal: couldn't open output log file \""<< log_name <<"\""<<endl;
@@ -52,6 +56,7 @@ StdInp::StdInp (
     time(&start_time);
     flog <<       " # Starting log on (local time):  " << ctime(&start_time) << endl;
     /* fprintf(flog, " # Starting log on (local time):  %s", ctime(&start_time)); */
+
 
     // initalize the tchain
     if (in_file_name.EndsWith(".list")){
