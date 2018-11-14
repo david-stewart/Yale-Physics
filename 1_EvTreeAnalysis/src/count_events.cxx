@@ -11,42 +11,43 @@
 
 using namespace std;
 
-TString makeM(long int i){
-    int mval = i/1000000;
-    int rval = i%1000000; 
-    return TString::Format("%i.%i", mval, rval/1000);
-};
-
-
 void print_header(ostream& flog){
     char dash[200];
     char nstr[200];
     char name[200];
 
     // print the dashes
-    flog << setw(10) << setfill('-') << left << "#";
+    flog << setw(10) << setfill('-') << left << " #";
     flog << right;
     for (int i{0}; i<9; ++i) flog << " " << setw(10) << "-";
     flog << endl;
+    flog << setfill(' ');
 
     // print  the names:
     for (auto name : 
-          { "#TrigName", "vpdMB5-ssd", "vpdMB5nosd",  "BBCMB",  "HT1vpdMB30",  
+          { " #TrigName", "vpdMB5-ssd", "vpdMB5nosd",  "BBCMB",  "HT1vpdMB30",  
             "HT1vpd30_n",  "BHT2*BBCMB",  "FMS-JP2",  "FMS-JP1",  "VPDMB-30"} ) 
-    flog << setw(10) << name << " ";
+    flog << left << setw(10) << name << " ";
     flog << endl;
 
+    flog << left;
     for (auto name :
-         { "#TrigNum", "500001",  "500006",  "500018",  "500202",  
+         { " #TrigNum", "500001",  "500006",  "500018",  "500202",  
            "500206",    "500215",  "500808",  "500809",  "500904"} )
     flog << setw(10) << name << " "; 
     flog << endl;
 
-    for (auto name : 
-          { "#TrigName", "vpdMB5-ssd", "vpdMB5nosd",  "BBCMB",  "HT1vpdMB30",  
-            "HT1vpd30_n",  "BHT2*BBCMB",  "FMS-JP2",  "FMS-JP1",  "VPDMB-30"} ) 
-    flog << setw(10) << name << " ";
+    /* for (auto name : */ 
+    /*       { " #TrigName", "vpdMB5-ssd", "vpdMB5nosd",  "BBCMB",  "HT1vpdMB30", */  
+    /*         "HT1vpd30_n",  "BHT2*BBCMB",  "FMS-JP2",  "FMS-JP1",  "VPDMB-30"} ) */ 
+    /* flog << setw(10) << name << " "; */
+    /* flog << endl; */
+
+    flog << setw(10) << setfill('-') << left << " #";
+    flog << right;
+    for (int i{0}; i<9; ++i) flog << " " << setw(10) << "-";
     flog << endl;
+    flog << setfill(' ');
 
         /* cout << setw(10) << setfill('-') */ 
 
@@ -90,7 +91,7 @@ void MyTree::MyLoop(){
     input.flog  << " # total available events: " << nentries << endl;
     /* fprintf(input.flog, "# total available events: %lli\n", nentries); */
     if (input.nEvents != -1) nentries = input.nEvents;
-    input.flog <<       "# Starting to read " << input.nEvents << endl;
+    input.flog << " # starting to read " << input.nEvents << endl;
     /* fprintf(input.flog, "# Starting to read %lli events\n", input.nEvents); */
     /* input.update_log(); */
     /* fprintf(input.flog,"TESTING!\n"); */
@@ -147,11 +148,11 @@ void MyTree::MyLoop(){
         Long64_t ientry = LoadTree(jentry);
         if (jentry % 500000 == 0) {
             /* usleep(3000000); */
-            input.flog << "# ! finished " << jentry << " events" << endl;
+            input.flog << " # finished " << jentry << " events" << endl;
             /* fprintf(input.flog, "# ! finished %lli events\n", jentry); */
-    cout << "b0"<<endl;
+    /* cout << "b0"<<endl; */
             input.update_log();
-    cout << "b1"<<endl;
+    /* cout << "b1"<<endl; */
         }
         if (ientry < 0) break;
 
@@ -216,13 +217,16 @@ void MyTree::MyLoop(){
     print_header(input.flog);
     print_header(cout);
 
-    input.flog << setw(10) << right << "#<sum>" << " ";
+    /* input.flog << "a1" << endl; */
+    input.flog << setw(10) << left << " #!sum:" << " " << right;
     for (auto v : sums) input.flog << setw(10) << v << " ";
     input.flog << endl;
 
-    input.flog << setw(10) << right << "#<sum>" << " ";
-    for (auto v : sums) input.flog << fixed << setw(10) << setprecision(3) << v/1.0E6 << " ";
+    /* input.flog << "a2" << endl; */
+    input.flog << setw(10) << left << " #!sum:" << " " << right;
+    for (auto v : sums) input.flog << fixed << setw(8) << setprecision(3) << v/1.0E6 << " M ";
     input.flog << endl;
+    /* input.flog << "a3" << endl; */
 
 
     /* fprintf(input.flog, "%-10s  %10li %10li %10li %10li %10li %10li %10li %10li %10li\n", */
@@ -246,11 +250,11 @@ void MyTree::MyLoop(){
     /*         makeM(sums[6]).Data(), makeM(sums[7]).Data(), makeM(sums[8]).Data(), */ 
     /*         makeM(sums[9]).Data()); */
 
-    input.flog <<       " #      " << setw(19) << setfill('-') << "-" << ivals[0].stats_dashes() << endl;
+    input.flog <<       " #      " << setw(20) << setfill('-') << "-" << ivals[0].stats_dashes() << setfill(' ') << endl;
     /* fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data()); */
-    input.flog <<       "        " << left << setw(19) << "name " << ivals[0].stats_header() << endl;
+    input.flog <<       " #      " << left << setw(20) << "name " << ivals[0].stats_header() << endl;
     /* fprintf(input.flog, " #      %-19s %s\n", "name", ivals[0].stats_header().Data()); */
-    input.flog <<       " #      " << setw(19) << setfill('-') << "-" << ivals[0].stats_dashes() << endl;
+    input.flog <<       " #      " << setw(20) << setfill('-') << "-" << ivals[0].stats_dashes() << setfill(' ') << endl;
     /* fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data()); */
     for (auto& x : ivals) input.flog << " #!val: " << setw(19) << x.name << " " << x.getstats() << endl;
                     /* fprintf(input.flog, " #!val: %-19s %s\n", x.name, x.getstats().Data()); */
