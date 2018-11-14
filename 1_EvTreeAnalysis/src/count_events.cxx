@@ -1,7 +1,7 @@
 #include "MyLoop.h"
 #include "tree.h"
 #include "StdInp.h"
-#include "MinMaxProf.h"
+#include "OneVarStats.h"
 
 #include <iostream>
 #include <iomanip>
@@ -102,64 +102,58 @@ void MyTree::MyLoop(){
 
     TProfile prof_e("prof_e",";;", 36, 0.5, 36.5, "e");
     TProfile prof_s("prof_s",";;", 36, 0.5, 36.5, "s");
-    vector<MinMaxProf_int>    ivals;
-    vector<MinMaxProf_double> dvals;
-    ivals.push_back( MinMaxProf_int{refmult, prof_e, prof_s, "refmult", 1} );
-    ivals.push_back( MinMaxProf_int{nGlobalTracks, prof_e, prof_s, "nGlobalTracks", 2} );
-    ivals.push_back( MinMaxProf_int{nTracks, prof_e, prof_s, "nTracks", 3} );
-    ivals.push_back( MinMaxProf_int{nPrimaryTracks, prof_e, prof_s, "nPrimaryTracks", 4} );
-    ivals.push_back( MinMaxProf_int{nGoodPrimaryTracks, prof_e, prof_s, "nGoodPrimaryTracks", 5} );
-    ivals.push_back( MinMaxProf_int{nTofMatch, prof_e, prof_s, "nTofMatch", 6} );
-    dvals.push_back( MinMaxProf_double{ranking, prof_e, prof_s, "ranking", 7} );
-    dvals.push_back( MinMaxProf_double{xPV, prof_e, prof_s, "xPV", 8} );
-    dvals.push_back( MinMaxProf_double{yPV, prof_e, prof_s, "yPV", 9} );
-    dvals.push_back( MinMaxProf_double{zPV, prof_e, prof_s, "zPV", 10} );
-    dvals.push_back( MinMaxProf_double{zdcX, prof_e, prof_s, "zdcX", 11} );
-    dvals.push_back( MinMaxProf_double{bbcAdcES, prof_e, prof_s, "bbcAdcES", 12} );
-    dvals.push_back( MinMaxProf_double{bbcAdcEL, prof_e, prof_s, "bbcAdcEL", 13} );
-    dvals.push_back( MinMaxProf_double{bbcAdcWS, prof_e, prof_s, "bbcAdcWS", 14} );
-    dvals.push_back( MinMaxProf_double{bbcAdcWL, prof_e, prof_s, "bbcAdcWL", 15} );
-    dvals.push_back( MinMaxProf_double{zdcSumAdcEast, prof_e, prof_s, "zdcSumAdcEast", 16} );
-    dvals.push_back( MinMaxProf_double{zdcSumAdcWest, prof_e, prof_s, "zdcSumAdcWest", 17} );
-    dvals.push_back( MinMaxProf_double{goodTrkRatio, prof_e, prof_s, "goodTrkRatio", 18} );
-    dvals.push_back( MinMaxProf_double{phiTrkMean, prof_e, prof_s, "phiTrkMean", 19} );
-    dvals.push_back( MinMaxProf_double{etaTrkMean, prof_e, prof_s, "etaTrkMean", 20} );
-    dvals.push_back( MinMaxProf_double{phiTrkLead, prof_e, prof_s, "phiTrkLead", 21} );
-    dvals.push_back( MinMaxProf_double{etaTrkLead, prof_e, prof_s, "etaTrkLead", 22} );
-    dvals.push_back( MinMaxProf_double{maxpt, prof_e, prof_s, "maxpt", 23} );
-    dvals.push_back( MinMaxProf_double{sumpt, prof_e, prof_s, "sumpt", 24} );
-    /* ivals.push_back( MinMaxProf_int{trigId, prof_e, prof_s, "trigId", 25} ); */
-    ivals.push_back( MinMaxProf_int{ntowTriggers, prof_e, prof_s, "ntowTriggers", 25} );
-    ivals.push_back( MinMaxProf_int{nHT1trigs, prof_e, prof_s, "nHT1trigs", 26} );
-    ivals.push_back( MinMaxProf_int{nHT2trigs, prof_e, prof_s, "nHT2trigs", 27} );
-    dvals.push_back( MinMaxProf_double{maxEt, prof_e, prof_s, "maxEt", 28} );
-    dvals.push_back( MinMaxProf_double{sumEt, prof_e, prof_s, "sumEt", 29} );
-    dvals.push_back( MinMaxProf_double{maxTowAdc, prof_e, prof_s, "maxTowAdc", 30} );
-    dvals.push_back( MinMaxProf_double{sumTowAdc, prof_e, prof_s, "sumTowAdc", 31} );
-    dvals.push_back( MinMaxProf_double{phiEt, prof_e, prof_s, "phiEt", 32} );
-    dvals.push_back( MinMaxProf_double{etaEt, prof_e, prof_s, "etaEt", 33} );
-    dvals.push_back( MinMaxProf_double{phiEtMean, prof_e, prof_s, "phiEtMean", 34} );
-    dvals.push_back( MinMaxProf_double{etaEtMean, prof_e, prof_s, "etaEtMean", 35} );
+    vector<OneVarStats>  vals;
+    /* vector<MinMaxProf_double> vals; */
+    vals.push_back( OneVarStats {"refmult", &refmult} ); 
+    vals.push_back( OneVarStats {"nGlobalTracks", &nGlobalTracks} );
+    vals.push_back( OneVarStats {"nTracks", &nTracks} );
+    vals.push_back( OneVarStats {"nPrimaryTracks", &nPrimaryTracks} );
+    vals.push_back( OneVarStats {"nGoodPrimaryTracks", &nGoodPrimaryTracks} );
+    vals.push_back( OneVarStats {"nTofMatch", &nTofMatch} );
+    vals.push_back( OneVarStats {"ranking", &ranking} );
+    vals.push_back( OneVarStats {"xPV", &xPV} );
+    vals.push_back( OneVarStats {"yPV", &yPV} );
+    vals.push_back( OneVarStats {"zPV", &zPV} );
+    vals.push_back( OneVarStats {"zdcX", &zdcX} );
+    vals.push_back( OneVarStats {"bbcAdcES", &bbcAdcES} );
+    vals.push_back( OneVarStats {"bbcAdcEL", &bbcAdcEL} );
+    vals.push_back( OneVarStats {"bbcAdcWS", &bbcAdcWS} );
+    vals.push_back( OneVarStats {"bbcAdcWL", &bbcAdcWL} );
+    vals.push_back( OneVarStats {"zdcSumAdcEast", &zdcSumAdcEast} );
+    vals.push_back( OneVarStats {"zdcSumAdcWest", &zdcSumAdcWest} );
+    vals.push_back( OneVarStats {"goodTrkRatio", &goodTrkRatio} );
+    vals.push_back( OneVarStats {"phiTrkMean", &phiTrkMean} );
+    vals.push_back( OneVarStats {"etaTrkMean", &etaTrkMean} );
+    vals.push_back( OneVarStats {"phiTrkLead", &phiTrkLead} );
+    vals.push_back( OneVarStats {"etaTrkLead", &etaTrkLead} );
+    vals.push_back( OneVarStats {"maxpt", &maxpt} );
+    vals.push_back( OneVarStats {"sumpt", &sumpt} );
+    /* vals.push_back( MinMaxProf_int{trigId, prof_e, prof_s, "trigId", 25} &); */
+    vals.push_back( OneVarStats {"ntowTriggers", &ntowTriggers} );
+    vals.push_back( OneVarStats {"nHT1trigs", &nHT1trigs} );
+    vals.push_back( OneVarStats {"nHT2trigs", &nHT2trigs} );
+    vals.push_back( OneVarStats {"maxEt", &maxEt} );
+    vals.push_back( OneVarStats {"sumEt", &sumEt} );
+    vals.push_back( OneVarStats {"maxTowAdc", &maxTowAdc} );
+    vals.push_back( OneVarStats {"sumTowAdc", &sumTowAdc} );
+    vals.push_back( OneVarStats {"phiEt", &phiEt} );
+    vals.push_back( OneVarStats {"etaEt", &etaEt} );
+    vals.push_back( OneVarStats {"phiEtMean", &phiEtMean} );
+    vals.push_back( OneVarStats {"etaEtMean", &etaEtMean} );
 
     bool runAll{input.nEvents == -1};
     Long64_t jentry{0};
     while (runAll || jentry < input.nEvents){
-    /* for (Long64_t jentry=0; jentry<nentries;jentry++) { */
         Long64_t ientry = LoadTree(jentry);
         if (jentry % 500000 == 0) {
-            /* usleep(3000000); */
             input.flog << " # finished " << jentry << " events" << endl;
-            /* fprintf(input.flog, "# ! finished %lli events\n", jentry); */
-    /* cout << "b0"<<endl; */
             input.update_log();
-    /* cout << "b1"<<endl; */
         }
         if (ientry < 0) break;
 
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
-        for (auto& x : ivals) x.fill();
-        for (auto& x : dvals) x.fill();
+        for (auto& x : vals) x.fill();
 
         if (!emap.count(runId)) emap[runId] = {};
 
@@ -250,17 +244,14 @@ void MyTree::MyLoop(){
     /*         makeM(sums[6]).Data(), makeM(sums[7]).Data(), makeM(sums[8]).Data(), */ 
     /*         makeM(sums[9]).Data()); */
 
-    input.flog <<       " #      " << setw(20) << setfill('-') << "-" << ivals[0].stats_dashes() << setfill(' ') << endl;
-    /* fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data()); */
-    input.flog <<       " #      " << left << setw(20) << "name " << ivals[0].stats_header() << endl;
-    /* fprintf(input.flog, " #      %-19s %s\n", "name", ivals[0].stats_header().Data()); */
-    input.flog <<       " #      " << setw(20) << setfill('-') << "-" << ivals[0].stats_dashes() << setfill(' ') << endl;
-    /* fprintf(input.flog, " #      %-19s %s\n", "--------------", ivals[0].stats_dashes().Data()); */
-    for (auto& x : ivals) input.flog << " #!val: " << setw(19) << x.name << " " << x.getstats() << endl;
-                    /* fprintf(input.flog, " #!val: %-19s %s\n", x.name, x.getstats().Data()); */
-    for (auto& x : dvals) input.flog << " #!val: " << setw(19) << x.name << " " << x.getstats() << endl;
-    /* for (auto& x : dvals) fprintf(input.flog, " #!val: %-19s %s\n", x.name, x.getstats().Data()); */
-    // print out the numbers for each runId
+    /* input.flog <<       " #      " << setw(20) << setfill('-') << "-" << vals[0].stats_dashes() << setfill(' ') << endl; */
+    /* fprintf(input.flog, " #      %-19s %s\n", "--------------", vals[0].stats_dashes().Data()); */
+    /* input.flog <<       " #      " << left << setw(20) << "name " << vals[0].stats_header() << endl; */
+    /* fprintf(input.flog, " #      %-19s %s\n", "name", vals[0].stats_header().Data()); */
+    /* input.flog <<       " #      " << setw(20) << setfill('-') << "-" << vals[0].stats_dashes() << setfill(' ') << endl; */
+    /* fprintf(input.flog, " #      %-19s %s\n", "--------------", vals[0].stats_dashes().Data()); */
+    vals[0].print_header(input.flog);
+    for (auto& x : vals) input.flog << x << endl;
 };
 
 int main(int argc, const char** argv) {
