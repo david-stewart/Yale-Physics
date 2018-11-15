@@ -22,19 +22,21 @@ class OneVarStats {
         /* bool is_int; */
         void operator()(double);
     public:
+        /* string getname() { return name; }; */
+        /* int    getrunid() { return runId; }; */
         OneVarStats(int runId, string name);
         OneVarStats(int runId, string name, int*    val);
         OneVarStats(int runId, string name, double* val);
         OneVarStats(int runId, const OneVarStats& cp);
         void fill();
         friend ostream& operator<<(ostream&, OneVarStats&);
-        ostream& print_header(ostream& os);
+        static ostream& print_header(ostream& os);
 };
 
 // a mapped container of all OneVarStats
 class AllVarStats {
     private:
-        int runId;
+        int& runId;
         // ?
     public:
         map<int, vector<OneVarStats> > data; // Map of OneVarStats indexed on runId

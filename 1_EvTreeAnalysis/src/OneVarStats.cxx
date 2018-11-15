@@ -120,7 +120,7 @@ ostream& operator<<(ostream& os, OneVarStats& stats) {
     if (stats.v_int) {
         os << setw(11) << static_cast<int>(stats.min) << " " 
            << setw(11) << static_cast<int>(stats.max) << " " 
-           << scientific << setprecision(6) << setw(13) << mean << " "
+           << /*scientific << setprecision(6) <<*/ setw(13) << mean << " "
            << setw(13) << stdev << " " 
            << setw(13) << stdev_mean << " " 
            << setw(11) << stats.nEntries << " "
@@ -132,7 +132,7 @@ ostream& operator<<(ostream& os, OneVarStats& stats) {
         /* os << general; */
         os << setw(11) << stats.min << " " 
            << setw(11) << stats.max << " " 
-           << scientific << setprecision(6) << setw(13) << mean << " "
+           << /*scientific << setprecision(6) << */ setw(13) << mean << " "
            << setw(13) << stdev << " " 
            << setw(13) << stdev_mean << " " 
            << setw(11) << stats.nEntries << " "
@@ -150,7 +150,7 @@ AllVarStats::AllVarStats(int& runId_) :
 void AllVarStats::fill() {
     if (!data.count(runId)){
         data[runId] = vector<OneVarStats>{};
-        for (auto& x : data[0]) data[runId].push_back(x);
+        for (auto& x : data[0]) data[runId].push_back({runId, x});
     }
     for (auto& x : data[0])     x.fill();
     for (auto& x : data[runId]) x.fill();
@@ -166,8 +166,10 @@ void AllVarStats::addVar (string name, double* val){
 
 ostream& operator<< (ostream& os, AllVarStats& obj){
     for (auto& x : obj.data) {
-        obj.data[0][0].print_header(os);
+        /* cout << " LION " << x.first << endl; */
+        OneVarStats::print_header(os);
         for (auto& y : x.second) os << y << endl;
+        /* { cout << " LIONESS " << y.getrunid() << endl; os << y << endl;} */
         os << endl;
     }
     return os;
