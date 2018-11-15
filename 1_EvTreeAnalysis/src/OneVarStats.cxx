@@ -109,7 +109,7 @@ ostream& OneVarStats::print_header(ostream& os){
     return os;
 };
 
-ostream& operator<<(ostream& os, OneVarStats const& stats) {
+ostream& operator<<(ostream& os, OneVarStats& stats) {
     // get mean
     double mean  { static_cast<double>(stats.sum / stats.nEntries) };
     double stdev { static_cast<double>(sqrt(stats.sum2/stats.nEntries - mean*mean)) };
@@ -139,6 +139,36 @@ ostream& operator<<(ostream& os, OneVarStats const& stats) {
            /* << general */
            << setw(13) << stats.sum  << " "
            << setw(13) << stats.sum2;
+    }
+    return os;
+};
+
+AllVarStats::AllVarStats(int& runId_) : 
+    runId{runId_} 
+{};
+
+void AllVarStats::fill() {
+    if (!data.count(runId)){
+        data[runId] = vector<OneVarStats>{};
+        for (auto& x : data[0]) data[runId].push_back(x);
+    }
+    for (auto& x : data[0])     x.fill();
+    for (auto& x : data[runId]) x.fill();
+};
+
+void AllVarStats::addVar (string name, int*    val){
+    data[0].push_back(OneVarStats{0, name, val});
+};
+
+void AllVarStats::addVar (string name, double* val){
+    data[0].push_back(OneVarStats{0, name, val});
+};
+
+ostream& operator<< (ostream& os, AllVarStats& obj){
+    for (auto& x : obj.data) {
+        obj.data[0][0].print_header(os);
+        for (auto& y : x.second) os << y << endl;
+        os << endl;
     }
     return os;
 };

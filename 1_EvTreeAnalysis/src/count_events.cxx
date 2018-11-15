@@ -26,42 +26,42 @@ void MyTree::MyLoop(){
 
     Long64_t nbytes = 0, nb = 0;
 
-    vector<OneVarStats>  vals;
-    vals.push_back( OneVarStats {0, "refmult", &refmult} ); 
-    vals.push_back( OneVarStats {0, "nGlobalTracks", &nGlobalTracks} );
-    vals.push_back( OneVarStats {0, "nTracks", &nTracks} );
-    vals.push_back( OneVarStats {0, "nPrimaryTracks", &nPrimaryTracks} );
-    vals.push_back( OneVarStats {0, "nGoodPrimaryTracks", &nGoodPrimaryTracks} );
-    vals.push_back( OneVarStats {0, "nTofMatch", &nTofMatch} );
-    vals.push_back( OneVarStats {0, "ranking", &ranking} );
-    vals.push_back( OneVarStats {0, "xPV", &xPV} );
-    vals.push_back( OneVarStats {0, "yPV", &yPV} );
-    vals.push_back( OneVarStats {0, "zPV", &zPV} );
-    vals.push_back( OneVarStats {0, "zdcX", &zdcX} );
-    vals.push_back( OneVarStats {0, "bbcAdcES", &bbcAdcES} );
-    vals.push_back( OneVarStats {0, "bbcAdcEL", &bbcAdcEL} );
-    vals.push_back( OneVarStats {0, "bbcAdcWS", &bbcAdcWS} );
-    vals.push_back( OneVarStats {0, "bbcAdcWL", &bbcAdcWL} );
-    vals.push_back( OneVarStats {0, "zdcSumAdcEast", &zdcSumAdcEast} );
-    vals.push_back( OneVarStats {0, "zdcSumAdcWest", &zdcSumAdcWest} );
-    vals.push_back( OneVarStats {0, "goodTrkRatio", &goodTrkRatio} );
-    vals.push_back( OneVarStats {0, "phiTrkMean", &phiTrkMean} );
-    vals.push_back( OneVarStats {0, "etaTrkMean", &etaTrkMean} );
-    vals.push_back( OneVarStats {0, "phiTrkLead", &phiTrkLead} );
-    vals.push_back( OneVarStats {0, "etaTrkLead", &etaTrkLead} );
-    vals.push_back( OneVarStats {0, "maxpt", &maxpt} );
-    vals.push_back( OneVarStats {0, "sumpt", &sumpt} );
-    vals.push_back( OneVarStats {0, "ntowTriggers", &ntowTriggers} );
-    vals.push_back( OneVarStats {0, "nHT1trigs", &nHT1trigs} );
-    vals.push_back( OneVarStats {0, "nHT2trigs", &nHT2trigs} );
-    vals.push_back( OneVarStats {0, "maxEt", &maxEt} );
-    vals.push_back( OneVarStats {0, "sumEt", &sumEt} );
-    vals.push_back( OneVarStats {0, "maxTowAdc", &maxTowAdc} );
-    vals.push_back( OneVarStats {0, "sumTowAdc", &sumTowAdc} );
-    vals.push_back( OneVarStats {0, "phiEt", &phiEt} );
-    vals.push_back( OneVarStats {0, "etaEt", &etaEt} );
-    vals.push_back( OneVarStats {0, "phiEtMean", &phiEtMean} );
-    vals.push_back( OneVarStats {0, "etaEtMean", &etaEtMean} );
+    AllVarStats vars(runId);
+    vars.addVar("refmult", &refmult);
+    vars.addVar("nGlobalTracks", &nGlobalTracks );
+    vars.addVar("nTracks", &nTracks );
+    vars.addVar("nPrimaryTracks", &nPrimaryTracks );
+    vars.addVar("nGoodPrimaryTracks", &nGoodPrimaryTracks );
+    vars.addVar("nTofMatch", &nTofMatch );
+    vars.addVar("ranking", &ranking );
+    vars.addVar("xPV", &xPV );
+    vars.addVar("yPV", &yPV );
+    vars.addVar("zPV", &zPV );
+    vars.addVar("zdcX", &zdcX );
+    vars.addVar("bbcAdcES", &bbcAdcES );
+    vars.addVar("bbcAdcEL", &bbcAdcEL );
+    vars.addVar("bbcAdcWS", &bbcAdcWS );
+    vars.addVar("bbcAdcWL", &bbcAdcWL );
+    vars.addVar("zdcSumAdcEast", &zdcSumAdcEast );
+    vars.addVar("zdcSumAdcWest", &zdcSumAdcWest );
+    vars.addVar("goodTrkRatio", &goodTrkRatio );
+    vars.addVar("phiTrkMean", &phiTrkMean );
+    vars.addVar("etaTrkMean", &etaTrkMean );
+    vars.addVar("phiTrkLead", &phiTrkLead );
+    vars.addVar("etaTrkLead", &etaTrkLead );
+    vars.addVar("maxpt", &maxpt );
+    vars.addVar("sumpt", &sumpt );
+    vars.addVar("ntowTriggers", &ntowTriggers );
+    vars.addVar("nHT1trigs", &nHT1trigs );
+    vars.addVar("nHT2trigs", &nHT2trigs );
+    vars.addVar("maxEt", &maxEt );
+    vars.addVar("sumEt", &sumEt );
+    vars.addVar("maxTowAdc", &maxTowAdc );
+    vars.addVar("sumTowAdc", &sumTowAdc );
+    vars.addVar("phiEt", &phiEt );
+    vars.addVar("etaEt", &etaEt );
+    vars.addVar("phiEtMean", &phiEtMean );
+    vars.addVar("etaEtMean", &etaEtMean );
 
     TrigCount tcount{runId, 
           { "VPDMB-5-ssd", "VPDMB-5-nossd",  "BBCMB",  "BHT1*VPDMB-30",  
@@ -87,17 +87,21 @@ void MyTree::MyLoop(){
 
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
-        for (auto& x : vals) x.fill();
+        vars.fill();
+        /* for (auto& x : vals) x.fill(); */
         tcount.fill();
         ++jentry;
     }
     cout << tcount << endl;
-    input.flog << tcount << endl;
+    cout << vars << endl;
 
-    vals[0].print_header(cout);
-    vals[0].print_header(input.flog);
-    for (auto& x : vals) input.flog << x << endl;
-    for (auto& x : vals) cout       << x << endl;
+    input.flog << tcount << endl;
+    input.flog << vars << endl;
+
+    /* vals[0].print_header(cout); */
+    /* vals[0].print_header(input.flog); */
+    /* for (auto& x : vals) input.flog << x << endl; */
+    /* for (auto& x : vals) cout       << x << endl; */
 };
 
 int main(int argc, const char** argv) {

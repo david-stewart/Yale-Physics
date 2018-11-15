@@ -4,6 +4,7 @@
 #include <TString.h>
 #include <TProfile.h>
 #include <string>
+#include <map>
 
 using namespace std;
 class OneVarStats {
@@ -26,8 +27,25 @@ class OneVarStats {
         OneVarStats(int runId, string name, double* val);
         OneVarStats(int runId, const OneVarStats& cp);
         void fill();
-        friend ostream& operator<<(ostream&, OneVarStats const&);
+        friend ostream& operator<<(ostream&, OneVarStats&);
         ostream& print_header(ostream& os);
 };
+
+// a mapped container of all OneVarStats
+class AllVarStats {
+    private:
+        int runId;
+        // ?
+    public:
+        map<int, vector<OneVarStats> > data; // Map of OneVarStats indexed on runId
+        AllVarStats(int& runId_);
+        friend ostream& operator<< (ostream&, AllVarStats&);
+        void addVar (OneVarStats);
+        void addVar (string name, int*    val);
+        void addVar (string name, double* val);
+        void fill();
+};
+
+/* } */
 
 #endif
