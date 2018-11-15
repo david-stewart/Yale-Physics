@@ -10,18 +10,18 @@
 using namespace std;
 class TrigCount {
     private:
-        int n_trigs;
-        vector<*bool>              trig_vals;
-        map<int, vector<long int>> map;
-        vector<string> trig_names;
-        vector<int>    trig_vals;
-        vector<int>    len_names; // for formatted printing; at least 10 digits
+        int&           runId;
+        vector<string> names;
+        vector<int>    trig_ids;
+        vector<bool*>  b_bools;
+        size_t         n_trigs;
+        map<int, vector<long int>> data;
+        vector<int>    len_names; // for formated printing; at least 10 digits
     public:
-        TrigCount(vector<string> names, vector<int> trigIds, vector<*bool> trig_bools);
+        TrigCount(int& runId_, vector<string> names, vector<int> trigIds, vector<bool*> trig_bools);
         void fill();
         // this next value prints the entire required data, header and all
-        friend ostream& operator<<(ostream&, TrigCount const&);
+        friend ostream& operator<<(ostream&, TrigCount&);
 };
-
 
 #endif

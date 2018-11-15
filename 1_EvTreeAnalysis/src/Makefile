@@ -18,7 +18,7 @@ OBJDIR = obj
 # 	${CC} -c OneVarStats.cxx ${INC_LIBS}
 
 
-count_events_ofiles = count_events.o tree.o StdInp.o OneVarStats.o
+count_events_ofiles = count_events.o tree.o StdInp.o OneVarStats.o TrigCount.o
 ../bin/count_events : ${count_events_ofiles} MyLoop.h
 	${CC} -o ../bin/$@ ${count_events_ofiles}  ${INC_LIBS}
 
