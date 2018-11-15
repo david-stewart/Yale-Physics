@@ -14,7 +14,7 @@ class TrigCount {
         vector<string> names;
         vector<int>    trig_ids;
         vector<bool*>  b_bools;
-        size_t         n_trigs;
+        int            n_trigs;
         map<int, vector<long int>> data;
         vector<int>    len_names; // for formated printing; at least 10 digits
     public:
