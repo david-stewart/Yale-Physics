@@ -1,5 +1,5 @@
-#ifndef PythLib__h
-#define PythLib__h
+#ifndef Pyth6__h
+#define Pyth6__h
 #include "TClass.h"
 
 #include <iostream>
