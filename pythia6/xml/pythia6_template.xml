@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job >
+    <ResourceUsage>
+        <Times>
+            <MaxWallTime>24</MaxWallTime>
+        </Times>
+    </ResourceUsage>
+	<command>
+        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/pythia6
+        set PROG=$MYPATH/run.sh
+        set OFILE=$MYPATH/root/&min;_&max;_&nEvents;.root
+        $PROG &nEvents; &min; &max; $OFILE &seed;
+	</command>
+	<!-- <SandBox installer="ZIP"> -->
+	<!-- 	<Package> -->
+            <!-- <File>file:./.sl73_gcc485</File> -->
+            <!-- <File>file:./run.C</File> -->
+	<!-- 	</Package> -->		
+	<!-- </SandBox> -->
+	
+	<Generator>
+        <Location>./input</Location>
+        <ScriptLocation>./input</ScriptLocation>
+        <ListLocation>./input</ListLocation>
+	</Generator>
+
+    <!-- <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" /> -->
+
+    <stdout URL="file:./out/&min;_&max;_&nEvents;" />	
+    <stderr URL="file:./err/&min;_&max;_&nEvents;" />
+</job>

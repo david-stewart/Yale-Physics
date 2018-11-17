@@ -14,6 +14,7 @@
 #include "TCanvas.h"
 #include "Riostream.h"
 #include <cstdlib>
+#include <time.h>
 
 // see https://root.cern.ch/root/html/tutorials/pythia/pythiaExample.C.html
 
@@ -31,7 +32,10 @@ PythJets::~PythJets() { };
 
 using namespace std;
 int PythJets::run(int nEvents, 
+        double hatMin,
+        double hatMax,
         string FILENAME,
+        int    seed,
         string TREENAME,
         string BRANCHNAME,
         string HISTNAME,
@@ -42,6 +46,21 @@ int PythJets::run(int nEvents,
 
   // Create an instance of the Pythia event generator ...
   TPythia6* pythia = new TPythia6;
+  
+  // set the hard scattering
+  pythia->SetCKIN(3, hatMin);
+  pythia->SetCKIN(4, hatMax);
+
+
+  if (seed == -1) {
+      time_t a_time;
+      time(&a_time);
+      int i{a_time};
+      cout << " using time seed: " << i << endl;
+      pythia->SetMRPY(1,i);
+  } else {
+      pythia->SetMRPY(1,seed);
+  }
 
   // ... and initialise it to run p+p at sqrt(200) GeV in CMS
   pythia->Initialize("cms", "p", "p", 200);
@@ -64,7 +83,7 @@ int PythJets::run(int nEvents,
   // Now we make some events
   for (Int_t i = 0; i < nEvents; i++) {
     // Show how far we got every 100'th event.
-    if (i % 100 == 0)
+    if (i % 500 == 0)
       cout << "Event # " << i << endl;
 
     // Make one event.
@@ -77,28 +96,32 @@ int PythJets::run(int nEvents,
     // Now we're ready to fill the tree, and the event is over.
     tree->Fill();
   }
+  cout << "Finished running pythia" << endl;
+
+  cout << "             " << pythia->GetMRPY(1) << " " << setw(30) << setprecision(14) << tree->GetMaximum("particles.fPx") << endl;
+
 
   // Show tree structure
-  tree->Print();
+  /* tree->Print(); */
 
   // After the run is over, we may want to do some summary plots:
-  TH1D* hist = new TH1D(HISTNAME.c_str(), "p_{#perp}  spectrum for  #pi^{+}",
-                        100, 0, 3);
-  hist->SetXTitle("p_{#perp}");
-  hist->SetYTitle("dN/dp_{#perp}");
-  char expression[64];
-  sprintf(expression,"sqrt(pow(%s.fPx,2)+pow(%s.fPy,2))>>%s",
-          BRANCHNAME.c_str(), BRANCHNAME.c_str(), HISTNAME.c_str());
-  char selection[64];
-  sprintf(selection,"%s.fKF==%d", BRANCHNAME.c_str(), PDGNUMBER);
-  tree->Draw(expression,selection);
+  /* TH1D* hist = new TH1D(HISTNAME.c_str(), "p_{#perp}  spectrum for  #pi^{+}", */
+  /*                       100, 0, 3); */
+  /* hist->SetXTitle("p_{#perp}"); */
+  /* hist->SetYTitle("dN/dp_{#perp}"); */
+  /* char expression[64]; */
+  /* sprintf(expression,"sqrt(pow(%s.fPx,2)+pow(%s.fPy,2))>>%s", */
+  /*         BRANCHNAME.c_str(), BRANCHNAME.c_str(), HISTNAME.c_str()); */
+  /* char selection[64]; */
+  /* sprintf(selection,"%s.fKF==%d", BRANCHNAME.c_str(), PDGNUMBER); */
+  /* tree->Draw(expression,selection); */
 
-  // Normalise to the number of events, and the bin sizes.
-  hist->Sumw2();
-  hist->Scale(3 / 100. / hist->Integral());
-  hist->Fit("expo", "QO+", "", .25, 1.75);
-  TF1* func = hist->GetFunction("expo");
-  func->SetParNames("A", "- 1 / T");
+  /* // Normalise to the number of events, and the bin sizes. */
+  /* hist->Sumw2(); */
+  /* hist->Scale(3 / 100. / hist->Integral()); */
+  /* hist->Fit("expo", "QO+", "", .25, 1.75); */
+  /* TF1* func = hist->GetFunction("expo"); */
+  /* func->SetParNames("A", "- 1 / T"); */
   // and now we flush and close the file
   file->Write();
   file->Close();

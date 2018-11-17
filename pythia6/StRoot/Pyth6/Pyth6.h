@@ -12,8 +12,11 @@ class PythJets {
     public:
         PythJets();
         virtual ~PythJets();
-        int run(int, 
-                string = "pythia.root", 
+        int run(int nEvents, 
+                double hatMin=5.0,
+                double hatMax=7.0,
+                string outFile = "pythia6.root",
+                int seed = -1,
                 string = "tree", 
                 string = "particles", 
                 string = "ptSpectra", 
