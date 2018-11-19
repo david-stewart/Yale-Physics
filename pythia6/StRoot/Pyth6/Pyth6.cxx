@@ -7,6 +7,7 @@
 #include "TError.h"
 #include "TTree.h"
 #include "TClonesArray.h"
+#include "TMCParticle.h"
 #include "TH1.h"
 #include "TF1.h"
 #include "TStyle.h"
@@ -15,22 +16,68 @@
 #include "Riostream.h"
 #include <cstdlib>
 #include <time.h>
+#include "TParticlePDG.h"
+#include "TDatabasePDG.h"
+#include "StThreeVectorF.hh"
+
+#define  NMAX_JETS 50
+
 
 // see https://root.cern.ch/root/html/tutorials/pythia/pythiaExample.C.html
+#include "fastjet/config.h"
+#include "fastjet/PseudoJet.hh"
+#include "fastjet/ClusterSequence.hh"
+#include "fastjet/ClusterSequenceArea.hh"
+#include "fastjet/Selector.hh"
+/* #include "fastjet/tools/Subtractor.hh" */
+#include "fastjet/tools/JetMedianBackgroundEstimator.hh"
+using namespace fastjet;
+/* #include "fastjet/Subtractor.hh" */
+
+/* struct JetMaker { */
+/*         Subtractor* subtractor; */
+/*         JetMedianBackgroundEstimator* bge_rm2; */
+/*         double R; // jet radius parameter */
+/*         /1* enum class CloneType *1/ */
+/*         JetMaker (double R_); */
+/*         void operator () (double px, double py, double pz, double E); */
+/*         void clear_particles(); */
+/*         void make_jets(); */
+/*         // add a TMCParticles */
+/*         std::vector<PseudoJet> jets; */
+/*         std::vector<PseudoJet> particles; */
+/*         double rho; */
+/* }; */
+
+/* void JetMaker::clear_particles() { particles.clear(); }; */
+
+/* JetMaker::JetMaker(double R_) : R{R_}, rho{0} { */
+/*     /1* JetMedianBackgroundEstimator* bge_rm2; *1/ */
+/*     double ghost_maxrap {4.0}; */
+/*     double jet_R_background{R}; */
+/*     JetDefinition jet_def_bkgd(kt_algorithm, jet_R_background); */ 
+/*     AreaDefinition area_def_bkgd(active_area_explicit_ghosts, */
+/*                                  GhostedAreaSpec (ghost_maxrap,1,0.01)); */
+/*     Selector selector_rm2 = SelectorAbsEtaMax(1.0) * (!SelectorNHardest(2)); */ 
+/*     bge_rm2 = new JetMedianBackgroundEstimator (selector_rm2, jet_def_bkgd, area_def_bkgd); */ 
+/*     subtractor = new Subtractor( bge_rm2 ) ; */
+/* }; */
+
+/* void JetMaker::operator()(double px, double py, double pz, double E){ */
+/*     particles.push_back( PseudoJet{px, py, pz, E} ); */
+/* }; */
+
+/* void JetMaker::make_jets() { */
+/*     /1* double ghost_maxrap{4}; *1/ */
+/* } */
 
 
 ClassImp(PythJets)
-PythJets::PythJets() { };
-PythJets::~PythJets() { };
-
-/* void PythJets::sayhello() { */ 
-/*     std::cout << "hello!" << std::endl; */
-/*     std::ofstream of; */
-/*     of.open("hello_file"); */
-/*     of << "Hello World!" << endl; */
-/* }; */
+PythJets::PythJets() : b_jets { "JtJet", NMAX_JETS}  {};
+PythJets::~PythJets() {};
 
 using namespace std;
+using namespace fastjet;
 int PythJets::run(int nEvents, 
         double hatMin,
         double hatMax,
@@ -41,8 +88,6 @@ int PythJets::run(int nEvents,
         string HISTNAME,
         int    PDGNUMBER
 ) {
-  // Load needed libraries
-  /* loadLibraries(); */
 
   // Create an instance of the Pythia event generator ...
   TPythia6* pythia = new TPythia6;
@@ -68,31 +113,132 @@ int PythJets::run(int nEvents,
   // Open an output file
   TFile* file = TFile::Open(FILENAME.c_str(), "RECREATE");
   if (!file || !file->IsOpen()) {
-    Error("makeEventSample", "Couldn;t open file %s", FILENAME.c_str());
+    cout << "Couldn't open file " << FILENAME << endl;
+    /* Error("makeEventSample", "Couldn't open file %s", FILENAME.c_str()); */
     return 1;
   }
 
   // Make a tree in that file ...
   TTree* tree = new TTree(TREENAME.c_str(), "Pythia 6 tree");
+  /* TH1F* z_vert = new TH1F("z_vert","z_vert", 100, -30, 30); */
+  TH1F* h_jets = new TH1F("jets","all detector level jets",45, 0, 45);
+
+  // Make the jet pt histogram
 
   // ... and register a the cache of pythia on a branch (It's a
   // TClonesArray of TMCParticle objects. )
   TClonesArray* particles = (TClonesArray*)pythia->GetListOfParticles();
-  tree->Branch(BRANCHNAME.c_str(), &particles);
+
+  /* tree->Branch(BRANCHNAME.c_str(), &particles); */
+  tree->Branch("event", &mEvent);
+  tree->Branch("jets",  &b_jets);
 
   // Now we make some events
-  for (Int_t i = 0; i < nEvents; i++) {
+
+
+  //initialize fastjet
+  float ghost_maxrap = 4.0;
+  double jet_R_background{0.4};
+  JetDefinition jet_def_bkgd(kt_algorithm, jet_R_background); // <--
+  AreaDefinition area_def_bkgd(active_area_explicit_ghosts,GhostedAreaSpec (ghost_maxrap,1,0.01));
+  Selector selector_rm2 = SelectorAbsEtaMax(1.0) * (!SelectorNHardest(2)); // <--
+  JetMedianBackgroundEstimator* bge_rm2 = new JetMedianBackgroundEstimator (selector_rm2, jet_def_bkgd, area_def_bkgd); // <--
+
+  JetDefinition jet_def(antikt_algorithm, 0.4);
+  AreaDefinition area_def(active_area_explicit_ghosts,GhostedAreaSpec(4.0,1,0.01));
+
+  cout << "starting pythia loop " << endl;
+  for (Int_t iEv = 0; iEv < nEvents; iEv++) {
+      cout << "A1" << endl;
     // Show how far we got every 100'th event.
-    if (i % 500 == 0)
-      cout << "Event # " << i << endl;
+    if (iEv % 500 == 0)
+    cout << "Event # " << iEv << endl;
 
     // Make one event.
     pythia->GenerateEvent();
+    b_jets.Clear();
 
-    // Maybe you want to have another branch with global event
-    // information.  In that case, you should process that here.
-    // You can also filter out particles here if you want.
+    mEvent.n_c = 0;
+    mEvent.n_n = 0;
 
+    mEvent.ptsum_c = 0;
+    mEvent.ptsum_n = 0;
+
+    mEvent.ptmax_c = 0;
+    mEvent.ptmax_n = 0;
+
+
+    /* int nch = 0; */  
+    /* int i   = 0; */
+
+    /* cout << iEv << "  " << pythia->GetN() << "  " << particles->GetEntries() << endl; */
+
+      cout << "A2" << endl;
+    vector<PseudoJet> jet_particles;
+    TMCParticle* p;
+    TIter piter(particles);
+    int c {0};
+    while( (p = (TMCParticle *) piter.Next()) ){
+      cout << "A3   " <<  c++ << endl;
+        // dump not-final state particles
+        if (p->GetKS() == 0 || p->GetKS() > 9) continue; // not a final state particles
+
+        TParticlePDG* pdg = TDatabasePDG().GetParticle(p->GetKF());
+        StThreeVectorF tr { p->GetPx(), p->GetPy(), p->GetPz() };
+
+        double pt  { tr.perp()};
+        double phi { tr.phi() };
+        double eta { tr.pseudoRapidity() };
+        if (pt < 0.2 || TMath::Abs(eta) > 1.) continue;
+
+        // neutral particles
+        if (pdg->Charge() == 0) {
+            ++mEvent.n_n;
+            mEvent.ptsum_n += pt;
+            if (pt > mEvent.ptmax_n) {
+                mEvent.ptmax_n = pt;
+                mEvent.eta_n = eta;
+                mEvent.phi_n = phi;
+            }
+            continue;
+        }
+
+        // charged particles
+        ++mEvent.n_c;
+        mEvent.ptsum_c += pt;
+        if (pt > mEvent.ptmax_c) {
+            mEvent.ptmax_c = pt;
+            mEvent.eta_c = eta;
+            mEvent.phi_c = phi;
+        }
+      cout << "A4" << endl;
+        jet_particles.push_back(PseudoJet{p->GetPx(), p->GetPy(), p->GetPz(), p->GetEnergy()} );
+      cout << "A5" << endl;
+    }
+
+      cout << "A6" << endl;
+    ClusterSequenceArea cs{jet_particles, jet_def, area_def};
+    vector<PseudoJet> jets = sorted_by_pt ( (!SelectorIsPureGhost())(cs.inclusive_jets()) ) ;
+    bge_rm2->set_particles(jet_particles);
+    mEvent.rho = bge_rm2->rho();
+
+      cout << "A7" << endl;
+    int njets{0};
+    Selector pt_min { SelectorPtMin(0.2) };
+    for (auto jet : jets) {
+      cout << "A8" << endl;
+        h_jets->Fill(jet.pt());
+
+        JtJet* b_jet = (JtJet*) b_jets.ConstructedAt(njets);
+        ++njets;
+        b_jet->phi = jet.phi_std();
+        b_jet->eta = jet.eta();
+        b_jet->pt  = jet.pt();
+        b_jet->pt_corr  = (jet - jet.area_4vector()*mEvent.rho).pt();
+        b_jet->area = jet.area();
+        b_jet->nch  = ( (pt_min)(jet.constituents()) ).size();
+    }
+    mEvent.njets = njets;
     // Now we're ready to fill the tree, and the event is over.
     tree->Fill();
   }
@@ -101,28 +247,6 @@ int PythJets::run(int nEvents,
   cout << "             " << pythia->GetMRPY(1) << " " << setw(30) << setprecision(14) << tree->GetMaximum("particles.fPx") << endl;
 
 
-  // Show tree structure
-  /* tree->Print(); */
-
-  // After the run is over, we may want to do some summary plots:
-  /* TH1D* hist = new TH1D(HISTNAME.c_str(), "p_{#perp}  spectrum for  #pi^{+}", */
-  /*                       100, 0, 3); */
-  /* hist->SetXTitle("p_{#perp}"); */
-  /* hist->SetYTitle("dN/dp_{#perp}"); */
-  /* char expression[64]; */
-  /* sprintf(expression,"sqrt(pow(%s.fPx,2)+pow(%s.fPy,2))>>%s", */
-  /*         BRANCHNAME.c_str(), BRANCHNAME.c_str(), HISTNAME.c_str()); */
-  /* char selection[64]; */
-  /* sprintf(selection,"%s.fKF==%d", BRANCHNAME.c_str(), PDGNUMBER); */
-  /* tree->Draw(expression,selection); */
-
-  /* // Normalise to the number of events, and the bin sizes. */
-  /* hist->Sumw2(); */
-  /* hist->Scale(3 / 100. / hist->Integral()); */
-  /* hist->Fit("expo", "QO+", "", .25, 1.75); */
-  /* TF1* func = hist->GetFunction("expo"); */
-  /* func->SetParNames("A", "- 1 / T"); */
-  // and now we flush and close the file
   file->Write();
   file->Close();
 
