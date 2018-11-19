@@ -34,7 +34,7 @@
 using namespace fastjet;
 
 ClassImp(PythJets)
-PythJets::PythJets() : b_jets { "JtJet", NMAX_JETS}  {};
+PythJets::PythJets(string argc_v) : b_jets { "JtJet", NMAX_JETS}, input{argc_v}  {};
 PythJets::~PythJets() {};
 
 using namespace std;

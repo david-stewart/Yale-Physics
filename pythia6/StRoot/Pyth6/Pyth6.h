@@ -6,16 +6,17 @@
 #include "StMaker.h"
 #include "Jet_Tree.h"
 #include "JetMaker.h"
+#include "StdInp.h"
 
 void print_hello_world();
-
 
 class PythJets {
     public:
     JtEvent mEvent;
     TClonesArray  b_jets;
-    PythJets();
+    PythJets(string argc_v);
     virtual ~PythJets();
+    StdInp input;
 
     int run(int nEvents, 
             double hatMin=5.0,
@@ -32,6 +33,4 @@ class PythJets {
     private:
         ClassDef(PythJets, 1);
 };
-
-
 #endif
