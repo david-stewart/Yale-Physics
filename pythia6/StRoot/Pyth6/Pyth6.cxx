@@ -32,45 +32,6 @@
 /* #include "fastjet/tools/Subtractor.hh" */
 #include "fastjet/tools/JetMedianBackgroundEstimator.hh"
 using namespace fastjet;
-/* #include "fastjet/Subtractor.hh" */
-
-/* struct JetMaker { */
-/*         Subtractor* subtractor; */
-/*         JetMedianBackgroundEstimator* bge_rm2; */
-/*         double R; // jet radius parameter */
-/*         /1* enum class CloneType *1/ */
-/*         JetMaker (double R_); */
-/*         void operator () (double px, double py, double pz, double E); */
-/*         void clear_particles(); */
-/*         void make_jets(); */
-/*         // add a TMCParticles */
-/*         std::vector<PseudoJet> jets; */
-/*         std::vector<PseudoJet> particles; */
-/*         double rho; */
-/* }; */
-
-/* void JetMaker::clear_particles() { particles.clear(); }; */
-
-/* JetMaker::JetMaker(double R_) : R{R_}, rho{0} { */
-/*     /1* JetMedianBackgroundEstimator* bge_rm2; *1/ */
-/*     double ghost_maxrap {4.0}; */
-/*     double jet_R_background{R}; */
-/*     JetDefinition jet_def_bkgd(kt_algorithm, jet_R_background); */ 
-/*     AreaDefinition area_def_bkgd(active_area_explicit_ghosts, */
-/*                                  GhostedAreaSpec (ghost_maxrap,1,0.01)); */
-/*     Selector selector_rm2 = SelectorAbsEtaMax(1.0) * (!SelectorNHardest(2)); */ 
-/*     bge_rm2 = new JetMedianBackgroundEstimator (selector_rm2, jet_def_bkgd, area_def_bkgd); */ 
-/*     subtractor = new Subtractor( bge_rm2 ) ; */
-/* }; */
-
-/* void JetMaker::operator()(double px, double py, double pz, double E){ */
-/*     particles.push_back( PseudoJet{px, py, pz, E} ); */
-/* }; */
-
-/* void JetMaker::make_jets() { */
-/*     /1* double ghost_maxrap{4}; *1/ */
-/* } */
-
 
 ClassImp(PythJets)
 PythJets::PythJets() : b_jets { "JtJet", NMAX_JETS}  {};
@@ -149,7 +110,7 @@ int PythJets::run(int nEvents,
 
   cout << "starting pythia loop " << endl;
   for (Int_t iEv = 0; iEv < nEvents; iEv++) {
-      cout << "A1" << endl;
+    /* cout << " |<- E" << endl; */
     // Show how far we got every 100'th event.
     if (iEv % 500 == 0)
     cout << "Event # " << iEv << endl;
@@ -168,31 +129,26 @@ int PythJets::run(int nEvents,
     mEvent.ptmax_n = 0;
 
 
-    /* int nch = 0; */  
-    /* int i   = 0; */
-
-    /* cout << iEv << "  " << pythia->GetN() << "  " << particles->GetEntries() << endl; */
-
-      cout << "A2" << endl;
     vector<PseudoJet> jet_particles;
-    TMCParticle* p;
-    TIter piter(particles);
-    int c {0};
-    while( (p = (TMCParticle *) piter.Next()) ){
-      cout << "A3   " <<  c++ << endl;
-        // dump not-final state particles
-        if (p->GetKS() == 0 || p->GetKS() > 9) continue; // not a final state particles
+    /* TMCParticle* p; */
+    /* TIter piter(particles); */
+    /* int c {0}; */
 
-        TParticlePDG* pdg = TDatabasePDG().GetParticle(p->GetKF());
-        StThreeVectorF tr { p->GetPx(), p->GetPy(), p->GetPz() };
-
-        double pt  { tr.perp()};
-        double phi { tr.phi() };
+    TDatabasePDG pdb;
+    for (int i{1}; i < particles->GetEntries()+1; ++i) {
+        if (pythia->GetK(i,1) == 0 || pythia->GetK(i,1) > 9) continue;
+        StThreeVector<double> tr { pythia->GetP(i,1),
+                            pythia->GetP(i,2),
+                            pythia->GetP(i,3) };
         double eta { tr.pseudoRapidity() };
-        if (pt < 0.2 || TMath::Abs(eta) > 1.) continue;
+        double pt  { tr.perp()};
+        if (pt < 0.2 || TMath::Abs(eta) > 1 ) continue;
+
+        double phi { tr.phi() };
 
         // neutral particles
-        if (pdg->Charge() == 0) {
+        if ( (pdb.GetParticle(pythia->GetK(i,2)))->Charge() ) {
+                /* pdg->Charge() == 0) { */
             ++mEvent.n_n;
             mEvent.ptsum_n += pt;
             if (pt > mEvent.ptmax_n) {
@@ -211,22 +167,21 @@ int PythJets::run(int nEvents,
             mEvent.eta_c = eta;
             mEvent.phi_c = phi;
         }
-      cout << "A4" << endl;
-        jet_particles.push_back(PseudoJet{p->GetPx(), p->GetPy(), p->GetPz(), p->GetEnergy()} );
-      cout << "A5" << endl;
+        jet_particles.push_back(PseudoJet{
+                pythia->GetP(i,1), pythia->GetP(i,2),pythia->GetP(i,2),pythia->GetP(i,4)});
+                /* p->GetPx(), p->GetPy(), p->GetPz(), p->GetEnergy()} ); */
     }
 
-      cout << "A6" << endl;
     ClusterSequenceArea cs{jet_particles, jet_def, area_def};
     vector<PseudoJet> jets = sorted_by_pt ( (!SelectorIsPureGhost())(cs.inclusive_jets()) ) ;
     bge_rm2->set_particles(jet_particles);
     mEvent.rho = bge_rm2->rho();
 
-      cout << "A7" << endl;
+
+    /* cout << "           <- jets " << endl; */
     int njets{0};
     Selector pt_min { SelectorPtMin(0.2) };
     for (auto jet : jets) {
-      cout << "A8" << endl;
         h_jets->Fill(jet.pt());
 
         JtJet* b_jet = (JtJet*) b_jets.ConstructedAt(njets);
@@ -240,11 +195,12 @@ int PythJets::run(int nEvents,
     }
     mEvent.njets = njets;
     // Now we're ready to fill the tree, and the event is over.
+    /* cout << "                 ----fill----  " << endl; */
     tree->Fill();
   }
   cout << "Finished running pythia" << endl;
 
-  cout << "             " << pythia->GetMRPY(1) << " " << setw(30) << setprecision(14) << tree->GetMaximum("particles.fPx") << endl;
+  /* cout << "             " << pythia->GetMRPY(1) << " " << setw(30) << setprecision(14) << tree->GetMaximum("particles.fPx") << endl; */
 
 
   file->Write();
