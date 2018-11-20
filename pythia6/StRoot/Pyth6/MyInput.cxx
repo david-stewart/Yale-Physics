@@ -2,8 +2,9 @@
 #include "TFile.h"
 #include "TH1F.h"
 
-MyInput::MyInput(int argc, const char** argv) :
-    InputBase{argc, argv, true},
+ClassImp(MyInput)
+MyInput::MyInput(string argv) :
+    InputBase{argv, true},
     nEvents{100},
     pthat_min{1.},
     pthat_max{2.},
@@ -39,8 +40,8 @@ MyInput::MyInput(int argc, const char** argv) :
     if (seed == -1) {
       time_t a_time;
       time(&a_time);
-      f_log << " # setting the seed from time to " << seed << endl;
       seed = (int)a_time;
+      f_log << " # setting the seed from -1 to " << seed << " (from the clock)." << endl;
     }
         
     f_log << " # running with inputs: " << endl
@@ -50,6 +51,7 @@ MyInput::MyInput(int argc, const char** argv) :
           << " #    ptHatMax:  " << pthat_max << endl
           << " #    seed:      " << seed << endl;
 }
+
 MyInput::~MyInput() {
     file->Write();
     file->Close();
