@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE note [
-<!ENTITY min "7">
-<!ENTITY nEvents "100">
-<!ENTITY seed "-1">
-<!ENTITY max "8">
+<!ENTITY max "55.0">
+<!ENTITY seed "6226553313">
+<!ENTITY nEvents "20000">
+<!ENTITY min "45.0">
 ]>
-<!-- Created on Sat Nov 17 15:31:04 2018 -->
+<!-- Created on Tue Nov 20 17:44:39 2018 -->
 <job >
     <ResourceUsage>
         <Times>
@@ -13,10 +13,13 @@
         </Times>
     </ResourceUsage>
 	<command>
-        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/pythia6
-        set PROG=$MYPATH/run.sh
-        set OFILE=$MYPATH/root/&min;_&max;_&nEvents;.root
-        $PROG &nEvents; &min; &max; $OFILE &seed;
+        set x_path=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/pythia6
+
+        set x_prog=$x_path/run.sh
+        set x_root=$x_path/root/&min;_&max;_&nEvents;k.root
+        set x_log=$x_path/root/&min;_&max;_&nEvents;k.log
+
+        $x_prog $x_log $x_root &nEvents; &min; &max; &seed;
 	</command>
 	<!-- <SandBox installer="ZIP"> -->
 	<!-- 	<Package> -->

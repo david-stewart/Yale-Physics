@@ -84,6 +84,15 @@ Pyth6::Pyth6(string argc_v) :
   AreaDefinition area_def(active_area_explicit_ghosts,GhostedAreaSpec(4.0,1,0.01));
 
   cout << "starting pythia loop " << endl;
+  cout << "MSUB(96) " << pythia->GetMSUB(96) << endl;
+  cout << "BRAT(96) " << pythia->GetBRAT(96) << endl;
+  cout << "CKIN(96) " << pythia->GetCKIN(96) << endl;
+  cout << "RMSS(96) " << pythia->GetRMSS(96) << endl;
+  cout << "RRPY(96) " << pythia->GetRRPY(96) << endl;
+  cout << "SMW(96) " << pythia->GetSMW(96) << endl;
+  cout << "SMZ(96) " << pythia->GetSMZ(96) << endl;
+
+
   for (Int_t iEv = 0; iEv < inp.nEvents; iEv++) {
     /* cout << " |<- E" << endl; */
     // Show how far we got every 100'th event.

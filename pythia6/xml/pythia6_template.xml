@@ -6,10 +6,13 @@
         </Times>
     </ResourceUsage>
 	<command>
-        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/pythia6
-        set PROG=$MYPATH/run.sh
-        set OFILE=$MYPATH/root/&min;_&max;_&nEvents;.root
-        $PROG &nEvents; &min; &max; $OFILE &seed;
+        set x_path=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/pythia6
+
+        set x_prog=$x_path/run.sh
+        set x_root=$x_path/root/&min;_&max;_&nEvents;k.root
+        set x_log=$x_path/root/&min;_&max;_&nEvents;k.log
+
+        $x_prog $x_log $x_root &nEvents; &min; &max; &seed;
 	</command>
 	<!-- <SandBox installer="ZIP"> -->
 	<!-- 	<Package> -->
