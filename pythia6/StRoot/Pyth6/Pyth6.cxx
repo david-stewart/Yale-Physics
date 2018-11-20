@@ -22,66 +22,53 @@
 
 #define  NMAX_JETS 50
 
-
 // see https://root.cern.ch/root/html/tutorials/pythia/pythiaExample.C.html
 #include "fastjet/config.h"
 #include "fastjet/PseudoJet.hh"
 #include "fastjet/ClusterSequence.hh"
 #include "fastjet/ClusterSequenceArea.hh"
 #include "fastjet/Selector.hh"
+
 /* #include "fastjet/tools/Subtractor.hh" */
 #include "fastjet/tools/JetMedianBackgroundEstimator.hh"
+using namespace std;
 using namespace fastjet;
 
 ClassImp(PythJets)
-PythJets::PythJets(string argc_v) : b_jets { "JtJet", NMAX_JETS}, input{argc_v}  {};
 PythJets::~PythJets() {};
 
-using namespace std;
-using namespace fastjet;
-int PythJets::run(int nEvents, 
-        double hatMin,
-        double hatMax,
-        string FILENAME,
-        int    seed,
-        string TREENAME,
-        string BRANCHNAME,
-        string HISTNAME,
-        int    PDGNUMBER
-) {
+PythJets::PythJets(string argc_v) : 
+    inp{argc_v}, 
+    b_jets { "JtJet", NMAX_JETS} 
+{
+
+/* int PythJets::run(int nEvents, */ 
+/*         double hatMin, */
+/*         double hatMax, */
+/*         string FILENAME, */
+/*         int    seed, */
+/* ) { */
 
   // Create an instance of the Pythia event generator ...
   TPythia6* pythia = new TPythia6;
   
   // set the hard scattering
-  pythia->SetCKIN(3, hatMin);
-  pythia->SetCKIN(4, hatMax);
-
-
-  if (seed == -1) {
-      time_t a_time;
-      time(&a_time);
-      int i{a_time};
-      cout << " using time seed: " << i << endl;
-      pythia->SetMRPY(1,i);
-  } else {
-      pythia->SetMRPY(1,seed);
-  }
+  pythia->SetCKIN(3, inp.pthat_min);
+  pythia->SetCKIN(4, inp.pthat_max);
+  pythia->SetMRPY(1,inp.seed);
 
   // ... and initialise it to run p+p at sqrt(200) GeV in CMS
   pythia->Initialize("cms", "p", "p", 200);
 
   // Open an output file
-  TFile* file = TFile::Open(FILENAME.c_str(), "RECREATE");
-  if (!file || !file->IsOpen()) {
-    cout << "Couldn't open file " << FILENAME << endl;
-    /* Error("makeEventSample", "Couldn't open file %s", FILENAME.c_str()); */
-    return 1;
-  }
+  /* TFile* file = TFile::Open(FILENAME.c_str(), "RECREATE"); */
+  /* if (!file || !file->IsOpen()) { */
+  /*   cout << "Couldn't open file " << FILENAME << endl; */
+  /*   return 1; */
+  /* } */
 
   // Make a tree in that file ...
-  TTree* tree = new TTree(TREENAME.c_str(), "Pythia 6 tree");
-  /* TH1F* z_vert = new TH1F("z_vert","z_vert", 100, -30, 30); */
+  TTree* tree = new TTree("jet_tree", "Pythia 6 tree");
   TH1F* h_jets = new TH1F("jets","all detector level jets",45, 0, 45);
 
   // Make the jet pt histogram
@@ -90,7 +77,6 @@ int PythJets::run(int nEvents,
   // TClonesArray of TMCParticle objects. )
   TClonesArray* particles = (TClonesArray*)pythia->GetListOfParticles();
 
-  /* tree->Branch(BRANCHNAME.c_str(), &particles); */
   tree->Branch("event", &mEvent);
   tree->Branch("jets",  &b_jets);
 
@@ -109,7 +95,7 @@ int PythJets::run(int nEvents,
   AreaDefinition area_def(active_area_explicit_ghosts,GhostedAreaSpec(4.0,1,0.01));
 
   cout << "starting pythia loop " << endl;
-  for (Int_t iEv = 0; iEv < nEvents; iEv++) {
+  for (Int_t iEv = 0; iEv < inp.nEvents; iEv++) {
     /* cout << " |<- E" << endl; */
     // Show how far we got every 100'th event.
     if (iEv % 500 == 0)
@@ -199,13 +185,4 @@ int PythJets::run(int nEvents,
     tree->Fill();
   }
   cout << "Finished running pythia" << endl;
-
-  /* cout << "             " << pythia->GetMRPY(1) << " " << setw(30) << setprecision(14) << tree->GetMaximum("particles.fPx") << endl; */
-
-
-  file->Write();
-  file->Close();
-
-  return 0;
-    
 };

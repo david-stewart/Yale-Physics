@@ -6,27 +6,25 @@
 #include "StMaker.h"
 #include "Jet_Tree.h"
 #include "JetMaker.h"
-#include "StdInp.h"
-
-void print_hello_world();
+#include "MyInput.h"
 
 class PythJets {
     public:
+    PythJets(string args);
+    MyInput inp;
     JtEvent mEvent;
     TClonesArray  b_jets;
-    PythJets(string argc_v);
     virtual ~PythJets();
-    StdInp input;
 
-    int run(int nEvents, 
-            double hatMin=5.0,
-            double hatMax=7.0,
-            string outFile = "pythia6.root",
-            int seed = -1,
-            string = "tree", 
-            string = "particles", 
-            string = "ptSpectra", 
-            int = 211);
+    /* int run(int nEvents, */ 
+    /*         double hatMin=5.0, */
+    /*         double hatMax=7.0, */
+    /*         string outFile = "pythia6.root", */
+    /*         int seed = -1, */
+    /*         string = "tree", */ 
+    /*         string = "particles", */ 
+    /*         string = "ptSpectra", */ 
+    /*         int = 211); */
         /* void sayhello(); */
     /* private: */
         /* ClassDef(PythLib, 1) */
