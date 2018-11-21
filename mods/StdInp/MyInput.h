@@ -5,15 +5,19 @@
 #include "TFile.h"
 #include "TH1.h"
 
+
 class MyInput : public InputBase {
     public:
-    MyInput(int argc, const char** argv);
     MyInput(string argv);
     ~MyInput();
 
     TFile* file;
-    TH1F*  hg;
     int nEvents;
+    double pthat_min;
+    double pthat_max;
+    int seed;
+    private:
+        ClassDef(MyInput, 1);
 };
 
 #endif

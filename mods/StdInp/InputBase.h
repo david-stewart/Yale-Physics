@@ -1,5 +1,4 @@
 #ifndef InputBase__h
-
 #define InputBase__h
 
 #include <string>
@@ -16,7 +15,8 @@ class InputBase {
     //constructors
     InputBase(int argc, const char** argv, bool has_help_msg = false); // if this is true, then don't kill if -h is an option
     InputBase(string line, bool has_help_msg = false);
-    ~InputBase();
+    /* ~InputBase(); */
+    virtual ~InputBase();
 
     //output log
     bool     has_help_msg;
@@ -25,11 +25,11 @@ class InputBase {
     ofstream f_log;
     void update_log();    // write the current log and reopen it for further input
     stringstream ss_args; // all of the options from the input
-    int n_inputs; // number of inputs BESIDES the log file name
+    int n_inputs;         // number of inputs AFTER the log file name
+    string time_ellapsed();
     private:
     void open_log();
     time_t start_time;
 };
 
 #endif
-
