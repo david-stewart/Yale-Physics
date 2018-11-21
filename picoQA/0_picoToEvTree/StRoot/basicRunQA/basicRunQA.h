@@ -25,7 +25,7 @@
 #include "TTree.h"
 /* #include "StPicoEvent/StPicoBTowHit.h" */
 
-#include "QA_event.h"
+#include "QA_tree.h"
 
 class StPicoDst;
 class StPicoDstMaker;

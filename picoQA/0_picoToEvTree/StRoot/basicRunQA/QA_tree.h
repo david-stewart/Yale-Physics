@@ -1,5 +1,5 @@
-#ifndef QA_EVENT__HH
-#define QA_EVENT__HH
+#ifndef QA_TREE__HH
+#define QA_TREE__HH
 /** @file    tree
     @author  David Stewart
     @version draft 0.0
@@ -32,6 +32,13 @@ struct QA_event  : public TObject {
     int    nPrimaryTracks;
     int    nGoodPrimaryTracks;
     int    nTofMatch;
+
+    // for all primary tracks (pre-cuts)
+    int    nIstHit;
+    int    nSstHit;
+    int    nPxl1Hit;
+    int    nPxl2Hit;
+    int    nHftHit;
 
     double ranking;
     double xPV;

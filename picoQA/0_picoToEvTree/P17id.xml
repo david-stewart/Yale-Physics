@@ -13,8 +13,8 @@
 
         <!-- #Then your stuff goes here, and you pass the $FILELIST as normal -->
 		<!-- cons -->
-        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree
-        root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/raw/$JOBID\",0\)
+        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/0_picoToEvTree
+        root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/P17id/$JOBID\",0\)
 	</command>
 	<SandBox installer="ZIP">
 		<Package>
@@ -25,13 +25,13 @@
 	</SandBox>
 	
 	<Generator>
-        <Location>./input/raw</Location>
-        <ScriptLocation>./input/raw</ScriptLocation>
-        <ListLocation>./input/raw</ListLocation>
+        <Location>./input/P17id</Location>
+        <ScriptLocation>./input/P17id</ScriptLocation>
+        <ListLocation>./input/P17id</ListLocation>
 	</Generator>
 
-    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/list/pico.list" />
+    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list/pico_P17id.list" />
 
-    <stdout URL="file:./out/raw/$JOBID" />	
-    <stderr URL="file:./err/raw/$JOBID" />
+    <stdout URL="file:./out/P17id/$JOBID" />	
+    <stderr URL="file:./err/P17id/$JOBID" />
 </job>

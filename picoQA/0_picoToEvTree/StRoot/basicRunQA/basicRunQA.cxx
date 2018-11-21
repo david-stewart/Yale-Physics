@@ -125,20 +125,31 @@ Int_t basicRunQA::Make() {
     double phi_sum{0};
     double eta_sum{0};
     
-    double phi_lead{0};
-    double eta_lead{0};
+    fevent.phiTrkLead = 0;
+    fevent.etaTrkLead = 0;
 
-    double sumpt{0};
-    double maxpt{0};
+    fevent.sumpt = 0;
+    fevent.maxpt = 0;
 
-    int nPrimary{0};
-    int nTof{0};
+    fevent.nPrimaryTracks = 0;
+    fevent.nTofMatch = 0;
+
+    fevent.nIstHit = 0;
+    fevent.nSstHit = 0;
+    fevent.nPxl1Hit = 0;
+    fevent.nPxl2Hit = 0;
+    fevent.nHftHit = 0;
 
     fevent.nGoodPrimaryTracks = 0; // update in the loop;
     for (int i = 0; i < fevent.nTracks; ++i){
         StPicoTrack* track = static_cast<StPicoTrack*>(mPicoDst->track(i));
         if (!track->isPrimary()) continue;
-        ++nPrimary;
+        ++fevent.nPrimaryTracks;
+        if (track->hasIstHit())  ++fevent.nIstHit;
+        if (track->hasSstHit())  ++fevent.nSstHit;
+        if (track->hasPxl1Hit()) ++fevent.nPxl1Hit;
+        if (track->hasPxl2Hit()) ++fevent.nPxl2Hit;
+        if (track->isHft())      ++fevent.nHftHit;
 
         // thanks to joel mazer
         StThreeVectorF Ptrack = track->pMom();
@@ -156,24 +167,22 @@ Int_t basicRunQA::Make() {
             || nhit_ratio < 0.52
         )  continue;
 
-        if (track->bTofPidTraitsIndex() != -1) ++nTof;
+        if (track->bTofPidTraitsIndex() != -1) ++fevent.nTofMatch;
 
         ++ fevent.nGoodPrimaryTracks;
         float phi { Ptrack.phi() };
 
         phi_sum += phi;
         eta_sum += eta;
-        sumpt += pt;
+        fevent.sumpt += pt;
 
-        if (pt > maxpt) { maxpt = pt; phi_lead = phi; eta_lead = eta; }
+        if (pt > fevent.maxpt) { 
+            fevent.maxpt = pt; 
+            fevent.phiTrkLead = phi; 
+            fevent.etaTrkLead = eta; 
+        }
     }
     /* cout << "nPrimary " << nPrimary << endl; */
-    fevent.nTofMatch = nTof;
-    fevent.nPrimaryTracks = nPrimary;
-    fevent.maxpt = maxpt;
-    fevent.sumpt = sumpt;
-    fevent.phiTrkLead = phi_lead;
-    fevent.etaTrkLead = eta_lead;
     fevent.phiTrkMean = phi_sum / fevent.nGoodPrimaryTracks;
     fevent.etaTrkMean = eta_sum / fevent.nGoodPrimaryTracks;
     fevent.goodTrkRatio = (double) fevent.nGoodPrimaryTracks / fevent.nPrimaryTracks;

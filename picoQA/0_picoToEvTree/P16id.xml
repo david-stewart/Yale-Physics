@@ -13,7 +13,7 @@
 
         <!-- #Then your stuff goes here, and you pass the $FILELIST as normal -->
 		<!-- cons -->
-        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/0_picoToEvTree
+        set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/0_picoToEvTree
         root4star -l -q -b basicRunQA.C\(-1,\"$FILELIST\",\"$mypath/root/P16id/$JOBID\",0\)
 	</command>
 	<SandBox installer="ZIP">
@@ -30,7 +30,7 @@
         <ListLocation>./input/P16id</ListLocation>
 	</Generator>
 
-    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/list/pico_P16id.list" />
+    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list/pico_P16id.list" />
 
     <stdout URL="file:./out/P16id/$JOBID" />	
     <stderr URL="file:./err/P16id/$JOBID" />
