@@ -13,9 +13,6 @@ class MyInput : public InputBase {
     /* MyInput(string argv); */
     MyInput(int argc, const char** argv);
     ~MyInput();
-
-    private:
-        ClassDef(MyInput, 1);
 };
 
 #endif

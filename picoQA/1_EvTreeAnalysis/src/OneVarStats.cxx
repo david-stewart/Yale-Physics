@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <string>
 #include <cfloat>
+#include <iostream>
+#include <sstream>
 
 
 using namespace std;
@@ -21,12 +23,14 @@ OneVarStats::OneVarStats(int runId_, string name_) :
 OneVarStats::OneVarStats(int runId_, string name_, int* val_) :
     OneVarStats(runId_, name_)
 {
+  isInt = true ;
   v_int = val_;
   v_double = nullptr;
 };
 OneVarStats::OneVarStats(int runId_, string name_, double* val_) :
     OneVarStats(runId_, name_)
 {
+  isInt = false;
   v_int = nullptr;
   v_double = val_;
 };
@@ -117,7 +121,7 @@ ostream& operator<<(ostream& os, OneVarStats& stats) {
     os << " :  " << setfill('0') << setw(8) << stats.runId << setfill(' ')  << " "
        << left << setw(19) << stats.name << " " << right;
     /* os << " #!v 1615819 " << left << setw(19) << stats.name << " " << right; */
-    if (stats.v_int) {
+    if (stats.isInt) {
         os << setw(11) << static_cast<int>(stats.min) << " " 
            << setw(11) << static_cast<int>(stats.max) << " " 
            << /*scientific << setprecision(6) <<*/ setw(13) << mean << " "
@@ -157,11 +161,37 @@ void AllVarStats::fill() {
 };
 
 void AllVarStats::addVar (string name, int*    val){
-    data[0].push_back(OneVarStats{0, name, val});
+    /* cout << " len data " << data.size() << endl; */
+    if (!data.count(0)) data[0] = vector<OneVarStats>{};
+    /* cout << " len data " << data.size() << endl; */
+    if (name_map.count(name)) {
+        cout << "fatal: Error in adding variable \"" << name << "\"" << endl;
+        cout << "       This variable has already been added!" << endl;
+    } else {
+        name_map[name] = data[0].size();
+    }
+    for (auto& p : data) { 
+        /* cout << " PUSHING " << name << " into " << p.first << endl; */
+        p.second.push_back(OneVarStats{p.first,name,val}); 
+        /* cout << " <<< " << p.second.size() << endl; */
+        /* cout << " <<< " << p.second[p.second.size()-1].name << endl; */
+        /* cout << " <<< " << p.second[p.second.size()-1].min << endl; */
+        /* cout << " <<< " << p.second[p.second.size()-1].max << endl; */
+
+    }
+    /* cout << ">>>" << data[0].size() << endl; */
+    /* cout << "wolf: " << data.size() << endl; */
 };
 
 void AllVarStats::addVar (string name, double* val){
-    data[0].push_back(OneVarStats{0, name, val});
+    if (!data.count(0)) data[0] = vector<OneVarStats>{};
+    if (name_map.count(name)) {
+        cout << "fatal: Error in adding variable \"" << name << "\"" << endl;
+        cout << "       This variable has already been added!" << endl;
+    } else {
+        name_map[name] = data[0].size();
+    }
+    for (auto p : data) p.second.push_back(OneVarStats{p.first,name,val});
 };
 
 ostream& operator<< (ostream& os, AllVarStats& obj){
@@ -174,4 +204,111 @@ ostream& operator<< (ostream& os, AllVarStats& obj){
     }
     return os;
 };
+
+void operator<< (AllVarStats& lhs, string line) {
+    /* cout << "z0" << endl; */
+    istringstream inp{line};
+    /* cout << "z1" << endl; */
+    int runId;
+    /* cout << "z2" << endl; */
+    string trash, name, min;// use mean to see if it is an integer or a float
+    /* cout << "z3" << endl; */
+
+    inp >> trash >> runId >> name >> min;
+    /* cout << "z4" << endl; */
+
+    bool isInt = (min.find('.',0) == string::npos);
+    
+    // if a new variable, then add it to all runIds
+    /* cout << "z5" << endl; */
+    if (!lhs.name_map.count(name)) {
+    /* cout << "z6" << endl; */
+        if (isInt) { lhs.addVar(name, (int*)    nullptr); } //cout << "int" << endl; }
+        else       { lhs.addVar(name, (double*) nullptr); } //cout << "double" << endl; }
+        /* cout << "wolf2: " << lhs.data.size() << endl; */
+        /* cout << "wolf2: " << lhs.data[0].size() << endl; */
+        /* for (auto i : lhs.data) { */
+            /* cout << i.first << endl; */
+            /* cout << i.second.size() << endl; */
+        /* } */
+    /* cout << "z7" << endl; */
+    }
+    /* cout << "z8" << endl; */
+
+    // if new runId, then add a new runId
+    /* cout << " name " << name << " runId " << runId << endl; */
+    if (!lhs.data.count(runId)) {
+        /* cout << " c-0" << endl; */
+        lhs.data[runId] = vector<OneVarStats>{};
+        for (auto& x : lhs.data[0]) lhs.data[runId].push_back({runId, x});
+    }
+    /* for (auto x : lhs.data) { */ 
+        /* cout << " run id " << x.first; */
+        /* for (auto y : x.second) cout << "att " << y << endl; */
+        /* cout << endl; */
+    /* } */
+    /* cout << "z9" << endl; */
+
+    // now add the value
+    /* lhs.data[0]    [lhs.name_map[name]].add(line); */ // the 0 is already summed up and will be tallie dlike any other run
+
+    /* cout << " name map " << (lhs.name_map[name]) << endl; */
+    /* cout << lhs.data[runId].size() << endl; */
+    /* cout << " shocker " << endl; */
+    /* for (auto i : lhs.data) { */ 
+        /* cout << " i.first " << i.first << "  " << (i.first == runId) << endl; */ 
+        /* cout << " name_map " << lhs.name_map[name] << endl; */
+        /* cout << lhs.data[runId][lhs.name_map[name]].min << endl; */
+    /* } */
+    lhs.data[runId][lhs.name_map[name]].add(line);
+    /* cout << "z10" << endl; */
+    return;
+};
+
+void OneVarStats::add(string inp){
+    int runId_;
+    string name_;
+    long long int nEntries_;
+    long double sum_;
+    long double sum2_;
+    double min_;
+    double max_;
+    /* cout << "z - " << inp << "||" << endl; */
+    /* cout << "z - 0" << endl; */
+
+    string trash0, trash1, trash2, trash3;
+    /* cout << "z - 1" << endl; */
+    istringstream ss{inp};
+    /* cout << "z - 2" << endl; */
+    /* cout << " reading " << ss.str() << endl; */
+    ss >> trash0 >> runId_ >> name_ >> min_ >> max_ >> trash1 >> trash2>> trash3>> nEntries_ >> sum_ >> sum2_;
+    /* cout << " runId_ " << runId_ << " name_ " << name_ << " min_ " << min_ << " max_ " << max_ << " nEntries_ " << nEntries_ << " sum_ " << sum_ << " sum2_ " << sum2_ << endl; */
+
+    istringstream s0{inp};
+    /* cout << "test: " << endl; */
+    /* while (s0 >> trash0) cout << " " << trash0; */
+    /* cout << endl; */
+    /* cout << "z - 3" << endl; */
+    
+    /* if (runId != runId_ || name_ != name) { */
+    /*     cout << "fatal error, trying to entry of runId::variable " << runId_<<"::"<<name_ */
+    /*          << "to existing record " << runId<<"::"<<name<<endl; */
+    /*     exit(2); */
+    /* } */
+    /* cout << "z - 4" << " " << min_ << endl; */
+    /* cout << " this stuff " << runId << endl; */
+    /* cout << " min " << min << endl; */
+    if (nEntries == 0){
+        min = min_;
+        max = max_;
+    } else {
+        if (min_ < min) min = min_;
+        if (max_ > max) max = max_;
+    }
+    nEntries += nEntries_;
+    sum += sum_;
+    sum2 += sum2_;
+};
+
+    
 

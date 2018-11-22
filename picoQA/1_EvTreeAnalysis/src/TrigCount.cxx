@@ -3,7 +3,9 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <sstream>
 #include <cfloat>
+
 
 TrigCount::TrigCount(int& runId_, vector<string> names_, vector<int> trig_ids_, 
         vector<bool*> b_bools) :
@@ -35,6 +37,31 @@ void TrigCount::fill(){
         }
     }
 };
+
+void TrigCount::add(string input) {
+    /* cout << " doing Add " << input << endl; */
+    istringstream ss{input};
+    string trash;
+    int id;
+    long int num;
+    ss >> trash >> id;
+    /* cout << " z0 : id " << id << endl; */
+    if (!data.count(id)){
+    /* cout << " z1 " << id << endl; */
+        data[id] = vector<long int>{};
+        for (int i{0}; i<n_trigs; ++i) { /* cout << "  i: " << i << endl;*/ data[id].push_back(0);}
+    }
+    /* cout << " z2 " << id << endl; */
+    int i = 0;
+    while (ss >> num) {
+    /* cout << " z3 " << id << endl; */
+        /* data[0][i]  += num; */
+    /* cout << " z4 " << id << endl; */
+        data[id][i] += num;
+    /* cout << " z5 " << id << endl; */
+        ++i;
+    }
+}
 
 ostream& operator<<(ostream& os, TrigCount& T) {
     // write the header

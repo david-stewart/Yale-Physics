@@ -8,11 +8,14 @@
 
 using namespace std;
 class OneVarStats {
-    private:
+    /* friend AllVarStats; */
+    /* private: */
+    public:
         int    runId;
         string name;
         int*    v_int;
         double* v_double;
+        bool    isInt;
         long long int nEntries;
         long double sum;
         long double sum2; // sum^2
@@ -29,23 +32,26 @@ class OneVarStats {
         OneVarStats(int runId, string name, double* val);
         OneVarStats(int runId, const OneVarStats& cp);
         void fill();
+        void add(string inp);
         friend ostream& operator<<(ostream&, OneVarStats&);
         static ostream& print_header(ostream& os);
 };
 
 // a mapped container of all OneVarStats
 class AllVarStats {
-    private:
+    /* private: */
         int& runId;
+        map <string, int> name_map;
         // ?
     public:
-        map<int, vector<OneVarStats> > data; // Map of OneVarStats indexed on runId
+        map<int, vector<OneVarStats>> data; // Map of OneVarStats indexed on runId
         AllVarStats(int& runId_);
         friend ostream& operator<< (ostream&, AllVarStats&);
-        void addVar (OneVarStats);
+        /* void addVar (OneVarStats); */
         void addVar (string name, int*    val);
         void addVar (string name, double* val);
         void fill();
+        friend void operator<< (AllVarStats&, string); // read a line into AllVarStats
 };
 
 /* } */

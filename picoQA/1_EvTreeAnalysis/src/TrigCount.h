@@ -22,6 +22,7 @@ class TrigCount {
         void fill();
         // this next value prints the entire required data, header and all
         friend ostream& operator<<(ostream&, TrigCount&);
+        void add(string line_input);
 };
 
 #endif
