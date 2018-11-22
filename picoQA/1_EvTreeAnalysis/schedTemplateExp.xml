@@ -3,7 +3,7 @@
 <!ENTITY k "20">
 <!ENTITY n "20">
 ]>
-<!-- Created on Thu Nov 15 10:32:22 2018 -->
+<!-- Created on Wed Nov 21 22:46:10 2018 -->
 <job >
     <ResourceUsage>
         <Times>
@@ -11,10 +11,10 @@
         </Times>
     </ResourceUsage>
 	<command>
-        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis
+        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/1_EvTreeAnalysis
         set PROG=$MYPATH/bin/count_events
-        set LOG=$MYPATH/logs/count_events_P16id_&n;_&k;.log
-        set LIST=$MYPATH/list/P16.list
+        set LOG=$MYPATH/logs/c_P17_&n;_&k;.log
+        set LIST=$MYPATH/list/P17.list
         $PROG -1 $LOG $LIST &n; &k;
 	</command>
 	<!-- <SandBox installer="ZIP"> -->
@@ -33,6 +33,6 @@
 
     <!-- <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/ssdmb.list" /> -->
 
-    <stdout URL="file:./out/P16_&n;_&k;" />	
-    <stderr URL="file:./err/P16_&n;_&k;" />
+    <stdout URL="file:./out/P17_&n;_&k;" />	
+    <stderr URL="file:./err/P17_&n;_&k;" />
 </job>

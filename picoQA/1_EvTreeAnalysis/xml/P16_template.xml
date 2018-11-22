@@ -6,9 +6,9 @@
         </Times>
     </ResourceUsage>
 	<command>
-        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/QA/1_EvTreeAnalysis
+        set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/1_EvTreeAnalysis
         set PROG=$MYPATH/bin/count_events
-        set LOG=$MYPATH/logs/count_events_P16id_&n;_&k;.log
+        set LOG=$MYPATH/logs/c_P16_&n;_&k;.log
         set LIST=$MYPATH/list/P16.list
         $PROG -1 $LOG $LIST &n; &k;
 	</command>
