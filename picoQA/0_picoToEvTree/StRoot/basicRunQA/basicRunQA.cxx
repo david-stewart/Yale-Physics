@@ -46,8 +46,6 @@ Int_t basicRunQA::Init() {
 
 //----------------------------------------------------------------------------- 
 Int_t basicRunQA::Finish() {
-    fout->Write();
-    fout->Close();
 
     // Write the RunEnds events
     fprintf(flog, "Writing the RunEnds tree\n");
@@ -57,6 +55,9 @@ Int_t basicRunQA::Finish() {
     }
     fprintf(flog,"Closing log at end of file.\n");
     fclose(flog);
+
+    fout->Write();
+    fout->Close();
 
     return kStOK;
 }
@@ -85,23 +86,25 @@ Int_t basicRunQA::Make() {
 
     // find first and last events
     int &id = fevent.runId;
+    /* for (auto i : fmap_RunEnds) cout << "run ends : " << i.first << endl; */
     if (fmap_RunEnds.count(id)) { 
         auto& entry = fmap_RunEnds[id];
         entry.nEvents += 1;
-        if (id < entry.eventId_0) {
-            entry.eventId_0 = id;
+        if (fevent.eventId < entry.eventId_0) {
+            entry.eventId_0 = fevent.eventId;
             entry.time_0    = mevent->time();
         }
-        if (id > fmap_RunEnds[id].eventId_1) {
-            entry.eventId_1 = id;
+        if (fevent.eventId > fmap_RunEnds[id].eventId_1) {
+            entry.eventId_1 = fevent.eventId;
             entry.time_1    = mevent->time();
         }
     } else {
+        /* fprintf(flog, " Old id: %i\n", id); */
         fmap_RunEnds[id] = RunEnds{};
         auto& entry = fmap_RunEnds[id];
-        entry.eventId_0 = id;
+        entry.eventId_0 = fevent.eventId;
         entry.time_0    = mevent->time();
-        entry.eventId_1 = id;
+        entry.eventId_1 = fevent.eventId;
         entry.time_1    = mevent->time();
         entry.nEvents = 1;
     }

@@ -10,14 +10,15 @@
 using namespace std;
 
 struct RunEnds : public TObject {
-    RunEnds() {};
-    ~RunEnds() {};
+    /* RunEnds() {}; */
+    /* ~RunEnds() {}; */
     int runId;
     int time_0;
     int time_1;
     int eventId_0;
     int eventId_1;
     long long int nEvents;
+    ClassDef(RunEnds,1);
 };
 
 struct QA_event  : public TObject {
