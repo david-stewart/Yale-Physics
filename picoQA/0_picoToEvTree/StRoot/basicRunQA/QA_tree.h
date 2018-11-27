@@ -9,6 +9,17 @@
 
 using namespace std;
 
+struct RunEnds : public TObject {
+    RunEnds() {};
+    ~RunEnds() {};
+    int runId;
+    int time_0;
+    int time_1;
+    int eventId_0;
+    int eventId_1;
+    long long int nEvents;
+};
+
 struct QA_event  : public TObject {
     // Et is the leading tower's Et
     // pt is the leading tracks' pt
@@ -25,6 +36,7 @@ struct QA_event  : public TObject {
     bool   trig_500808;
     bool   trig_500809;
     bool   trig_500904;
+    bool   trig_9300;
 
     int    refmult;
     int    nGlobalTracks;

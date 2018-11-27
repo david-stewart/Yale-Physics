@@ -33,6 +33,11 @@ void MyTree::MyLoop(){
     vars.addVar("nPrimaryTracks", &nPrimaryTracks );
     vars.addVar("nGoodPrimaryTracks", &nGoodPrimaryTracks );
     vars.addVar("nTofMatch", &nTofMatch );
+    vars.addVar("nIstHit", &nIstHit );
+    vars.addVar("nSstHit", &nSstHit );
+    vars.addVar("nPxl1Hit", &nPxl1Hit );
+    vars.addVar("nPxl2Hit", &nPxl2Hit );
+    vars.addVar("nHftHit",  &nHftHit );
     vars.addVar("ranking", &ranking );
     vars.addVar("xPV", &xPV );
     vars.addVar("yPV", &yPV );
@@ -65,12 +70,12 @@ void MyTree::MyLoop(){
 
     TrigCount tcount{runId, 
           { "VPDMB-5-ssd", "VPDMB-5-nossd",  "BBCMB",  "BHT1*VPDMB-30",  
-            "BHT1*VPDMB-30_nobsmd",  "BHT2*BBCMB",  "FMS-JP2",  "FMS-JP1",  "VPDMB-30"
+            "BHT1*VPDMB-30_nobsmd",  "BHT2*BBCMB",  "FMS-JP2",  "FMS-JP1",  "VPDMB-30", "ZEROBIAS"
           },
-          { 500001,  500006, 500018, 500202, 500206, 500215, 500808, 500809, 500904},
+          { 500001,  500006, 500018, 500202, 500206, 500215, 500808, 500809, 500904, 9300},
           {
             &trig_500001, &trig_500006, &trig_500018, &trig_500202, &trig_500206,
-            &trig_500215, &trig_500808, &trig_500809, &trig_500904
+            &trig_500215, &trig_500808, &trig_500809, &trig_500904, &trig_9300
           }
     };
 
@@ -88,6 +93,26 @@ void MyTree::MyLoop(){
         nb = fChain->GetEntry(jentry);   nbytes += nb;
 
         vars.fill();
+
+        if (trig_500904){
+            input.h_vz_500904->Fill(zPV);
+            input.h_IstHits_500904->Fill(nIstHit);
+            input.h_SstHits_500904->Fill(nSstHit);
+            input.h_SstIstHits_500904->Fill(nSstHit+nIstHit);
+        }
+        if (trig_9300){
+            input.h_vz_9300->Fill(zPV);
+            input.h_IstHits_9300->Fill(nIstHit);
+            input.h_SstHits_9300->Fill(nSstHit);
+            input.h_SstIstHits_9300->Fill(nSstHit+nIstHit);
+        }
+        if (trig_500206){
+            input.h_vz_500206->Fill(zPV);
+            input.h_IstHits_500206->Fill(nIstHit);
+            input.h_SstHits_500206->Fill(nSstHit);
+            input.h_SstIstHits_500206->Fill(nSstHit+nIstHit);
+        }
+
         /* for (auto& x : vals) x.fill(); */
         tcount.fill();
         ++jentry;

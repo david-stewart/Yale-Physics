@@ -7,6 +7,7 @@
 #include "TString.h"
 #include <time.h>
 #include "TChain.h"
+#include "TH1.h"
 /* #include <iostream> */
 
 // Author David Stewart
@@ -44,6 +45,24 @@ class StdInp {
 
     time_t start_time;
     const char* time_ellapsed();
+
+    TFile *f_hgrams;
+
+    TH1F* h_vz_9300;
+    TH1F* h_IstHits_9300;
+    TH1F* h_SstHits_9300;
+    TH1F* h_SstIstHits_9300;
+
+    TH1F* h_vz_500206;
+    TH1F* h_IstHits_500206;
+    TH1F* h_SstHits_500206;
+    TH1F* h_SstIstHits_500206;
+
+    TH1F* h_vz_500904;
+    TH1F* h_IstHits_500904;
+    TH1F* h_SstHits_500904;
+    TH1F* h_SstIstHits_500904;
+
     ~StdInp();
 };
 

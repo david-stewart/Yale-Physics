@@ -41,10 +41,11 @@ OneVarStats::OneVarStats(int runId_, const OneVarStats& cp) :
 {
     v_int = cp.v_int;
     v_double = cp.v_double;
+    isInt = cp.isInt;
 };
 
 void OneVarStats::fill() {
-    if (v_int) this->operator()(static_cast<double>(*v_int));
+    if (isInt) this->operator()(static_cast<double>(*v_int));
     else       this->operator()(*v_double);
 };
 
@@ -162,6 +163,7 @@ void AllVarStats::fill() {
 
 void AllVarStats::addVar (string name, int*    val){
     /* cout << " len data " << data.size() << endl; */
+    cout << "_"<<name<<"_ "<<endl;
     if (!data.count(0)) data[0] = vector<OneVarStats>{};
     /* cout << " len data " << data.size() << endl; */
     if (name_map.count(name)) {
@@ -169,18 +171,16 @@ void AllVarStats::addVar (string name, int*    val){
         cout << "       This variable has already been added!" << endl;
     } else {
         name_map[name] = data[0].size();
+        cout << " : names ";
+        for (auto i : name_map) cout << " " << i.second << " " << i.first;
+        cout << endl;
     }
     for (auto& p : data) { 
         /* cout << " PUSHING " << name << " into " << p.first << endl; */
+        cout << " name " << name << "  presize " << p.second.size();
         p.second.push_back(OneVarStats{p.first,name,val}); 
-        /* cout << " <<< " << p.second.size() << endl; */
-        /* cout << " <<< " << p.second[p.second.size()-1].name << endl; */
-        /* cout << " <<< " << p.second[p.second.size()-1].min << endl; */
-        /* cout << " <<< " << p.second[p.second.size()-1].max << endl; */
-
+        cout << " post size " << p.second.size() << endl;
     }
-    /* cout << ">>>" << data[0].size() << endl; */
-    /* cout << "wolf: " << data.size() << endl; */
 };
 
 void AllVarStats::addVar (string name, double* val){
@@ -191,7 +191,7 @@ void AllVarStats::addVar (string name, double* val){
     } else {
         name_map[name] = data[0].size();
     }
-    for (auto p : data) p.second.push_back(OneVarStats{p.first,name,val});
+    for (auto& p : data) p.second.push_back(OneVarStats{p.first,name,val});
 };
 
 ostream& operator<< (ostream& os, AllVarStats& obj){
@@ -211,13 +211,13 @@ void operator<< (AllVarStats& lhs, string line) {
     /* cout << "z1" << endl; */
     int runId;
     /* cout << "z2" << endl; */
-    string trash, name, min;// use mean to see if it is an integer or a float
+    string trash, name, min, max;// use mean to see if it is an integer or a float
     /* cout << "z3" << endl; */
 
-    inp >> trash >> runId >> name >> min;
+    inp >> trash >> runId >> name >> min >> max;
     /* cout << "z4" << endl; */
 
-    bool isInt = (min.find('.',0) == string::npos);
+    bool isInt = ( (min.find('.',0) == string::npos) || (max.find('.',0) == string::npos) );
     
     // if a new variable, then add it to all runIds
     /* cout << "z5" << endl; */

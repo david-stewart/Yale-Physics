@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include "TFile.h"
 
 using namespace std;
 // implrement class StdInp
@@ -101,8 +102,28 @@ StdInp::StdInp (
         /* fprintf(flog, " # adding file(s) from %s\n", in_file_name.Data()); */
         chain->Add(in_file_name.Data());
     }
-};
+    
+    // open the root file with same name as the log file, and fill it with Vz distributions
+    TString root_name { log_name };
+    root_name.ReplaceAll(".log",".root");
 
+    f_hgrams = new TFile(root_name.Data(), "RECREATE");
+
+    h_vz_500206      = new TH1F("Vz_500206","V_{z};V_{z}[cm];N_{events-500206-trig}",500,-250, 250);
+    h_IstHits_500206 = new TH1F("IstHits_500206","IstHits;Number of Primary Tracks with Ist Hits;N_{events-500206-trig}",90, -0.5, 89.5);
+    h_SstHits_500206 = new TH1F("SstHits_500206","SstHits;Number of Primary Tracks with Sst Hits;N_{events-500206-trig}",90, -0.5, 89.5);
+    h_SstIstHits_500206 = new TH1F("SstIstHits_500206","IstHits;Number of Primary Tracks with Ist||Sst Hits;N_{events-500206-trig}",90, -0.5, 89.5);
+
+    h_vz_9300      = new TH1F("Vz_9300","V_{z};V_{z}[cm];N_{events-9300-trig}",500,-250, 250);
+    h_IstHits_9300 = new TH1F("IstHits_9300","IstHits;Number of Primary Tracks with Ist Hits;N_{events-9300-trig}",90, -0.5, 89.5);
+    h_SstHits_9300 = new TH1F("SstHits_9300","SstHits;Number of Primary Tracks with Sst Hits;N_{events-9300-trig}",90, -0.5, 89.5);
+    h_SstIstHits_9300 = new TH1F("SstIstHits_9300","IstHits;Number of Primary Tracks with Ist||Sst Hits;N_{events-9300-trig}",90, -0.5, 89.5);
+
+    h_vz_500904      = new TH1F("Vz_500904","V_{z};V_{z}[cm];N_{events-500904-trig}",500,-250, 250);
+    h_IstHits_500904 = new TH1F("IstHits_500904","IstHits;Number of Primary Tracks with Ist Hits;N_{events-500904-trig}",90, -0.5, 89.5);
+    h_SstHits_500904 = new TH1F("SstHits_500904","SstHits;Number of Primary Tracks with Sst Hits;N_{events-500904-trig}",90, -0.5, 89.5);
+    h_SstIstHits_500904 = new TH1F("SstIstHits_500904","IstHits;Number of Primary Tracks with Ist||Sst Hits;N_{events-500904-trig}",90, -0.5, 89.5);
+};
 StdInp::~StdInp() {
     time_t end_time;
     time(&end_time);
@@ -119,5 +140,8 @@ StdInp::~StdInp() {
     /* fprintf(flog," # Time ellapsed: %i seconds or (in hr:min:sec) %02i:%02i:%02i\n", */
             /* (int) seconds, hr, min, sec); */
     flog.close();
+
+    f_hgrams->Write();
+    f_hgrams->Close();
     /* fclose(flog); */
 };

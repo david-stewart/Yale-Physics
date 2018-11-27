@@ -37,12 +37,18 @@ public :
    Bool_t          trig_500808;
    Bool_t          trig_500809;
    Bool_t          trig_500904;
+   Bool_t          trig_9300;
    Int_t           refmult;
    Int_t           nGlobalTracks;
    Int_t           nTracks;
    Int_t           nPrimaryTracks;
    Int_t           nGoodPrimaryTracks;
    Int_t           nTofMatch;
+   Int_t           nIstHit;
+   Int_t           nSstHit;
+   Int_t           nPxl1Hit;
+   Int_t           nPxl2Hit;
+   Int_t           nHftHit;
    Double_t        ranking;
    Double_t        xPV;
    Double_t        yPV;
@@ -89,12 +95,18 @@ public :
    TBranch        *b_event_trig_500808;   //!
    TBranch        *b_event_trig_500809;   //!
    TBranch        *b_event_trig_500904;   //!
+   TBranch        *b_event_trig_9300;   //!
    TBranch        *b_event_refmult;   //!
    TBranch        *b_event_nGlobalTracks;   //!
    TBranch        *b_event_nTracks;   //!
    TBranch        *b_event_nPrimaryTracks;   //!
    TBranch        *b_event_nGoodPrimaryTracks;   //!
    TBranch        *b_event_nTofMatch;   //!
+   TBranch        *b_event_nIstHit;   //!
+   TBranch        *b_event_nSstHit;   //!
+   TBranch        *b_event_nPxl1Hit;   //!
+   TBranch        *b_event_nPxl2Hit;   //!
+   TBranch        *b_event_nHftHit;   //!
    TBranch        *b_event_ranking;   //!
    TBranch        *b_event_xPV;   //!
    TBranch        *b_event_yPV;   //!

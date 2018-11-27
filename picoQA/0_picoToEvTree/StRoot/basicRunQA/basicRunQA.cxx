@@ -38,6 +38,9 @@ Int_t basicRunQA::Init() {
     ftree = new TTree("tree","Tree of General Event Characteristics");
     ftree->Branch("event",  &fevent);
 
+    ftree_RunEnds = new TTree("RunEnds","Tree of first and last events per run");
+    ftree_RunEnds->Branch("RunEnds", &fRunEnds);
+
     return kStOK;
 }
 
@@ -45,8 +48,16 @@ Int_t basicRunQA::Init() {
 Int_t basicRunQA::Finish() {
     fout->Write();
     fout->Close();
+
+    // Write the RunEnds events
+    fprintf(flog, "Writing the RunEnds tree\n");
+    for (auto& entry : fmap_RunEnds) {
+        fRunEnds = entry.second;
+        ftree_RunEnds->Fill();
+    }
     fprintf(flog,"Closing log at end of file.\n");
     fclose(flog);
+
     return kStOK;
 }
     
@@ -71,6 +82,29 @@ Int_t basicRunQA::Make() {
     fevent.runId = mevent->runId();
     fevent.eventId = mevent->eventId();
 
+
+    // find first and last events
+    int &id = fevent.runId;
+    if (fmap_RunEnds.count(id)) { 
+        auto& entry = fmap_RunEnds[id];
+        entry.nEvents += 1;
+        if (id < entry.eventId_0) {
+            entry.eventId_0 = id;
+            entry.time_0    = mevent->time();
+        }
+        if (id > fmap_RunEnds[id].eventId_1) {
+            entry.eventId_1 = id;
+            entry.time_1    = mevent->time();
+        }
+    } else {
+        fmap_RunEnds[id] = RunEnds{};
+        auto& entry = fmap_RunEnds[id];
+        entry.eventId_0 = id;
+        entry.time_0    = mevent->time();
+        entry.eventId_1 = id;
+        entry.time_1    = mevent->time();
+        entry.nEvents = 1;
+    }
     // check for the triggers
     bool has_trig{false};
 
@@ -83,6 +117,7 @@ Int_t basicRunQA::Make() {
     if (mevent->isTrigger(500808)) { fevent.trig_500808 = true; has_trig = true; } else { fevent.trig_500808 = false; }
     if (mevent->isTrigger(500809)) { fevent.trig_500809 = true; has_trig = true; } else { fevent.trig_500809 = false; }
     if (mevent->isTrigger(500904)) { fevent.trig_500904 = true; has_trig = true; } else { fevent.trig_500904 = false; }
+    if (mevent->isTrigger(9300)) { fevent.trig_9300 = true; has_trig = true; } else { fevent.trig_9300 = false; }
 
 
     if (!has_trig) return kStOK;

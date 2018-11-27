@@ -23,6 +23,7 @@
 #include "StEmcUtil/geometry/StEmcGeom.h"
 #include "StEmcUtil/projection/StEmcPosition.h"
 #include "TTree.h"
+#include <map>
 /* #include "StPicoEvent/StPicoBTowHit.h" */
 
 #include "QA_tree.h"
@@ -69,8 +70,13 @@ class basicRunQA : public StMaker {
 
     bool fdebug;
 
-    TTree   *ftree;
-    QA_event fevent;
+    TTree          *ftree;
+    QA_event       fevent;
+
+    TTree          *ftree_RunEnds;
+    RunEnds        fRunEnds;
+
+    map<int, RunEnds> fmap_RunEnds; 
     int fEventsProcessed;
 
 

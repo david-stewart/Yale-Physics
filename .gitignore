@@ -8,3 +8,5 @@ root/
 QA_event.h
 .sl73_gcc485
 /**/bin/
+*.list
+**/schedTemplateExp.xml

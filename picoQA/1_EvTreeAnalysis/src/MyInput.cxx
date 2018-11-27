@@ -19,6 +19,8 @@ MyInput::MyInput(int argc, const char** argv) :
         cout << " required input : out-file-name.log input1.log input2.log [input3.log ...]." << endl;
         exit(2);
     }
+
+
 }
 
 MyInput::~MyInput() {

@@ -1,55 +1,166 @@
-#define tree_cxx
-#include "tree.h"
-#include <TH2.h>
-#include <TStyle.h>
-#include <TCanvas.h>
+//////////////////////////////////////////////////////////
+// This class has been automatically generated on
+// Tue Nov 27 08:03:05 2018 by ROOT version 5.34/30
+// from TTree tree/Tree of General Event Characteristics
+// found on file: AE95465C21BEB89EA650B3069B447266_295.root
+//////////////////////////////////////////////////////////
 
-void tree::Loop()
-{
-//   In a ROOT session, you can do:
-//      Root > .L tree.C
-//      Root > tree t
-//      Root > t.GetEntry(12); // Fill t data members with entry number 12
-//      Root > t.Show();       // Show values of entry 12
-//      Root > t.Show(16);     // Read and show values of entry 16
-//      Root > t.Loop();       // Loop on all entries
-//
+#ifndef tree_h
+#define tree_h
 
-//     This is the loop skeleton where:
-//    jentry is the global entry number in the chain
-//    ientry is the entry number in the current Tree
-//  Note that the argument to GetEntry must be:
-//    jentry for TChain::GetEntry
-//    ientry for TTree::GetEntry and TBranch::GetEntry
-//
-//       To read only selected branches, Insert statements like:
-// METHOD1:
-//    fChain->SetBranchStatus("*",0);  // disable all branches
-//    fChain->SetBranchStatus("branchname",1);  // activate branchname
-// METHOD2: replace line
-//    fChain->GetEntry(jentry);       //read all branches
-//by  b_branchname->GetEntry(ientry); //read only this branch
-   if (fChain == 0) return;
+#include <TROOT.h>
+#include <TChain.h>
+#include <TFile.h>
 
-   Long64_t nentries = fChain->GetEntriesFast();
+// Header file for the classes stored in the TTree if any.
+#include <TObject.h>
 
-   Long64_t nbytes = 0, nb = 0;
-   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      Long64_t ientry = LoadTree(jentry);
-      if (ientry < 0) break;
-      nb = fChain->GetEntry(jentry);   nbytes += nb;
-      // if (Cut(ientry) < 0) continue;
-   }
-}
+// Fixed size dimensions of array or collections stored in the TTree if any.
 
+class tree {
+public :
+   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+   Int_t           fCurrent; //!current Tree number in a TChain
+
+   // Declaration of leaf types
+ //QA_event        *event;
+   UInt_t          fUniqueID;
+   UInt_t          fBits;
+   Int_t           runId;
+   Int_t           eventId;
+   Bool_t          trig_500001;
+   Bool_t          trig_500006;
+   Bool_t          trig_500018;
+   Bool_t          trig_500202;
+   Bool_t          trig_500206;
+   Bool_t          trig_500215;
+   Bool_t          trig_500808;
+   Bool_t          trig_500809;
+   Bool_t          trig_500904;
+   Bool_t          trig_9300;
+   Int_t           refmult;
+   Int_t           nGlobalTracks;
+   Int_t           nTracks;
+   Int_t           nPrimaryTracks;
+   Int_t           nGoodPrimaryTracks;
+   Int_t           nTofMatch;
+   Int_t           nIstHit;
+   Int_t           nSstHit;
+   Int_t           nPxl1Hit;
+   Int_t           nPxl2Hit;
+   Int_t           nHftHit;
+   Double_t        ranking;
+   Double_t        xPV;
+   Double_t        yPV;
+   Double_t        zPV;
+   Double_t        zdcX;
+   Double_t        bbcAdcES;
+   Double_t        bbcAdcEL;
+   Double_t        bbcAdcWS;
+   Double_t        bbcAdcWL;
+   Double_t        zdcSumAdcEast;
+   Double_t        zdcSumAdcWest;
+   Double_t        goodTrkRatio;
+   Double_t        phiTrkMean;
+   Double_t        etaTrkMean;
+   Double_t        phiTrkLead;
+   Double_t        etaTrkLead;
+   Double_t        maxpt;
+   Double_t        sumpt;
+   Int_t           trigId;
+   Int_t           ntowTriggers;
+   Int_t           nHT1trigs;
+   Int_t           nHT2trigs;
+   Double_t        maxEt;
+   Double_t        sumEt;
+   Double_t        maxTowAdc;
+   Double_t        sumTowAdc;
+   Double_t        phiEt;
+   Double_t        etaEt;
+   Double_t        phiEtMean;
+   Double_t        etaEtMean;
+   Bool_t          maxEt_is_maxAdc;
+
+   // List of branches
+   TBranch        *b_event_fUniqueID;   //!
+   TBranch        *b_event_fBits;   //!
+   TBranch        *b_event_runId;   //!
+   TBranch        *b_event_eventId;   //!
+   TBranch        *b_event_trig_500001;   //!
+   TBranch        *b_event_trig_500006;   //!
+   TBranch        *b_event_trig_500018;   //!
+   TBranch        *b_event_trig_500202;   //!
+   TBranch        *b_event_trig_500206;   //!
+   TBranch        *b_event_trig_500215;   //!
+   TBranch        *b_event_trig_500808;   //!
+   TBranch        *b_event_trig_500809;   //!
+   TBranch        *b_event_trig_500904;   //!
+   TBranch        *b_event_trig_9300;   //!
+   TBranch        *b_event_refmult;   //!
+   TBranch        *b_event_nGlobalTracks;   //!
+   TBranch        *b_event_nTracks;   //!
+   TBranch        *b_event_nPrimaryTracks;   //!
+   TBranch        *b_event_nGoodPrimaryTracks;   //!
+   TBranch        *b_event_nTofMatch;   //!
+   TBranch        *b_event_nIstHit;   //!
+   TBranch        *b_event_nSstHit;   //!
+   TBranch        *b_event_nPxl1Hit;   //!
+   TBranch        *b_event_nPxl2Hit;   //!
+   TBranch        *b_event_nHftHit;   //!
+   TBranch        *b_event_ranking;   //!
+   TBranch        *b_event_xPV;   //!
+   TBranch        *b_event_yPV;   //!
+   TBranch        *b_event_zPV;   //!
+   TBranch        *b_event_zdcX;   //!
+   TBranch        *b_event_bbcAdcES;   //!
+   TBranch        *b_event_bbcAdcEL;   //!
+   TBranch        *b_event_bbcAdcWS;   //!
+   TBranch        *b_event_bbcAdcWL;   //!
+   TBranch        *b_event_zdcSumAdcEast;   //!
+   TBranch        *b_event_zdcSumAdcWest;   //!
+   TBranch        *b_event_goodTrkRatio;   //!
+   TBranch        *b_event_phiTrkMean;   //!
+   TBranch        *b_event_etaTrkMean;   //!
+   TBranch        *b_event_phiTrkLead;   //!
+   TBranch        *b_event_etaTrkLead;   //!
+   TBranch        *b_event_maxpt;   //!
+   TBranch        *b_event_sumpt;   //!
+   TBranch        *b_event_trigId;   //!
+   TBranch        *b_event_ntowTriggers;   //!
+   TBranch        *b_event_nHT1trigs;   //!
+   TBranch        *b_event_nHT2trigs;   //!
+   TBranch        *b_event_maxEt;   //!
+   TBranch        *b_event_sumEt;   //!
+   TBranch        *b_event_maxTowAdc;   //!
+   TBranch        *b_event_sumTowAdc;   //!
+   TBranch        *b_event_phiEt;   //!
+   TBranch        *b_event_etaEt;   //!
+   TBranch        *b_event_phiEtMean;   //!
+   TBranch        *b_event_etaEtMean;   //!
+   TBranch        *b_event_maxEt_is_maxAdc;   //!
+
+   tree(TTree *tree=0);
+   virtual ~tree();
+   virtual Int_t    Cut(Long64_t entry);
+   virtual Int_t    GetEntry(Long64_t entry);
+   virtual Long64_t LoadTree(Long64_t entry);
+   virtual void     Init(TTree *tree);
+   virtual void     Loop();
+   virtual Bool_t   Notify();
+   virtual void     Show(Long64_t entry = -1);
+};
+
+#endif
+
+#ifdef tree_cxx
 tree::tree(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("a.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("AE95465C21BEB89EA650B3069B447266_295.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("a.root");
+         f = new TFile("AE95465C21BEB89EA650B3069B447266_295.root");
       }
       f->GetObject("tree",tree);
 
@@ -182,3 +293,4 @@ Int_t tree::Cut(Long64_t entry)
 // returns -1 otherwise.
    return 1;
 }
+#endif // #ifdef tree_cxx
