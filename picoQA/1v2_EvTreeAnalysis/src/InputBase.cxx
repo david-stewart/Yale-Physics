@@ -31,7 +31,7 @@ InputBase::InputBase(string line, bool has_help_msg_) :
 void InputBase::open_log() {
     ss_args >> log_name;
 
-    if (has_help_msg && (log_name == "-h" || log_name == "--help"){
+    if (has_help_msg && (log_name == "-h" || log_name == "--help")){
         give_help_msg = true; 
         return;
     }

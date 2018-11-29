@@ -17,10 +17,14 @@ OBJDIR = obj
 # OneVarStats.o : OneVarStats.cxx
 # 	${CC} -c OneVarStats.cxx ${INC_LIBS}
 
-count_o = count.o CountInput.o RunStats.o
-
-count: ${count_o}
+count: count.o CountInput.o RunStats.o tree.o InputBase.o
 	${CC} -o $@ $^ ${INC_LIBS}
+
+CountInput.o: CountInput.cxx CountInput.h RunStats.o InputBase.o tree.o
+	${CC} -c $^ ${INC_LIBS}
+
+count.o: count.cxx count.h CountInput.o RunStats.o tree.o 
+	${CC} -c $^ ${INC_LIBS}
 
 
 count_events_ofiles = count_events.o tree.o StdInp.o OneVarStats.o TrigCount.o

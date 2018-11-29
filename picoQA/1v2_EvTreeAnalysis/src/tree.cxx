@@ -3,6 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <iostream>
 
 void tree::Loop()
 {
@@ -94,7 +95,10 @@ void tree::Init(TTree *tree)
 
    // Set branch addresses and branch pointers
    if (!tree) return;
+   /* std::cout << "have a tree!" << std::endl; */
    fChain = tree;
+   /* std::cout << fChain->GetEntries() << std::endl; */
+   /* std::cout << "--------------" << std::endl; */
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
