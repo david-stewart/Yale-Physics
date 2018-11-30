@@ -9,6 +9,9 @@ OBJDIR = obj
 %.o : %.cxx %.h
 	${CC} -c $*.cxx ${INC_LIBS}
 
+count: count.o CountInput.o RunStats.o tree.o InputBase.o dict.cxx
+	${CC} -o $@ $^ ${INC_LIBS}
+
 
 # test : OneVarStats.o test.cxx
 # 	${CC} -o test test.cxx OneVarStats.o ${INC_LIBS}
@@ -16,14 +19,19 @@ OBJDIR = obj
 
 # OneVarStats.o : OneVarStats.cxx
 # 	${CC} -c OneVarStats.cxx ${INC_LIBS}
+OneVar_root_dict.cxx:
+	rootcint -f OneVar_root_dict.cxx RunStats.h OneVar_LinkDef.h
 
-count: count.o CountInput.o RunStats.o tree.o InputBase.o
-	${CC} -o $@ $^ ${INC_LIBS}
+RunStats.o: RunStats.cxx RunStats.h OneVar_root_dict.cxx
+	# echo "hi"
+	# echo ${CC} -c $^ ${INC_LIBS}
+	${CC} -c $^ ${INC_LIBS}
+
 
 CountInput.o: CountInput.cxx CountInput.h RunStats.o InputBase.o tree.o
 	${CC} -c $^ ${INC_LIBS}
 
-count.o: count.cxx count.h CountInput.o RunStats.o tree.o 
+count.o: count.cxx count.h CountInput.o RunStats.o tree.o dict.cxx
 	${CC} -c $^ ${INC_LIBS}
 
 

@@ -9,6 +9,7 @@ OneVar::OneVar() :
     is_int{false}, min{0}, max{0}, nEntries{0}, sum{0}, sum2{0}
 {};
 OneVar::~OneVar () {};
+/* OneVar::OneVar(const OneVar&) {}; */
 //---------------------------------------------------------------
 
 OneVarFiller::~OneVarFiller(){};
@@ -28,6 +29,7 @@ OneVarFiller::OneVarFiller(double* p) :
 
 void OneVarFiller::operator()() {
     double v { is_int ? *p_int : *p_double } ;
+    if (v != v) return;
     /* std::cout << "This is v: " << v << std::endl; */
     ++data.nEntries;
     if (data.nEntries == 1) {
