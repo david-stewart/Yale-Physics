@@ -9,25 +9,30 @@ OBJDIR = obj
 %.o : %.cxx %.h
 	${CC} -c $*.cxx ${INC_LIBS}
 
-
-# test : OneVarStats.o test.cxx
-# 	${CC} -o test test.cxx OneVarStats.o ${INC_LIBS}
-
-
-# OneVarStats.o : OneVarStats.cxx
-# 	${CC} -c OneVarStats.cxx ${INC_LIBS}
+../bin/count: count.o InputCount.o RunStats.o tree.o InputBase.o # dict.cxx
+	${CC} -o $@ $^ ${INC_LIBS}
 
 
-count_events_ofiles = count_events.o tree.o StdInp.o OneVarStats.o TrigCount.o
+RunStats.o: RunStats.cxx RunStats.h #OneVar_root_dict.cxx
+	# echo "hi"
+	# echo ${CC} -c $^ ${INC_LIBS}
+	${CC} -c $^ ${INC_LIBS}
+
+InputCount.o: InputCount.cxx InputCount.h RunStats.o InputBase.o tree.o
+	${CC} -c $^ ${INC_LIBS}
+
+count.o: count.cxx count.h InputCount.o RunStats.o tree.o # dict.cxx
+	${CC} -c $^ ${INC_LIBS}
+
+
+count_events_ofiles = count_events.o tree.o StdInp.o TrigCount.o
 ../bin/count_events : ${count_events_ofiles} MyLoop.h
 	${CC} -o $@ ${count_events_ofiles}  ${INC_LIBS}
 
 
-combine_logs_ofiles = OneVarStats.o MyInput.o InputBase.o CombineLogs.o TrigCount.o
+combine_logs_ofiles = MyInput.o InputBase.o CombineLogs.o TrigCount.o
 ../bin/combine_logs : ${combine_logs_ofiles} 
 	${CC} -o $@ ${combine_logs_ofiles} ${INC_LIBS}
-
-
 
 
 # test : MapFromText.o

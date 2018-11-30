@@ -7,14 +7,14 @@
     </ResourceUsage>
 	<command>
         set MYPATH=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/1_EvTreeAnalysis
-        set PROG=$MYPATH/bin/count_events
+        set PROG=$MYPATH/bin/count
         set LOG=$MYPATH/logs/c_P17_&n;_&k;.log
         set LIST=$MYPATH/list/P17.list
-        $PROG -1 $LOG $LIST &n; &k;
+        $PROG $LOG -1 $LIST &n; &k;
 	</command>
 	<!-- <SandBox installer="ZIP"> -->
 		<!-- <Package> -->
-            <!-- <File>file:./bin/count_events</File> -->
+            <!-- <File>file:./bin/count</File> -->
 			<!-- <File>file:./StRoot</File> -->
             <!-- <File>file:./.sl73_gcc485</File> -->
 		<!-- </Package> -->		
