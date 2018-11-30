@@ -9,7 +9,7 @@ OBJDIR = obj
 %.o : %.cxx %.h
 	${CC} -c $*.cxx ${INC_LIBS}
 
-count: count.o CountInput.o RunStats.o tree.o InputBase.o dict.cxx
+count: count.o CountInput.o RunStats.o tree.o InputBase.o # dict.cxx
 	${CC} -o $@ $^ ${INC_LIBS}
 
 
@@ -19,10 +19,10 @@ count: count.o CountInput.o RunStats.o tree.o InputBase.o dict.cxx
 
 # OneVarStats.o : OneVarStats.cxx
 # 	${CC} -c OneVarStats.cxx ${INC_LIBS}
-OneVar_root_dict.cxx:
-	rootcint -f OneVar_root_dict.cxx RunStats.h OneVar_LinkDef.h
+# OneVar_root_dict.cxx:
+	# rootcint -f OneVar_root_dict.cxx RunStats.h OneVar_LinkDef.h
 
-RunStats.o: RunStats.cxx RunStats.h OneVar_root_dict.cxx
+RunStats.o: RunStats.cxx RunStats.h #OneVar_root_dict.cxx
 	# echo "hi"
 	# echo ${CC} -c $^ ${INC_LIBS}
 	${CC} -c $^ ${INC_LIBS}
@@ -31,7 +31,7 @@ RunStats.o: RunStats.cxx RunStats.h OneVar_root_dict.cxx
 CountInput.o: CountInput.cxx CountInput.h RunStats.o InputBase.o tree.o
 	${CC} -c $^ ${INC_LIBS}
 
-count.o: count.cxx count.h CountInput.o RunStats.o tree.o dict.cxx
+count.o: count.cxx count.h CountInput.o RunStats.o tree.o # dict.cxx
 	${CC} -c $^ ${INC_LIBS}
 
 

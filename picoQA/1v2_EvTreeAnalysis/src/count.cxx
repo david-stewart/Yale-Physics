@@ -17,19 +17,22 @@
 /* CountLoop::CountLoop(CountInput& inp_) : input(inp_), tree{inp_.chain} {}; */
 class Filler{
     public:
-    vector<string>& names;
-    map<int,vector<OneVarFiller>>& mapV;
-    Filler(vector<string>& names_, map<int,vector<OneVarFiller>>& map_) :
-        names{names_}, mapV{map_} {};
+    vector<string>* names;
+    map<int,vector<OneVarFiller>>* mapV;
+    Filler(vector<string>* names_, map<int,vector<OneVarFiller>>* map_) 
+    {
+        names=names_; 
+        mapV = map_;
+    };
 
     void operator()(string name, int& v) {
-        names.push_back(name);
-        mapV[0].push_back(OneVarFiller{&v});
-    }
+        names->push_back(name);
+        (*mapV)[0].push_back(OneVarFiller{&v});
+    };
     void operator()(string name, double& v) {
-        names.push_back(name);
-        mapV[0].push_back(OneVarFiller{&v});
-    }
+        names->push_back(name);
+        (*mapV)[0].push_back(OneVarFiller{&v});
+    };
 };
 
 void CountInput::CountLoop() {
@@ -59,7 +62,7 @@ void CountInput::CountLoop() {
     vector<string> par_names;
     map<int, vector<OneVarFiller>> mapV;
     mapV[0] = vector<OneVarFiller>{};
-    Filler fill{par_names, mapV};
+    Filler fill(&par_names, &mapV);
 
 
     fill("refmult", refmult);

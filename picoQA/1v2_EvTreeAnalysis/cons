@@ -1,0 +1,91 @@
+build for #.sl73_gcc485
+Base DEBUG options = -g
+        DEBUG is enabled (enable optimize by setting the ENV NODEBUG)
+        The ENV variable OPTIM_OPTIONS may override the default optimize options
+System: sl73_gcc485
+CERNLIB =  /cern/pro/lib/libpawlib.a /cern/pro/lib/liblapack3.a /cern/pro/lib/libblas.a /c ern/pro/lib/libpacklib_noshift.a /cern/pro/lib/libgraflib.a /cern/pro/lib/libgrafX11.a /cern/pro/lib/libpacklib_noshift.a /cern/pro/lib/libmathlib.a /cern/pro/lib/libkernlib_noshift.a -L/usr/X11R6/lib -lX11 -lnsl -lcrypt -ldl
+CXX_VERSION : 4.8.5 MAJOR = 4 MINOR = 8
+        CXX version implies using C++/C++11 c++0x standard
+        Removing duplicate -fPIC from CFLAGS
+        Removing duplicate -m32 from CFLAGS
+        Removing duplicate -m32 from CXXFLAGS
+Using /afs/rhic.bnl.gov/opt/star/sl73_gcc485/bin/mysql_config
+        MYSQLINCDIR = /usr/include/mysql MYSQLLIBDIR = /usr/lib/mysql   MYSQLLIB =  -lmysqlclient -Wl,--no-whole-archive -Wl,-Bdynamic -lpthread -lz -lm -lssl -lcrypto -ldl
+Use QTLIBDIR = /opt/star/sl73_gcc485/qt4/lib    QTINCDIR = /opt/star/sl73_gcc485/qt4/include:/opt/star/sl73_gcc485/qt4/include/Qt:/opt/star/sl73_gcc485/qt4/include/QtCore:/opt/star/sl73_gcc485/qt4/include/QtXml:/opt/star/sl73_gcc485/qt4/include/QtNetwork:/opt/star/sl73_gcc485/qt4/include/QtSql:/opt/star/sl73_gcc485/qt4/include/QtTest:/opt/star/sl73_gcc485/qt4/include/QtDBus:/opt/star/sl73_gcc485/qt4/include/QtGui:/opt/star/sl73_gcc485/qt4/include/Qt3Support:/opt/star/sl73_gcc485/qt4/include/QtOpenGL:/opt/star/sl73_gcc485/qt4/include/QtMultimedia:/opt/star/sl73_gcc485/qt4/include/QtSvg:/opt/star/sl73_gcc485/qt4/include/QtScript:/opt/star/sl73_gcc485/qt4/include/QtDeclarative:/opt/star/sl73_gcc485/qt4/include/QtWebKit:/opt/star/sl73_gcc485/qt4/include/QtScriptTools:/opt/star/sl73_gcc485/qt4/include/QtHelp:/opt/star/sl73_gcc485/qt4/include/QtUiTools:/opt/star/sl73_gcc485/qt4/include/QtDesigner     QTFLAGS = -DR__QT -DQT_QT3SUPPORT_LIB -DQT3_SUPPORT -DQT_GUI_LIB -DQT_CORE_LIB -DQ
+T_SHARED        QTLIBS =  -lQtCore -lQtXml -lQtNetwork -lQtSql -lQtTest -lQtDBus -lQtGui -
+lQt3Support -lQtOpenGL -lQtMultimedia -lQtSvg -lQtScript -lQtDeclarative -lQtWebKit -lQtSc
+riptTools -lQtCLucene -lQtHelp -lQtDesigner -lQtDesignerComponents
+Use COIN3DLIBDIR = /afs/rhic.bnl.gov/opt/star/sl73_gcc485/bin   COIN3DINCDIR = /afs/rhic.b
+nl.gov/opt/star/sl73_gcc485/include     COIN3DFLAGS =   COIN3DLIBS = -lCoin -lSmallChange
+-lSoQt -lsimage
+Use Logger  LIBDIR = /afs/rhic.bnl.gov/opt/star/sl73_gcc485/lib         LoggerINCDIR = /af
+s/rhic.bnl.gov/opt/star/sl73_gcc485/include     LoggerLIBS = -llog4cxx
+Use xml /usr/bin/xml2-config XMLLIBDIR = /usr/lib       XMLINCDIR = /usr/include/libxml2 X
+MLLIBS = -lxml2 -lz -lm -ldl XMLCPPFlag =
+param::defaultInclude = .sl73_gcc485/include
+Repository used is /afs/rhic.bnl.gov/star/packages/SL18b
+Use default Conscript from Conscript-standard
+Install includes
+Set LIB = #.sl73_gcc485/lib BIN = #.sl73_gcc485/bin OBJ = #.sl73_gcc485/obj INCLUDE = #.sl
+73_gcc485/include LIBPATH = #.sl73_gcc485/lib:/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gc
+c485/rootdeb/lib:/usr/lib/mysql:/opt/star/sl73_gcc485/qt4/lib:/afs/rhic.bnl.gov/opt/star/s
+l73_gcc485/lib
+DirPath    = /gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/0_picoToEvTree
+repository = /afs/rhic.bnl.gov/star/packages/SL18b
+Repositories:  "/afs/rhic.bnl.gov/star/packages/SL18b"; Set Salt to "user"
+Link #.sl73_gcc485 => /gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/0_pic
+oToEvTree
+STAR_SYS = sl73_gcc485  ROOTSYS = /afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc485/rootdeb
+CXX = g++       DEBUG = -g      CXXFLAGS = -m32 -fPIC -pipe -Wall -Woverloaded-virtual -st
+d=c++0x -Wno-long-long -pthread         CPPFLAGS =  -Dsl73_gcc485 -D__ROOT__
+CPPPATH = #:#StRoot:#.sl73_gcc485/include:/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc485
+/rootdeb/include
+CC = gcc        DEBUG = -g      CFLAGS = -m32 -fPIC -w -pipe -Wall -Wshadow -pthread  -Dsl
+73_gcc485 -D__ROOT__
+FC = gfortran   FDEBUG = -g     FPPFLAGS =  -DCERNLIB_TYPE -DCERNLIB_DOUBLE -DCERNLIB_NOQU
+AD -DCERNLIB_LINUX  -Dsl73_gcc485       FEXTEND = -ffixed-line-length-132       FFLAGS = -
+m32 -fd-lines-as-code  -std=legacy -fno-second-underscore -w -fno-automatic -Wall -W -Wsur
+prising -fPIC
+FCPATH = #.sl73_gcc485/include:#asps/Simulation/geant321/include:/cern/pro/include:#
+F77LD = g++     F77LDFLAGS = -m32
+CERNLIBS =  /cern/pro/lib/libpawlib.a /cern/pro/lib/liblapack3.a /cern/pro/lib/libblas.a /
+cern/pro/lib/libpacklib_noshift.a /cern/pro/lib/libgraflib.a /cern/pro/lib/libgrafX11.a /c
+ern/pro/lib/libpacklib_noshift.a /cern/pro/lib/libmathlib.a /cern/pro/lib/libkernlib_noshi
+ft.a -L/usr/X11R6/lib -lX11 -lnsl -lcrypt -ldl
+FLIBS = -lgfortran      CLIBS =  -L/usr/X11R6/lib -lXt -lXpm -lX11 -lm -ldl -lrt -rdynamic
+ -pthread       SYSLIBS = -lm -ldl -lrt -rdynamic -pthread
+LD = g++        LDFLAGS = -m32  LIBPATH = #.sl73_gcc485/lib:/afs/rhic.bnl.gov/star/ROOT/5.
+34.30/.sl73_gcc485/rootdeb/lib:/usr/lib/mysql:/opt/star/sl73_gcc485/qt4/lib:/afs/rhic.bnl.
+gov/opt/star/sl73_gcc485/lib
+SO = g++        SOFLAGS = -m32 -shared -Wl,-Bdynamic
+
+ROOTLIBS = -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscr
+ipt -lMatrix -lPhysics -lMathCore -lThread
+BUILD  = #.sl73_gcc485 OBJ = #.sl73_gcc485/obj
+Run Conscript-standard in StRoot/basicRunQA               for basicRunQA
+g++ -m32 -fPIC -pipe -Wall -Woverloaded-virtual -std=c++0x -Wno-long-long -pthread -g -Dsl
+73_gcc485 -D__ROOT__ -DNEW_DAQ_READER -I. -IStRoot -I.sl73_gcc485/include -I/afs/rhic.bnl.
+gov/star/packages/SL18b -I/afs/rhic.bnl.gov/star/packages/SL18b/StRoot -I/afs/rhic.bnl.gov
+/star/packages/SL18b/.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc4
+85/rootdeb/include -c .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA.cxx -o .sl73_gcc485/ob
+j/StRoot/basicRunQA/basicRunQA.o
+// 
+RootCint.pl ".sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA_Cint.cxx" "StRoot/basicRunQA/QA_tree.h StRoot/basicRunQA/basicRunQA.h" "-IStRoot/basicRunQA -I. -IStRoot -I.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/packages/SL18b -I/afs/rhic.bnl.gov/star/packages/SL18b/StRoot -I/afs/rhic.bnl.gov/star/packages/SL18b/.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc485/rootdeb/include "
+#pragma link C++ class RunEnds+;
+#pragma link C++ class QA_event+;
+#pragma link C++ class basicRunQA+;
+
+cmd (normal)= rootcint -f .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA_Cint.cxx -c -DROOT_CINT -D__ROOT__  -I.sl73_gcc485/obj/StRoot/basicRunQA -IStRoot/basicRunQA -IStRoot/basicRunQA -I. -IStRoot -I.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/packages/SL18b -I/afs/rhic.bnl.gov/star/packages/SL18b/StRoot -I/afs/rhic.bnl.gov/star/packages/SL18b/.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc485/rootdeb/include   QA_tree.h basicRunQA.h  LinkDef.h
+
+g++ -m32 -fPIC -pipe -Wall -Woverloaded-virtual -std=c++0x -Wno-long-long -pthread -Dsl73_
+gcc485 -D__ROOT__ -DNEW_DAQ_READER -I. -IStRoot -I.sl73_gcc485/include -I. -I/afs/rhic.bnl
+.gov/star/packages/SL18b -I/afs/rhic.bnl.gov/star/packages/SL18b/StRoot -I/afs/rhic.bnl.go
+v/star/packages/SL18b/.sl73_gcc485/include -I/afs/rhic.bnl.gov/star/ROOT/5.34.30/.sl73_gcc
+485/rootdeb/include -I/afs/rhic.bnl.gov/star/packages/SL18b -c .sl73_gcc485/obj/StRoot/bas
+icRunQA/basicRunQA_Cint.cxx -o .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA_Cint.o
+g++ -g -m32 -shared -Wl,-Bdynamic -o .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA.so .sl7
+3_gcc485/obj/StRoot/basicRunQA/basicRunQA.o .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA_
+Cint.o
+Install .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA.so as .sl73_gcc485/lib/basicRunQA.so
+Install .sl73_gcc485/obj/StRoot/basicRunQA/basicRunQA.so as .sl73_gcc485/lib/libbasicRunQA
+.so
