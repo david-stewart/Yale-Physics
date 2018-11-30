@@ -1,12 +1,12 @@
 #include "InputBase.h"
-#include "CountInput.h"
+#include "InputCount.h"
 #include "TFile.h"
 #include "TH1F.h"
 #include "RunStats.h"
 
 using namespace std;
 
-CountInput::CountInput(int argc, const char** argv) :
+InputCount::InputCount(int argc, const char** argv) :
     InputBase{argc, argv, true},
     nEvents{100}
 {
@@ -146,8 +146,7 @@ CountInput::CountInput(int argc, const char** argv) :
     /* tr_data->Fill(); */
 }
 
-CountInput::~CountInput() {
+InputCount::~InputCount() {
     file->Write();
     file->Close();
 };
-

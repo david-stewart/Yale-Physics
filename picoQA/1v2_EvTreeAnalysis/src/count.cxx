@@ -2,7 +2,7 @@
 
 /* #include "MyLoop.h" */
 /* #include "tree.h" */
-#include "CountInput.h"
+#include "InputCount.h"
 #include "RunStats.h"
 #include <assert.h>
 
@@ -14,7 +14,7 @@
 /* #include <iomanip> */
 /* #include <unistd.h> */
 
-/* CountLoop::CountLoop(CountInput& inp_) : input(inp_), tree{inp_.chain} {}; */
+/* CountLoop::CountLoop(InputCount& inp_) : input(inp_), tree{inp_.chain} {}; */
 class Filler{
     public:
     vector<string>* names;
@@ -35,7 +35,7 @@ class Filler{
     };
 };
 
-void CountInput::CountLoop() {
+void InputCount::CountLoop() {
     if (fChain == 0) return;
     bool runAll{nEvents == -1};
     Long64_t jentry{0};
@@ -141,32 +141,19 @@ void CountInput::CountLoop() {
         for (auto& v : mapT[runId]) v();
         ++jentry;
     }
-    // write the trees of data
+
+    int br_runId;
+    tr_data->Branch("runId", &br_runId);
+
     vector<int>    val_ntrigs(mapT[0].size());
     vector<OneVar> val_onevar(mapV[0].size());
-    /* vector<int> br_n_trigs; */ 
-    /* array<int, */ 
-    /* vector<OneVar>   br_onevar; */
-    /* int i{0}; */
-    /* int j{100}; */
-    /* int newbie; */
-    /* file->cd(); */
-    /* tr_data->Branch("newbie_copy",&newbie); */
-    /* for (int i{0}; i<trig_names.size();++i) br_n_trigs.push_back(0); */
+
     for (int i{0}; i<val_ntrigs.size();++i)//{
         tr_data->Branch(trig_names[i].c_str(), &val_ntrigs[i]);
-        /* for (auto name : trig_names){ */
-        /* cout << " trig_names " << trig_names[i] <<  endl; */
-        /* br_n_trigs.push_back(0); */
-        /* tr_data->Branch(TString::Format("dat_%i",i).Data(), &br_n_trigs[i]); */
-        /* tr_data->Branch("MMM",&br_n_trigs[0]); */
-    //}
-    /* tr_data->Branch("NNN", &br_n_trigs[0]); */
-    /* i = 0; */
-    /* OneVar test_onevar; */
+
     for (int i{0}; i<val_onevar.size(); ++i){
         string min_name{par_names[i]};
-        /* double* min = &(val_onevar[i].min); */
+    
         tr_data->Branch(min_name.append("_min").c_str(),&(val_onevar[i].min));
 
         string max_name{par_names[i]};
@@ -182,8 +169,10 @@ void CountInput::CountLoop() {
         tr_data->Branch(nEntries_name.append("_nEntries").c_str(),&(val_onevar[i].nEntries));
     }
 
+
     cout << mapT.size() << "    ----" << endl;
     for (auto& v_ : mapT){
+        br_runId = v_.first;
         cout << "Writing for run " << v_.first << endl;
 
         assert (mapV.count(v_.first) != 0);
@@ -205,7 +194,7 @@ void CountInput::CountLoop() {
 using namespace std;
 
 int main(int argc, const char** argv) {
-    CountInput input{argc, argv};
+    InputCount input{argc, argv};
     input.CountLoop();
 }
 
@@ -327,7 +316,7 @@ int main(int argc, const char** argv) {
 /* }; */
 
 /* /1* int main(int argc, const char** argv) { *1/ */
-/* /1*     CountInput input(argc, argv); *1/ */
+/* /1*     InputCount input(argc, argv); *1/ */
 /*     // get all the the input braches sorted out */
 /*     /1* StdInp inp{argc, argv, true, 10, "test.log"}; *1/ */
 /*     /1* MyTree mytree{inp}; *1/ */
