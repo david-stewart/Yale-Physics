@@ -50,12 +50,12 @@ void CountInput::CountLoop() {
     /* t_fill( "VPDMB_5_ssd",   trig_500001 ); */
     /* t_fill( "VPDMB_5_nossd", trig_500006 ); */
     t_fill( "BBCMB",          trig_500018 );
-    /* t_fill( "BHT1_VPDMB-30"       ,  trig_500202 ); */
-    /* t_fill( "BHT1_VPDMB_30_nobsmd",  trig_500206 ); */
-    /* t_fill( "BHT2_BBCMB",            trig_500215 ); */ 
-    /* t_fill( "FMS_JP2",               trig_500808 ); */
-    /* t_fill( "FMS_JP1",               trig_500809 ); */
-    /* t_fill( "VPDMB_30",              trig_500904 ); */
+    t_fill( "BHT1_VPDMB_30"       ,  trig_500202 );
+    t_fill( "BHT1_VPDMB_30_nobsmd",  trig_500206 );
+    t_fill( "BHT2_BBCMB",            trig_500215 ); 
+    t_fill( "FMS_JP2",               trig_500808 );
+    t_fill( "FMS_JP1",               trig_500809 );
+    t_fill( "VPDMB_30",              trig_500904 );
     t_fill( "ZEROBIAS",              trig_9300   );
 
     // make maps to keep the data
@@ -66,45 +66,45 @@ void CountInput::CountLoop() {
 
 
     fill("refmult", refmult);
-    /* fill("nGlobalTracks", nGlobalTracks ); */
-    /* fill("nTracks", nTracks ); */
-    /* fill("nPrimaryTracks", nPrimaryTracks ); */
-    /* fill("nGoodPrimaryTracks", nGoodPrimaryTracks ); */
-    /* fill("nTofMatch", nTofMatch ); */
-    /* fill("nIstHit", nIstHit ); */
-    /* fill("nSstHit", nSstHit ); */
-    /* fill("nPxl1Hit", nPxl1Hit ); */
-    /* fill("nPxl2Hit", nPxl2Hit ); */
-    /* fill("nHftHit",  nHftHit ); */
-    /* fill("ranking", ranking ); */
-    /* fill("xPV", xPV ); */
-    /* fill("yPV", yPV ); */
-    /* fill("zPV", zPV ); */
-    /* fill("zdcX", zdcX ); */
-    /* fill("bbcAdcES", bbcAdcES ); */
-    /* fill("bbcAdcEL", bbcAdcEL ); */
-    /* fill("bbcAdcWS", bbcAdcWS ); */
-    /* fill("bbcAdcWL", bbcAdcWL ); */
-    /* fill("zdcSumAdcEast", zdcSumAdcEast ); */
-    /* fill("zdcSumAdcWest", zdcSumAdcWest ); */
-    /* fill("goodTrkRatio", goodTrkRatio ); */
-    /* fill("phiTrkMean", phiTrkMean ); */
-    /* fill("etaTrkMean", etaTrkMean ); */
-    /* fill("phiTrkLead", phiTrkLead ); */
-    /* fill("etaTrkLead", etaTrkLead ); */
-    /* fill("maxpt", maxpt ); */
-    /* fill("sumpt", sumpt ); */
-    /* fill("ntowTriggers", ntowTriggers ); */
-    /* fill("nHT1trigs", nHT1trigs ); */
-    /* fill("nHT2trigs", nHT2trigs ); */
-    /* fill("maxEt", maxEt ); */
-    /* fill("sumEt", sumEt ); */
-    /* fill("maxTowAdc", maxTowAdc ); */
-    /* fill("sumTowAdc", sumTowAdc ); */
-    /* fill("phiEt", phiEt ); */
-    /* fill("etaEt", etaEt ); */
-    /* fill("phiEtMean", phiEtMean ); */
-    /* fill("etaEtMean", etaEtMean ); */
+    fill("nGlobalTracks", nGlobalTracks );
+    fill("nTracks", nTracks );
+    fill("nPrimaryTracks", nPrimaryTracks );
+    fill("nGoodPrimaryTracks", nGoodPrimaryTracks );
+    fill("nTofMatch", nTofMatch );
+    fill("nIstHit", nIstHit );
+    fill("nSstHit", nSstHit );
+    fill("nPxl1Hit", nPxl1Hit );
+    fill("nPxl2Hit", nPxl2Hit );
+    fill("nHftHit",  nHftHit );
+    fill("ranking", ranking );
+    fill("xPV", xPV );
+    fill("yPV", yPV );
+    fill("zPV", zPV );
+    fill("zdcX", zdcX );
+    fill("bbcAdcES", bbcAdcES );
+    fill("bbcAdcEL", bbcAdcEL );
+    fill("bbcAdcWS", bbcAdcWS );
+    fill("bbcAdcWL", bbcAdcWL );
+    fill("zdcSumAdcEast", zdcSumAdcEast );
+    fill("zdcSumAdcWest", zdcSumAdcWest );
+    fill("goodTrkRatio", goodTrkRatio );
+    fill("phiTrkMean", phiTrkMean );
+    fill("etaTrkMean", etaTrkMean );
+    fill("phiTrkLead", phiTrkLead );
+    fill("etaTrkLead", etaTrkLead );
+    fill("maxpt", maxpt );
+    fill("sumpt", sumpt );
+    fill("ntowTriggers", ntowTriggers );
+    fill("nHT1trigs", nHT1trigs );
+    fill("nHT2trigs", nHT2trigs );
+    fill("maxEt", maxEt );
+    fill("sumEt", sumEt );
+    fill("maxTowAdc", maxTowAdc );
+    fill("sumTowAdc", sumTowAdc );
+    fill("phiEt", phiEt );
+    fill("etaEt", etaEt );
+    fill("phiEtMean", phiEtMean );
+    fill("etaEtMean", etaEtMean );
 
     /* map<int, RunStats> mapR; */
     /* mapV[0].push_back(make_pair("refmult", OneVarFiller<int>{refmult})); */
@@ -164,55 +164,42 @@ void CountInput::CountLoop() {
     /* tr_data->Branch("NNN", &br_n_trigs[0]); */
     /* i = 0; */
     /* OneVar test_onevar; */
-    for (int i{0}; i<val_onevar.size(); ++i) 
-        tr_data->Branch(par_names[i].c_str(), &val_onevar[i]);
-        /* auto name : par_names){ */
-        /* int test_int; */
-        /* br_onevar.push_back(OneVar{}); */
-        /* tr_data->Branch(name.c_str(), &br_onevar[i]); */
-        /* cout << "Branch " << name << endl; */
-        /* ++i; */
-    /* }; */
+    for (int i{0}; i<val_onevar.size(); ++i){
+        string min_name{par_names[i]};
+        /* double* min = &(val_onevar[i].min); */
+        tr_data->Branch(min_name.append("_min").c_str(),&(val_onevar[i].min));
+
+        string max_name{par_names[i]};
+        tr_data->Branch(max_name.append("_max").c_str(),&(val_onevar[i].max));
+
+        string sum_name{par_names[i]};
+        tr_data->Branch(sum_name.append("_sum").c_str(),&(val_onevar[i].sum));
+
+        string sum2_name{par_names[i]};
+        tr_data->Branch(sum2_name.append("_sum2").c_str(),&(val_onevar[i].sum2));
+
+        string nEntries_name{par_names[i]};
+        tr_data->Branch(nEntries_name.append("_nEntries").c_str(),&(val_onevar[i].nEntries));
+    }
+
     cout << mapT.size() << "    ----" << endl;
     for (auto& v_ : mapT){
         cout << "Writing for run " << v_.first << endl;
 
         assert (mapV.count(v_.first) != 0);
 
-        // set number of triggers
         auto& trigs = v_.second;
         for (int i{0}; i < val_ntrigs.size(); ++i) 
             val_ntrigs[i] = trigs[i].n;
-        // {
-            /* br_n_trigs[i] = trigs[i].n; */
-            /* cout << " trigs " << setw(10) << trig_names[i] */ 
-            /*      << " " << setw(10) << br_n_trigs[i] << endl; */
-        /* } */
-        /* newbie = br_n_trigs[0]; */
 
         // set data points
         int run_id = v_.first;
         auto& vals = mapV[run_id];
         for (int i{0}; i < val_onevar.size(); ++i)
             val_onevar[i] = vals[i].data;
-        /* for (int i{0}; i < vals.size(); ++i){ */
-            /* cout << " val " << par_names[i] << " sum: " << vals[i].data.sum << endl; */
-            /* br_onevar[i] = vals[i].data; */
-        /* } */
+
         tr_data->Fill();
     }
-
-    /* for (auto& p : mapT) { */
-    /*     cout << " STARTING RUN " << p.first << endl; */
-
-    /*     for (int i{0}; i<p.second.size(); ++i){ */
-    /*         cout << " -> " << trig_names[i] << " " << p.second[i].n << endl; */
-    /*     } */
-    /* } */
-    /* for (const auto& m : mapV[0]) { */
-        /* cout << m.first << " "; */
-        /* for (const auto v : m.second) */
-    /* } */
 };
 
 using namespace std;

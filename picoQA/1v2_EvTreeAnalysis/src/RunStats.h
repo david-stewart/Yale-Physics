@@ -23,14 +23,14 @@ struct OneVar : public TObject { // statistics for an observable
     virtual ~OneVar();
     /* OneVar(const OneVar&); */
     /* OneVar(const OneVar&); */
-    bool   is_int;
-    double min;
-    double max;
-    long int nEntries;
-    long double sum;
-    long double sum2;
+    Bool_t   is_int;
+    Double_t min;
+    Double_t max;
+    Long64_t nEntries;
+    Double_t sum;
+    Double_t sum2;
     OneVar& operator+(const OneVar&);
-    ClassDef(OneVar,1)
+    /* ClassDef(OneVar,1) */
 };
 
 // skip building these for now

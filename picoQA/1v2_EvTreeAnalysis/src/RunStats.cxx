@@ -3,7 +3,7 @@
 using namespace std;
 
 //---------------------------------------------------------------
-ClassImp(OneVar)
+/* ClassImp(OneVar) */
 
 OneVar::OneVar() :
     is_int{false}, min{0}, max{0}, nEntries{0}, sum{0}, sum2{0}
