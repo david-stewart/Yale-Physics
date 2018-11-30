@@ -9,8 +9,15 @@ OBJDIR = obj
 %.o : %.cxx %.h
 	${CC} -c $*.cxx ${INC_LIBS}
 
+combine: combine.cxx combine.h InputCombine.o RunStats.o InputBase.o
+	${CC} -o $@ $^ ${INC_LIBS}
+
+InputCombine.o: InputCombine.cxx InputCombine.h  RunStats.o InputBase.o
+	${CC} -c $^ ${INC_LIBS}
+
 ../bin/count: count.o InputCount.o RunStats.o tree.o InputBase.o # dict.cxx
 	${CC} -o $@ $^ ${INC_LIBS}
+
 
 
 RunStats.o: RunStats.cxx RunStats.h #OneVar_root_dict.cxx
