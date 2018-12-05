@@ -1,2 +1,6 @@
 src/count
 src/combine
+*/*.log
+*/*.pdf
+arch
+**/*.log
