@@ -11,3 +11,5 @@ QA_event.h
 **/*.gch
 *.list
 **/schedTemplateExp.xml
+**/*.log
+mods
