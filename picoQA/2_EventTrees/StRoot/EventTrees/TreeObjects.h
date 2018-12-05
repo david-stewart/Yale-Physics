@@ -2,36 +2,29 @@
 #define TreeObjects__h
 #include <iostream>
 
-#include <vector>
-
-using namespace std;
-
 class AntiktJet : public TObject {
 	public:
     AntiktJet() {} ;
 	virtual ~AntiktJet() {};
     double phi; 
-    /* double dphi; // phi relative to the trigger tower (redundent with phi) */
-    /* int    dphi_bin; // 0, 1, or 2 */
-    double eta; //
-    double pt;  //
-    /* double rho; */
-    /* double pt_corr; // jet pt - rho A */
-    double area; //
+    double eta; 
+    double pt;  
+    double area; 
     int    nch;
-	ClassDef(JtJet,1);
+	ClassDef(AntiktJet,1);
 };
 
 class ChargedTrack : public TObject {
 	public:
-    ChargedTrack();
+    ChargedTrack() {} ;
     /* void SetPhiEtaPt(double phi_, double eta_, double pt_) */ 
-    { phi = phi_; eta = eta_; pt = pt_; } ;
+
+    /* { phi = phi_; eta = eta_; pt = pt_; } ; */
 	virtual ~ChargedTrack() {};
     double phi; 
-    double eta; //
-    double pt;  //
-	ClassDef(JtJet,1);
+    double eta; 
+    double pt; 
+	ClassDef(ChargedTrack,1);
 };
 
 struct Event : public TObject {
@@ -41,10 +34,10 @@ struct Event : public TObject {
     double       bbcAdcES;  // bbc East adc
     double       zdcX;
     int          runId;      
-    /* int          eventId; */
+   
     double       refMult;
     double       vz;
-    /* double       rand; // random (0,1) */
+    
     bool trig_500001;//
     bool trig_500006;//
     bool trig_500202;//
@@ -58,6 +51,6 @@ struct Event : public TObject {
     double       Et; //
     int          towId_Et;
 
-    ClassDef(JtEvent,1);
+    ClassDef(Event,1);
 };
 #endif

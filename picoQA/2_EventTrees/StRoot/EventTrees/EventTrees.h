@@ -23,9 +23,8 @@
 #include "StThreeVectorF.hh"
 #include "StEmcUtil/geometry/StEmcGeom.h"
 #include "StEmcUtil/projection/StEmcPosition.h"
-#include "jet_tree.h"
+#include "TreeObjects.h"
 
-#include "TRandom3.h"
 
 
 /* #include "StPicoEvent/StPicoBTowHit.h" */
@@ -51,7 +50,6 @@ class EventTrees : public StMaker {
     bool            fmakePreCuts;
     bool            fisAu;
 
-    double fvz_cut;
     std::vector<int> ftriggerid;
     float fTT_threshold;
     float f_jetR;
@@ -64,6 +62,7 @@ class EventTrees : public StMaker {
     long long int fEventsProcessed;
     bool f_hastriggers;
 
+    double fvz_cut;
     StPicoDst*       fPicoDst;
     std::vector<int> fbad_run_list;
     std::vector<int> fbad_tower_list;
@@ -74,39 +73,16 @@ class EventTrees : public StMaker {
     TTree*       ftree;
     TTree*       fpc_tree; // a tree which will hold the pre-cut BBCsig, ZDCsig, Zvert, max_TT_Et, 
                            // and NTracks prior to requiring a minimum TT_Et
-    PreCut       fpc;
     Event        fevent;
 
     MyJetDefinitionTerms* f_bge;
-    TRandom3* frand;
-    TH1F*  fHgram_ev_cuts;
-    TH1F*  fHgram_tr_cuts;    // not currently implemented
-
-    /* TH1F*  fHgram_bbcES_percentile; */
-    /* TH1F*  fHgram_zdcE_percentile; */
-    /* TH1F*      fHgram_ev_prun; */
-    /* TProfile*  fProfE_vz_prun; */
-    /* TProfile*  fProfE_zdcSumAdcEast_prun; */
-    /* TProfile*  fProfE_bbcAdcES_prun; */
-    /* TProfile*  fProfE_zdcX_prun; */
-
-
-    /* TH1F*  fHgram_vz; */
-    /* TH1F*  fHgram_zdcX; */
-    /* TH1F*  fHgram_ln_ranking; */
-    /* TH1F*  fHgram_track_pt; */
-    /* TH1F*  fHgram_BTowHit_pt; // all hits */
-    /* TH2F*  fHgram_BTowHit_phieta; // */ 
-    /* TH2F*  fHgram_TT_phieta; // */ 
-
-    bool  f_eff_cut_tracks;
 
   public:
     EventTrees(
         const char*     name,
         StPicoDstMaker* picoMaker,
         const char*     outName,
-        int             triggerid,
+        /* int             triggerid, */
         const char*     i_bad_tower_file,
         const char*     i_bad_run_file,
         bool            i_debug//,

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job maxFilesPerProcess="100" simulateSubmission="false" >
+	<command>
+        foreach file (`cat $FILELIST | awk '{printf($1"\n")}'`)
+           echo copying $file to $SCRATCH
+           cp $file $SCRATCH
+        end
+
+        echo making new file list
+        ls $SCRATCH/*.picoDst.root > newFileList.list
+        set FILELIST=newFileList.list
+        cat $FILELIST
+
+        <!-- #Then your stuff goes here, and you pass the $FILELIST as normal -->
+		<!-- cons -->
+        starver SL18b
+        set my_path=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/kate
+        set my_list=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list
+        set bdtow=$my_list/BadTowers_Comb.08.02.list
+        set bdrun=$my_list/bad_run_list.list
+        root4star -l -q -b jetTrees.C\(-1,1,\"$FILELIST\",\"$my_path/root/206/$JOBID\",\"$bdtow\",\"$bdrun\",0,0\)
+	</command>
+	<SandBox installer="ZIP">
+		<Package>
+            <File>file:./jetTrees.C</File>
+			<File>file:./StRoot</File>
+            <File>file:./.sl73_gcc485</File>
+		</Package>		
+	</SandBox>
+	
+	<Generator>
+        <Location>./input/206</Location>
+        <ScriptLocation>./input/206</ScriptLocation>
+        <ListLocation>./input/206</ListLocation>
+	</Generator>
+
+    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/list/QA_st_physics.list" />
+
+    <stdout URL="file:./out/206/$JOBID" />	
+    <stderr URL="file:./err/206/$JOBID" />
+</job>

@@ -4,7 +4,6 @@
 //
 #include "EventTrees.h"
 #include <iostream>
-#include "pi_const.h"
 #include "TowerList.h"
 
 #include "fastjet/config.h"
@@ -57,11 +56,9 @@ EventTrees::EventTrees(
         const char*     i_name,
         StPicoDstMaker* i_picoMaker,
         const char*     i_outName,
-        int             i_trigger_selection,
         const char*     i_bad_tower_file,
         const char*     i_bad_run_file,
-        bool            i_debug,
-        bool            i_makePreCuts
+        bool            i_debug
     )
   : StMaker(i_name), 
     /* max_ntracks_noTOF(0), */
@@ -72,14 +69,15 @@ EventTrees::EventTrees(
     fbad_tower_file {i_bad_tower_file},
     fbad_run_file   {i_bad_run_file},
     fdebug          {i_debug},
-    fmakePreCuts    {i_makePreCuts},
+    /* fmakePreCuts    {i_makePreCuts}, */
     fTT_threshold   {4.0},
     f_jetR          {0.4},
     b_jets          {"AntiktJet",    kNMaxJets},
     b_tracks        {"ChargedTrack", kNMaxTracks},
     /* b_activity      {"Activity", kMaxRegions}, */
     fEventsProcessed{0},
-    f_hastriggers   {true}
+    f_hastriggers   {true},
+    fvz_cut {30.}
 { 
     f_jet_etaMax = 1.0;// - f_jetR;
     ftriggerid = std::vector<int> { 500001, 500006, 50020, 500206, 500216, 500904 };
@@ -254,7 +252,7 @@ Int_t EventTrees::Make() {
 
     float rank = mevent->ranking();
     int sig = rank > 0 ? +1 : -1;
-    float ln = TMath::Log(TMath::Abs(rank));
+    /* float ln = TMath::Log(TMath::Abs(rank)); */
     /* fHgram_ln_ranking->Fill(sig*ln); */
     if (fdebug) fprintf(dlog," %-20s %-10.2f\n", "ranking", rank);
     if (sig < 0) return kStOK;
@@ -271,7 +269,7 @@ Int_t EventTrees::Make() {
     fevent.trig_500206 = mevent->isTrigger(500206);//
     fevent.trig_500215 = mevent->isTrigger(500215);//
     fevent.trig_500904 = mevent->isTrigger(500904);//
-    fevent.zdcX    = mevents->ZDCx();
+    fevent.zdcX    = mevent->ZDCx();
 
     fevent.refMult = mevent->refMult();
     fevent.nch = 0;
@@ -283,12 +281,10 @@ Int_t EventTrees::Make() {
         if (!track->isPrimary()) continue;
 
         // thanks to joel mazer
-        ++track_cuts[0];
         StThreeVectorF Ptrack = track->pMom();
         float pt  = Ptrack.perp();
         if (pt > 30)   return kStOK; // cut out this event
         if (pt < 0.2)  continue;
-        /* ++track_cuts[1]; */
 
         float phi = Ptrack.phi();
         float eta = Ptrack.pseudoRapidity();
@@ -296,10 +292,8 @@ Int_t EventTrees::Make() {
         // thanks to joel mazer
         float dca = (track->dcaPoint() - mevent->primaryVertex()).mag();
         if (dca > 3.0)  continue;
-        /* ++track_cuts[2]; */
 
         if (TMath::Abs(eta)  >= 1.0) continue;
-        /* ++track_cuts[3]; */
 
         float nhit_ratio = ((float)track->nHitsFit()) / (float)track->nHitsMax();
         if (nhit_ratio <= 0.52) continue;
@@ -310,7 +304,7 @@ Int_t EventTrees::Make() {
         particles[j].reset_PtYPhiM(pt, eta, phi);
         particles[j].set_user_index(i);
 
-        ChargedTrack* b_track = b_tracks.ConstructedAt(fevent.nch);
+        ChargedTrack* b_track = (ChargedTrack*) b_tracks.ConstructedAt(fevent.nch);
         b_track->phi = phi;
         b_track->eta = eta;
         b_track->pt  = pt ;
@@ -323,7 +317,7 @@ Int_t EventTrees::Make() {
     TT_list towlist(fTT_threshold);
     for (unsigned int i=0 ; i < fPicoDst->numberOfEmcTriggers(); ++i){
         StPicoEmcTrigger* emcTrig = fPicoDst->emcTrigger(i);
-        if (! emcTrig->isHT1()) continue;
+        if (! (emcTrig->isHT1() || emcTrig->isHT2()) ) continue;
         int   trigId  = emcTrig->id();
         if (trigId < 1) {
             fprintf(flog,"Warning! in ev(%i) emcTriggerId(%i) (should be > 1)\n",
@@ -355,11 +349,10 @@ Int_t EventTrees::Make() {
     for (int i = 1; i < 16; ++i) fevent.bbcAdcES += mevent->bbcAdcEast(i);
 
     /* RegionActivities activity{particles}; */
-    fevent.Et      = towlist.maxEt;
-    fevent.phi_Et  = towlist.etaEt();
-    fevent.eta_Et  = towlist.etaEt();
+    fevent.Et       = towlist.maxEt;
+    fevent.phi_Et   = towlist.etaEt();
+    fevent.eta_Et   = towlist.etaEt();
     fevent.towId_Et = towlist.TT_towID();
-    fevent.bbcAdcES = bbcAdcES;
 
     //make and fill jets
     AreaDefinition area_def(active_area_explicit_ghosts,GhostedAreaSpec(4.0,1,0.01));
@@ -378,7 +371,6 @@ Int_t EventTrees::Make() {
         PseudoJet& jet = jets[i_jet];
         if ( jet.is_pure_ghost() ) { continue; }
         if ( jet.eta() > f_jet_etaMax || jet.eta() < -f_jet_etaMax) continue;
-
 
         AntiktJet* b_jet = (AntiktJet*) b_jets.ConstructedAt(fevent.njets); 
         ++fevent.njets;
