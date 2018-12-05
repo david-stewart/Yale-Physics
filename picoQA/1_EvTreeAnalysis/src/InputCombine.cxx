@@ -35,8 +35,8 @@ InputCombine::InputCombine(int argc, const char** argv) :
         } else {
             ostringstream msg;
             msg << " # TChain->AddFile("<<add_name<<")"<<endl;
-            f_log << msg;
-            cout << msg;
+            f_log << msg.str();
+            cout << msg.str();
             chain->AddFile(add_name.c_str());
         }
     }
