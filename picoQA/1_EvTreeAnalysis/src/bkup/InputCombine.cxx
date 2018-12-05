@@ -11,7 +11,6 @@ using namespace std;
 InputCombine::InputCombine(int argc, const char** argv) :
     InputBase{argc, argv, true}
 {
-    chain = new TChain("VarStats");
     /* cout << "c0" << endl; */
     /* cout << "n_inputs " << n_inputs << endl; */
     if (give_help_msg) {
@@ -23,6 +22,7 @@ InputCombine::InputCombine(int argc, const char** argv) :
     }
 
     chain = new TChain("VarStats"); 
+    chain_file_names = new TChain("file_names");
 
     string add_name;
     while (ss_args >> add_name) {
@@ -38,6 +38,7 @@ InputCombine::InputCombine(int argc, const char** argv) :
             f_log << msg.str();
             cout << msg.str();
             chain->AddFile(add_name.c_str());
+            chain_file_names->AddFile(add_name.c_str());
         }
     }
 }

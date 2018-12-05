@@ -12,6 +12,7 @@
 class InputCombine : public InputBase {
     public:
     TChain* chain; // input chain
+    TChain* chain_file_names; // input chain
     ~InputCombine();
     InputCombine(int argc, const char** argv);
     void Combine();

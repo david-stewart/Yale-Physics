@@ -13,7 +13,7 @@ OBJDIR = obj
 %.o : %.cxx %.h
 	${CC} -c $*.cxx ${C_LIBS}
 
-combine: combine.o InputCombine.o RunStats.o InputBase.o
+../bin/combine: combine.o InputCombine.o RunStats.o InputBase.o
 	${CC} -o $@ $^ ${L_LIBS}
 
 InputCombine.o: InputCombine.cxx InputCombine.h  RunStats.o InputBase.o
