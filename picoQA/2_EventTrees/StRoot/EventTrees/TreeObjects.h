@@ -24,7 +24,9 @@ class AntiktJet : public TObject {
 
 class ChargedTrack : public TObject {
 	public:
-    ChargedTrack() {} ;
+    ChargedTrack();
+    /* void SetPhiEtaPt(double phi_, double eta_, double pt_) */ 
+    { phi = phi_; eta = eta_; pt = pt_; } ;
 	virtual ~ChargedTrack() {};
     double phi; 
     double eta; //
@@ -54,7 +56,7 @@ struct Event : public TObject {
     double       phi_Et; // Trigger Tower (max Et tower)
     double       eta_Et; //
     double       Et; //
-    int          towIdEt;
+    int          towId_Et;
 
     ClassDef(JtEvent,1);
 };
