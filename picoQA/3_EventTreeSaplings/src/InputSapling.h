@@ -19,8 +19,10 @@ class InputSapling : public InputBase, public EventTree {
     ~InputSapling();
     InputSapling(int argc, const char** argv);
 
-    void SaplingLoop();
     long long int nEvents;
+    void LoopPrototype(); // does nothing; just serves as a template for other loops
+    void LoopZdcBbcHgram();
+    void LoopSapling();
 };
 
 #endif

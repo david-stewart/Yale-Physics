@@ -3,7 +3,82 @@
 #include "TFile.h"
 #include "TH1F.h"
 
+#include "TProfile.h"
+#include "TH1.h"
+
 using namespace std;
+
+//------------------------------------------------------------------
+// get basic zdcX and bbc hisgorams
+//------------------------------------------------------------------
+void InputSapling::LoopZdcBbcHgram() {
+    if (chain == 0) return;
+    bool runAll{nEvents == -1};
+    Long64_t jentry{0};
+
+    if (runAll) {
+        f_log << " # starting to read all events" << endl;
+    } else {
+        f_log << " # starting to read " << nEvents << " all events" << endl;
+    }
+
+    TH1D* h_zdcX = new TH1D("zdcX","zdcX in Min Bias events", 500, 0, 25000);
+    TH1D* h_bbcES = new TH1D("bbcES","BBC Adc East Small in Min Bias events", 500, 0, 70000);
+    TH1D* h_vz    = new TH1D("h_vz", "Primary vertex z position", 62, -31, 31);
+
+    TProfile* p_bbc_zdcX = new TProfile("bbc_zdcX", ";zdcX;BBC Adc East Small", 500, 0, 25000);
+    TProfile* p_bbc_vz   = new TProfile("bbc_vz",   ";V_{Z};BBC Adc East Small", 62, -31, 31);
+    TProfile* p_zdcX_vz  = new TProfile("zdcX_vz",  ";V_{Z};zdcX[Hz]", 62, -31, 31);
+
+    Long64_t nbytes = 0, nb = 0;
+    while (runAll || jentry < nEvents){
+        nb = chain->GetEntry(jentry);   nbytes += nb;
+        Long64_t ientry = LoadTree(jentry);
+        if (ientry < 0) break;
+        if (jentry % 500000 == 0) {
+            f_log << " # finished " << jentry << " events" << endl;
+            update_log();
+        }
+        if (!trig_500001) continue;
+        h_zdcX->Fill(zdcX);
+        h_bbcES->Fill(bbcAdcES);
+        h_vz->Fill(vz);
+
+        p_bbc_zdcX->Fill(zdcX, bbcAdcES);
+        p_bbc_vz->Fill(vz, bbcAdcES);
+        p_zdcX_vz->Fill(vz, zdcX);
+
+        ++jentry;
+    }
+};
+
+//------------------------------------------------------------------
+// get basic zdcX and bbc hisgorams
+//------------------------------------------------------------------
+void InputSapling::LoopPrototype() {
+    if (chain == 0) return;
+    bool runAll{nEvents == -1};
+    Long64_t jentry{0};
+
+    if (runAll) {
+        f_log << " # starting to read all events" << endl;
+    } else {
+        f_log << " # starting to read " << nEvents << " all events" << endl;
+    }
+
+    Long64_t nbytes = 0, nb = 0;
+    while (runAll || jentry < nEvents){
+        nb = chain->GetEntry(jentry);   nbytes += nb;
+        Long64_t ientry = LoadTree(jentry);
+        if (ientry < 0) break;
+        if (jentry % 500000 == 0) {
+            f_log << " # finished " << jentry << " events" << endl;
+            update_log();
+        }
+        
+        ++jentry;
+    }
+};
 
 InputSapling::InputSapling(int argc, const char** argv) :
     InputBase{argc, argv, true},
