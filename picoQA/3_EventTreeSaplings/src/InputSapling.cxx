@@ -22,6 +22,10 @@ void InputSapling::LoopZdcBbcHgram() {
         f_log << " # starting to read " << nEvents << " all events" << endl;
     }
 
+    vector<pair<string, bool*>> sets;
+
+    vector<TH1D*> v_zdcX;
+
     TH1D* h_zdcX = new TH1D("zdcX","zdcX in Min Bias events", 500, 0, 25000);
     TH1D* h_bbcES = new TH1D("bbcES","BBC Adc East Small in Min Bias events", 500, 0, 70000);
     TH1D* h_vz    = new TH1D("h_vz", "Primary vertex z position", 62, -31, 31);

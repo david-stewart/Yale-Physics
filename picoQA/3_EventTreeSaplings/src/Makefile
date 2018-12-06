@@ -14,7 +14,7 @@ OBJDIR = obj
 	${CC} -c $*.cxx ${C_LIBS}
 
 Sapling: Sapling.o InputBase.o InputSapling.o EventTree.o
-	${CC} -o $@ $^ ${L_LIBS}
+	${CC} -o $@ $^ ${INC_LIBS}
 
 InputSapling.o: InputSapling.cxx InputBase.o EventTree.o
 	${CC} -c $^ ${C_LIBS}
