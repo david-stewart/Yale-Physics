@@ -17,11 +17,11 @@
         set mylist=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list
         set bdtow=$mylist/BadTowers_Comb.08.02.list
         set bdrun=$mylist/P17_bad_runs.list
-        root4star -l -q -b jetTrees.C\(-1,\"$FILELIST\",\"$mypath/root/P17/$JOBID\",\"$bdtow\",\"$bdrun\",0\)
+        root4star -l -q -b EventTrees.C\(-1,\"$FILELIST\",\"$mypath/root/P17/$JOBID\",\"$bdtow\",\"$bdrun\",0\)
 	</command>
 	<SandBox installer="ZIP">
 		<Package>
-            <File>file:./jetTrees.C</File>
+            <File>file:./EventTrees.C</File>
 			<File>file:./StRoot</File>
 
 

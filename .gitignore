@@ -13,3 +13,4 @@ QA_event.h
 **/schedTemplateExp.xml
 **/*.log
 mods
+picoQA/2_EventTrees/kate
