@@ -15,6 +15,6 @@ using namespace std;
 
 int main(int argc, const char** argv) {
     InputSapling input{argc, argv};
-    input.LoopZdcBbcHgram();
+    input.ExploratoryLoop();
 }
 

@@ -21,7 +21,7 @@ class InputSapling : public InputBase, public EventTree {
 
     long long int nEvents;
     void LoopPrototype(); // does nothing; just serves as a template for other loops
-    void LoopZdcBbcHgram();
+    void ExploratoryLoop();
     void LoopSapling();
 };
 

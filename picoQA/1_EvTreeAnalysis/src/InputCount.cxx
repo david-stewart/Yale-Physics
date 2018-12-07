@@ -127,23 +127,7 @@ InputCount::InputCount(int argc, const char** argv) :
     }
     /* cout << "c6" << endl; */
         
-    // write the input names
     Init(chain);
-    /* tr_data = new TTree("run_data","data for each run"); */
-    /* tr_data->Branch("data",&fdata); */
-
-    /* cout << "before mytree " << *myTree << " |" << endl; */
-
-    /* Init(chain); */
-    /* myTree = tree{chain}; */
-    /* cout << "after  mytree " << *myTree << " |" << endl; */
-    /* int b{0}; */
-    /* tr_data->Branch("test_branch",&b); */
-    /* tr_data->Fill(); */
-    /* b = 4; */
-    /* tr_data->Fill(); */
-    /* b = 5; */
-    /* tr_data->Fill(); */
 }
 
 InputCount::~InputCount() {

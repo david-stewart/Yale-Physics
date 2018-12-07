@@ -23,7 +23,7 @@ bool is_same_side (double first, double second) {
     else return false;
 };
 
-void InputSapling::LoopZdcBbcHgram() {
+void InputSapling::ExploratoryLoop() {
     if (chain == 0) return;
     bool runAll{nEvents == -1};
     Long64_t jentry{0};
@@ -61,43 +61,77 @@ void InputSapling::LoopZdcBbcHgram() {
     vector<pair<TH1D*, TH1D*>> vh_maxJet;
 
     const auto& fmt = TString::Format;
+
+    int    nb_zdcX {200};
+    double lo_zdcX {0};
+    double hi_zdcX {30E3};
+
+    int    nb_bbcES {200};
+    double lo_bbcES {0};
+    double hi_bbcES {70E3};
+
+    int    nb_Vz {124};
+    double lo_Vz {-31};
+    double hi_Vz { 31};
+
+    int    nb_Trpt {124};
+    double lo_Trpt {-31};
+    double hi_Trpt { 31};
+
+    int    nb_Et {124};
+    double lo_Et {-31};
+    double hi_Et { 31};
+
+    int    nb_jetPt {120};
+    double lo_jetPt {0};
+    double hi_jetPt {60};
+
     for (auto x : sets) {
         const char* num {x.second.first.c_str()};
         const char* name {x.second.second.c_str()};
-        vh_zdcX.push_back(new TH1D( fmt("h_zdcX_%s",num).Data(), fmt("%s;zdcX;N_events",name).Data(), 500, 0, 25000));
-        vh_bbcES.push_back(new TH1D( fmt("h_bbcES_%s",num).Data(), fmt("%s;bbcES;N_events",name).Data(), 500, 0, 70000));
-        vh_vz.push_back(new TH1D( fmt("h_vz_%s",num).Data(), fmt("%s;vz;N_events",name).Data(), 62, -31, 31));
+        vh_zdcX.push_back(new TH1D( fmt("h_zdcX_%s",num).Data(), fmt("%s;zdcX;N_events",name).Data(), nb_zdcX, lo_zdcX, hi_zdcX));
+        vh_bbcES.push_back(new TH1D( fmt("h_bbcES_%s",num).Data(), fmt("%s;bbcES;N_events",name).Data(), nb_bbcES, lo_bbcES, hi_bbcES));
+        vh_vz.push_back(new TH1D( fmt("h_vz_%s",num).Data(), fmt("%s;vz;N_events",name).Data(), nb_Vz, lo_Vz, hi_Vz));
 
-        vp_bbc_zdcX.push_back(new TProfile(fmt("p_bbc_zdcX_%s",num).Data(), fmt("%s;zdcX;BBC Adc ES",name).Data(), 500, 0, 70000));
-        vp_bbc_vz.push_back(new TProfile(fmt("p_bbc_vz_%s",num).Data(), fmt("%s;V_{z};BBC Adc ES",name).Data(), 500, 0, 70000));
-        vp_zdcX_vz.push_back(new TProfile(fmt("p_zdcX_vz_%s",num).Data(), fmt("%s;V_{z};zdcX",name).Data(), 62, -31, 31));
+        vp_bbc_zdcX.push_back(new TProfile(fmt("p_bbc_zdcX_%s",num).Data(), fmt("%s;zdcX;BBC Adc ES",name).Data(), nb_zdcX, lo_zdcX, hi_zdcX));
+        vp_bbc_vz.push_back(new TProfile(fmt("p_bbc_vz_%s",num).Data(), fmt("%s;V_{z};BBC Adc ES",name).Data(), nb_Vz, lo_Vz, hi_Vz));
+        vp_zdcX_vz.push_back(new TProfile(fmt("p_zdcX_vz_%s",num).Data(), fmt("%s;V_{z};zdcX",name).Data(),     nb_Vz, lo_Vz, hi_Vz));
 
         vp_maxTr_bbc.push_back( {
-                new TProfile(fmt("p_maxTr_bbc_%s_S",num).Data(), fmt("%s S:Same Side;BBC Adc ES;max Track p_{T}",name).Data(), 500, 0, 70000),
-                new TProfile(fmt("p_maxTr_bbc_%s_R",num).Data(), fmt("%s R:Recoil Side;BBC Adc ES;max Track p{T}",name).Data(), 500, 0, 70000)
-        });
+                new TProfile(fmt("p_maxTr_bbc_%s_S",num).Data(), 
+                             fmt("%s S:Same Side;BBC Adc ES;max Track p_{T}",name).Data(),   nb_bbcES, lo_bbcES, hi_bbcES),
+                new TProfile(fmt("p_maxTr_bbc_%s_R",num).Data(), 
+                             fmt("%s R:Recoil Side;BBC Adc ES;max Track p_{T}",name).Data(), nb_bbcES, lo_bbcES, hi_bbcES)
+                });
 
-        vp_maxEt_bbc.push_back( {
-                new TProfile(fmt("p_maxEt_bbc_%s",num).Data(), fmt("%s;BBC Adc ES;max Et hit",name).Data(), 500, 0, 70000)
-        });
+        vp_maxEt_bbc.push_back( 
+                new TProfile(fmt("p_maxEt_bbc_%s",num).Data(), 
+                             fmt("%s;BBC Adc ES;max Et hit",name).Data(), nb_bbcES, lo_bbcES, hi_bbcES));
 
         vp_maxJet_bbc.push_back( {
-                new TProfile(fmt("p_maxJet_bbc_%s_S",num).Data(), fmt("%s S:Same Side;BBC Adc ES;max Jet p_{T}",name).Data(), 500, 0, 70000),
-                new TProfile(fmt("p_maxJet_bbc_%s_R",num).Data(), fmt("%s R:Recoil Side;BBC Adc ES;max Jet p_{T}",name).Data(), 500, 0, 70000)
+                new TProfile(fmt("p_maxJet_bbc_%s_S",num).Data(), 
+                             fmt("%s S:Same Side;BBC Adc ES;max Jet p_{T}",name).Data(), nb_bbcES, lo_bbcES, hi_bbcES),
+                new TProfile(fmt("p_maxJet_bbc_%s_R",num).Data(), 
+                             fmt("%s R:Recoil Side;BBC Adc ES;max Jet p_{T}",name).Data(), nb_bbcES, lo_bbcES, hi_bbcES)
         });
 
         vh_maxTr.push_back( {
-                new TH1D(fmt("h_maxTr_%s_S",num).Data(), fmt("%s S:Same Side;max Track p_{T};N_{events}",name).Data(), 100, 0, 31),
-                new TH1D(fmt("h_maxTr_%s_R",num).Data(), fmt("%s R:Recoil Side;max Track p{T};N_{events}",name).Data(), 100, 0, 31)
+                new TH1D(fmt("h_maxTr_%s_S",num).Data(), 
+                        fmt("%s S:Same Side;max Track p_{T};N_{events}",name).Data(), nb_Trpt, lo_Trpt, hi_Trpt),
+                new TH1D(fmt("h_maxTr_%s_R",num).Data(), 
+                         fmt("%s R:Recoil Side;max Track p_{T};N_{events}",name).Data(), nb_Trpt, lo_Trpt, hi_Trpt)
         });
 
-        vh_maxEt.push_back( {
-                new TH1D(fmt("h_maxEt_%s",num).Data(), fmt("%s;max Et hit;N_{events}",name).Data(),  60, -2, 31)
-        });
+        vh_maxEt.push_back( 
+                new TH1D(fmt("h_maxEt_%s",num).Data(), 
+                         fmt("%s;max Et hit;N_{events}",name).Data(), nb_Et, lo_Et, hi_Et)
+        );
 
         vh_maxJet.push_back( {
-                new TH1D(fmt("h_maxJet_%s_S",num).Data(), fmt("%s S:Same Side;max Jet p_{T};N_{events}",name).Data(), 120, 0, 60),
-                new TH1D(fmt("h_maxJet_%s_R",num).Data(), fmt("%s R:Recoil Side;max Jet p_{T};N_{events}",name).Data(), 120, 0, 60)
+                new TH1D(fmt("h_maxJet_%s_S",num).Data(), 
+                         fmt("%s S:Same Side;max Jet p_{T};N_{events}",name).Data(), nb_jetPt, lo_jetPt, hi_jetPt), 
+                new TH1D(fmt("h_maxJet_%s_R",num).Data(), 
+                         fmt("%s R:Recoil Side;max Jet p_{T};N_{events}",name).Data(), nb_jetPt, lo_jetPt, hi_jetPt)
         });
     }
     
@@ -111,24 +145,17 @@ void InputSapling::LoopZdcBbcHgram() {
             update_log();
         }
 
-        // get max track pt
-        double vchpt{0};
-        double vchpt_phi{-10};
-        for (int i{0}; i<nch; ++i){
-            if (ch_tracks_pt[i] > vchpt) { vchpt = ch_tracks_pt[i]; vchpt_phi = ch_tracks_phi[i]; }
-        }
-
         for (int i{0};i<sets.size();++i){
             if (*sets[i].first) {
                 vh_zdcX[i]->Fill(zdcX);
                 vh_bbcES[i]->Fill(bbcAdcES);
                 vh_vz[i]->Fill(vz);
 
-                vp_bbc_zdcX[i]->Fill(bbcAdcES, zdcX);
-                vp_bbc_vz[i]->Fill(bbcAdcES, vz);
+                vp_bbc_zdcX[i]->Fill(zdcX, bbcAdcES);
+                vp_bbc_vz[i]->Fill(vz, bbcAdcES);
                 vp_zdcX_vz[i]->Fill(vz, zdcX);
 
-                if (Et != 0) {
+                if (Et != -1) {
                     vh_maxEt[i]->Fill(Et);
                     vp_maxEt_bbc[i]->Fill(bbcAdcES, Et);
                     if (njets > 0) {
@@ -141,12 +168,12 @@ void InputSapling::LoopZdcBbcHgram() {
                         }
                     }
                     if (nch > 0) {
-                        if (is_same_side(phi_Et, vchpt_phi)) {
-                            vp_maxTr_bbc[i].first->Fill(bbcAdcES, vchpt);
-                            vh_maxTr[i]    .first->Fill(vchpt);
+                        if (is_same_side(phi_Et, ch_tracks_phi[0])) {
+                            vp_maxTr_bbc[i].first->Fill(bbcAdcES, ch_tracks_pt[0]);
+                            vh_maxTr[i]    .first->Fill(ch_tracks_pt[0]);
                         } else {
-                            vp_maxTr_bbc[i].second->Fill(bbcAdcES, vchpt);
-                            vh_maxTr[i]    .second->Fill(vchpt);
+                            vp_maxTr_bbc[i].second->Fill(bbcAdcES, ch_tracks_pt[0]);
+                            vh_maxTr[i]    .second->Fill(ch_tracks_pt[0]);
                         }
                     }
                 }
