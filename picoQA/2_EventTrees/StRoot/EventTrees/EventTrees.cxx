@@ -304,12 +304,6 @@ Int_t EventTrees::Make() {
         particles[j].reset_PtYPhiM(pt, eta, phi);
         particles[j].set_user_index(i);
 
-        ChargedTrack* b_track = (ChargedTrack*) b_tracks.ConstructedAt(fevent.nch);
-        b_track->phi = phi;
-        b_track->eta = eta;
-        b_track->pt  = pt ;
-
-        ++fevent.nch;
     }
     if (fdebug) fprintf(dlog," %-20s\n","  -> read tracks\n");
 
@@ -347,6 +341,19 @@ Int_t EventTrees::Make() {
     // fill the signal histograms (for getting the percentile on the minimum bias data sets)
     fevent.bbcAdcES = mevent->bbcAdcEast(0);
     for (int i = 1; i < 16; ++i) fevent.bbcAdcES += mevent->bbcAdcEast(i);
+
+    particles = sortd_by_pt( particles );
+
+    fevent.nch = particles.size();
+    for (int i{0};i<fevent.nch;++i){
+        ChargedTrack* b_track = (ChargedTrack*) b_tracks.ConstructedAt(i);
+        b_track->phi = parttiles[i].phi();
+        b_track->eta = parttiles[i].eta();
+        b_track->pt  = parttiles[i].pt() ;
+    }
+
+
+    /* ++fevent.nch; */
 
     /* RegionActivities activity{particles}; */
     fevent.Et       = towlist.maxEt;
