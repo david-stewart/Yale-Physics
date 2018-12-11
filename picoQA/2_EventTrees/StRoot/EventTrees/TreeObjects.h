@@ -29,6 +29,7 @@ class ChargedTrack : public TObject {
 
 struct Event : public TObject {
 	virtual ~Event() {} ;
+    int          eventId;
     int          njets;       // will match the number of jets measured
     int          nch; // doesn't *have* to match sum of jet tracks;
     double       bbcAdcES;  // bbc East adc

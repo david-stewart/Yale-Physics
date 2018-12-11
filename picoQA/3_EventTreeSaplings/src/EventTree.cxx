@@ -109,6 +109,7 @@ void EventTree::Init(TTree *tree)
    fChain->SetBranchAddress("vz", &vz, &b_event_vz);
    fChain->SetBranchAddress("trig_500001", &trig_500001, &b_event_trig_500001);
    fChain->SetBranchAddress("trig_500006", &trig_500006, &b_event_trig_500006);
+   fChain->SetBranchAddress("trig_500018", &trig_500018, &b_event_trig_500018);
    fChain->SetBranchAddress("trig_500202", &trig_500202, &b_event_trig_500202);
    fChain->SetBranchAddress("trig_500206", &trig_500206, &b_event_trig_500206);
    fChain->SetBranchAddress("trig_500215", &trig_500215, &b_event_trig_500215);

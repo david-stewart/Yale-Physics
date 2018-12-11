@@ -5,6 +5,7 @@
 
 #include "TProfile.h"
 #include "TH1.h"
+#include "TH2.h"
 
 using namespace std;
 
@@ -14,7 +15,9 @@ using namespace std;
 
 # define TWO_PI 6.2831853072
 # define ONE_PI 3.1415926536
-# define HALF_PI 1.5707963268
+# define HALF_PI  1.5707963268
+# define LEFT_PI -1.5707963268
+# define RIGHT_PI  4.7123889804
 
 bool is_same_side (double first, double second) {
     double diff { abs(first - second) };
@@ -22,6 +25,15 @@ bool is_same_side (double first, double second) {
     if (diff < HALF_PI) return true;
     else return false;
 };
+
+double delta_phi(double Et, double jet) {
+    double diff { jet - Et };
+    while (diff < LEFT_PI) diff += TWO_PI;
+    while (diff > RIGHT_PI) diff -= TWO_PI;
+    return diff;
+};
+// TODO total jet spectra
+// TODO TH2D jet spectra w.r.t. trigger
 
 void InputSapling::ExploratoryLoop() {
     if (chain == 0) return;
@@ -37,10 +49,11 @@ void InputSapling::ExploratoryLoop() {
     vector<pair<bool*, pair<string,string>>> sets { 
         {&trig_500001, {"500001", "VPDMB-5-ssd"}},
         {&trig_500006, {"500006", "VPDMB-5-nossd"}},
+        {&trig_500018, {"500018", "BBCMB"}},
         {&trig_500202, {"500202", "BHT1*VPDMB-30"}},
         {&trig_500206, {"500206", "BHT1*VPDMB-30_nobsmd"}},
         {&trig_500215, {"500215", "BHT2*BBCMB"}},
-        {&trig_500904, {"500904", "VPDMB-30"}}
+        {&trig_500904, {"500904", "VPDMB-30"}},
     };
 
     vector<TH1D*> vh_zdcX;
@@ -51,7 +64,6 @@ void InputSapling::ExploratoryLoop() {
     vector<TProfile*> vp_bbc_vz;
     vector<TProfile*> vp_zdcX_vz;
 
-
     vector<pair<TProfile*, TProfile*>> vp_maxTr_bbc; //first for same side, second for opposite side
     vector<TProfile*> vp_maxEt_bbc;
     vector<pair<TProfile*, TProfile*>> vp_maxJet_bbc;
@@ -60,11 +72,14 @@ void InputSapling::ExploratoryLoop() {
     vector<TH1D*> vh_maxEt;
     vector<pair<TH1D*, TH1D*>> vh_maxJet;
 
+    vector<TH1D*> vh_jet_pt;
+    vector<TH2D*> vh_jet_pt_dphi;
+
     const auto& fmt = TString::Format;
 
     int    nb_zdcX {200};
     double lo_zdcX {0};
-    double hi_zdcX {30E3};
+    double hi_zdcX {50E3};
 
     int    nb_bbcES {200};
     double lo_bbcES {0};
@@ -74,12 +89,12 @@ void InputSapling::ExploratoryLoop() {
     double lo_Vz {-31};
     double hi_Vz { 31};
 
-    int    nb_Trpt {124};
-    double lo_Trpt {-31};
+    int    nb_Trpt {64};
+    double lo_Trpt {-1};
     double hi_Trpt { 31};
 
-    int    nb_Et {124};
-    double lo_Et {-31};
+    int    nb_Et {64};
+    double lo_Et {-1};
     double hi_Et { 31};
 
     int    nb_jetPt {120};
@@ -133,6 +148,17 @@ void InputSapling::ExploratoryLoop() {
                 new TH1D(fmt("h_maxJet_%s_R",num).Data(), 
                          fmt("%s R:Recoil Side;max Jet p_{T};N_{events}",name).Data(), nb_jetPt, lo_jetPt, hi_jetPt)
         });
+
+        vh_jet_pt.push_back( 
+            new TH1D(fmt("h_jet_pt_%s",num).Data(), 
+                 fmt("%s;Jet p_{T};N_{Jets}",name).Data(), nb_jetPt, lo_jetPt, hi_jetPt)
+        );
+
+        vh_jet_pt_dphi.push_back( 
+            new TH2D(fmt("h_jet_pt_dphi_%s",num).Data(), 
+                 fmt("%s;#Delta#phi;p_{T,jet}",name).Data(), 31, LEFT_PI, RIGHT_PI, nb_jetPt, lo_jetPt, hi_jetPt)
+        );
+   
     }
     
     Long64_t nbytes = 0, nb = 0;
@@ -167,6 +193,12 @@ void InputSapling::ExploratoryLoop() {
                             vh_maxJet[i]    .second->Fill(jets_pt[0]);
                         }
                     }
+
+                    for (int j{0}; j<njets;++j){
+                        vh_jet_pt[i]->Fill(jets_pt[j]);
+                        vh_jet_pt_dphi[i]->Fill(delta_phi(phi_Et, jets_phi[j]), jets_pt[j]);
+                    }
+
                     if (nch > 0) {
                         if (is_same_side(phi_Et, ch_tracks_phi[0])) {
                             vp_maxTr_bbc[i].first->Fill(bbcAdcES, ch_tracks_pt[0]);

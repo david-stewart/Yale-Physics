@@ -38,6 +38,7 @@ public :
    Double_t        vz;
    Bool_t          trig_500001;
    Bool_t          trig_500006;
+   Bool_t          trig_500018;
    Bool_t          trig_500202;
    Bool_t          trig_500206;
    Bool_t          trig_500215;
@@ -74,6 +75,7 @@ public :
    TBranch        *b_event_vz;   //!
    TBranch        *b_event_trig_500001;   //!
    TBranch        *b_event_trig_500006;   //!
+   TBranch        *b_event_trig_500018;   //!
    TBranch        *b_event_trig_500202;   //!
    TBranch        *b_event_trig_500206;   //!
    TBranch        *b_event_trig_500215;   //!
