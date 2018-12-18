@@ -8,6 +8,7 @@
 #include <vector>
 #include <time.h>
 #include <iomanip>
+#include <map>
 
 using namespace std;
 class InputBase {
@@ -27,6 +28,7 @@ class InputBase {
 
     void update_log();    // write the current log and reopen it for further input
     stringstream ss_args; // all of the options from the input
+    map<string,string> map_args;
     int n_inputs;         // number of inputs AFTER the log file name
     string time_ellapsed();
 

@@ -19,8 +19,12 @@ class InputSapling : public InputBase, public EventTree {
     ~InputSapling();
     InputSapling(int argc, const char** argv);
 
+    vector<int> good_runs;
+    vector<int> bad_runs;
+
     long long int nEvents;
     void LoopPrototype(); // does nothing; just serves as a template for other loops
+    void TriggerCombinations(); // as name indicates
     void ExploratoryLoop();
     void LoopSapling();
 };

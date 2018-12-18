@@ -16,8 +16,15 @@ OBJDIR = obj
 ../bin/0_ExploratoryLoop: 0_ExploratoryLoop.o InputBase.o InputSapling.o EventTree.o
 	${CC} -o $@ $^ ${INC_LIBS}
 
+../bin/1_TriggerCombinations: 1_TriggerCombinations.o InputBase.o InputSapling.o EventTree.o
+	${CC} -o $@ $^ ${INC_LIBS}
+
+
 # Sapling: Sapling.o InputBase.o InputSapling.o EventTree.o
 	# ${CC} -o $@ $^ ${INC_LIBS}
+
+1_TriggerCombinations.o: 1_TriggerCombinations.cxx InputBase.o EventTree.o
+	${CC} -c $^ ${C_LIBS}
 
 0_ExploratoryLoop.o: 0_ExploratoryLoop.cxx InputBase.o EventTree.o
 	${CC} -c $^ ${C_LIBS}

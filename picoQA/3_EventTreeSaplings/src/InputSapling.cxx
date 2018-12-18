@@ -4,8 +4,10 @@
 #include "TH1F.h"
 
 #include "TProfile.h"
+#include "TMath.h"
 #include "TH1.h"
 #include "TH2.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -16,24 +18,86 @@ using namespace std;
 # define TWO_PI 6.2831853072
 # define ONE_PI 3.1415926536
 # define HALF_PI  1.5707963268
-# define LEFT_PI -1.5707963268
-# define RIGHT_PI  4.7123889804
+# define LEFT_PI -0.7853981634
+# define RIGHT_PI 5.4977871438
 
 bool is_same_side (double first, double second) {
-    double diff { abs(first - second) };
-    while (diff > ONE_PI) diff = abs(diff - TWO_PI);
-    if (diff < HALF_PI) return true;
+    double diff { abs(first - second)/TMath::Pi() };
+    while (diff > 1) diff = abs(diff - 2);
+    if (diff < 0.5) return true;
     else return false;
 };
 
 double delta_phi(double Et, double jet) {
-    double diff { jet - Et };
-    while (diff < LEFT_PI) diff += TWO_PI;
-    while (diff > RIGHT_PI) diff -= TWO_PI;
+    double diff { (jet - Et)/TMath::Pi() };
+    while (diff < -0.25) diff += 2;
+    while (diff > 1.75) diff -= 2;
     return diff;
 };
 // TODO total jet spectra
 // TODO TH2D jet spectra w.r.t. trigger
+void InputSapling::TriggerCombinations() {
+    
+    // read in the "good run list" and run only over those
+    if (chain == 0) return;
+    bool runAll{nEvents == -1};
+    Long64_t jentry{0};
+
+	//only read in godo runs
+	bool check_good{good_runs.size()!=0};
+
+    TH1D* which_triggers = new TH1D("which_triggers",
+            "binary;500: 001-1, 006-2, 018-4, 202-8, 206-16, 215-32, 904-64;N_{trigs}",
+            128,-0.5,127.5);
+    TH1D* yesno_500001 = new TH1D("yesno_500001", "if 500001;0:no,1:yes",2,-0.5,1.5);
+
+    if (runAll) {
+        f_log << " # starting to read all events" << endl;
+    } else {
+        f_log << " # starting to read " << nEvents << " all events" << endl;
+    }
+	map<int, int> m_500206;
+
+    Long64_t nbytes = 0, nb = 0;
+    while (runAll || jentry < nEvents){
+        nb = chain->GetEntry(jentry);   nbytes += nb;
+        Long64_t ientry = LoadTree(jentry);
+        if (ientry < 0) break;
+        if (jentry % 500000 == 0) {
+            f_log << " # finished " << jentry << " events" << endl;
+        }
+
+        if (check_good && !binary_search(good_runs.begin(), good_runs.end(), runId)) continue;
+
+		if (trig_500206) {
+			if (m_500206.count(runId)) ++m_500206[runId];
+			else m_500206[runId] = 1;
+		}
+
+        /* cout << " this is the name: " << chain->GetFile()->GetName() << endl; */
+        int nfill{0};
+        if (trig_500001) nfill += 1;
+        if (trig_500006) nfill += 2;
+        if (trig_500018) nfill += 4;
+        if (trig_500202) nfill += 8;
+        if (trig_500206) nfill += 16;
+        if (trig_500215) nfill += 32;
+        if (trig_500904) nfill += 64;
+        which_triggers->Fill(nfill);
+
+        if (trig_500001) {
+            yesno_500001->Fill(1);
+        } else {
+            yesno_500001->Fill(0);
+        }
+        ++jentry;
+    }
+	f_log  << "500206 entries per run: " << endl;
+	f_log  << "  --run---  num"<<endl;
+	for (auto e : m_500206) f_log << "  " << e.first << "  " << e.second << endl;
+	
+
+};
 
 void InputSapling::ExploratoryLoop() {
     if (chain == 0) return;
@@ -156,23 +220,37 @@ void InputSapling::ExploratoryLoop() {
 
         vh_jet_pt_dphi.push_back( 
             new TH2D(fmt("h_jet_pt_dphi_%s",num).Data(), 
-                 fmt("%s;#Delta#phi;p_{T,jet}",name).Data(), 31, LEFT_PI, RIGHT_PI, nb_jetPt, lo_jetPt, hi_jetPt)
+                 fmt("%s;#Delta#phi;p_{T,jet}",name).Data(), 44, -0.25, 1.75, nb_jetPt, lo_jetPt, hi_jetPt)
         );
    
     }
     
     Long64_t nbytes = 0, nb = 0;
+    /* jentry = 11910; // TODO */
+	bool check_good{good_runs.size()!=0};
+	map<int, int> m_500206;
+
     while (runAll || jentry < nEvents){
-        nb = chain->GetEntry(jentry);   nbytes += nb;
+        nb = chain->GetEntry(jentry);  
+        nbytes += nb;
         Long64_t ientry = LoadTree(jentry);
         if (ientry < 0) break;
-        if (jentry % 500000 == 0) {
+        if (jentry % 1000000 == 0) {
             f_log << " # finished " << jentry << " events" << endl;
+            cout << " # finished " << jentry << " events" << endl;
             update_log();
-        }
+		}
+
+        if (check_good && !binary_search(good_runs.begin(), good_runs.end(), runId)) continue;
+
+		if (trig_500206) {
+			if (m_500206.count(runId)) ++m_500206[runId];
+			else m_500206[runId] = 1;
+		}
 
         for (int i{0};i<sets.size();++i){
             if (*sets[i].first) {
+                /* cout << " a2: " << endl; // TODO */
                 vh_zdcX[i]->Fill(zdcX);
                 vh_bbcES[i]->Fill(bbcAdcES);
                 vh_vz[i]->Fill(vz);
@@ -182,6 +260,7 @@ void InputSapling::ExploratoryLoop() {
                 vp_zdcX_vz[i]->Fill(vz, zdcX);
 
                 if (Et != -1) {
+                    /* cout << " a3: " << endl; // TODO */
                     vh_maxEt[i]->Fill(Et);
                     vp_maxEt_bbc[i]->Fill(bbcAdcES, Et);
                     if (njets > 0) {
@@ -193,13 +272,17 @@ void InputSapling::ExploratoryLoop() {
                             vh_maxJet[i]    .second->Fill(jets_pt[0]);
                         }
                     }
+                    /* cout << " a4: " << endl; // TODO */
 
                     for (int j{0}; j<njets;++j){
+                    /* cout << " a5: " << endl; // TODO */
                         vh_jet_pt[i]->Fill(jets_pt[j]);
                         vh_jet_pt_dphi[i]->Fill(delta_phi(phi_Et, jets_phi[j]), jets_pt[j]);
                     }
 
+                    /* cout << " a6: " << endl; // TODO */
                     if (nch > 0) {
+                    /* cout << " a7: " << endl; // TODO */
                         if (is_same_side(phi_Et, ch_tracks_phi[0])) {
                             vp_maxTr_bbc[i].first->Fill(bbcAdcES, ch_tracks_pt[0]);
                             vh_maxTr[i]    .first->Fill(ch_tracks_pt[0]);
@@ -208,12 +291,16 @@ void InputSapling::ExploratoryLoop() {
                             vh_maxTr[i]    .second->Fill(ch_tracks_pt[0]);
                         }
                     }
+                    /* cout << " a8: " << endl; // TODO */
                 }
             }
         };
-
+        /* update_log(); // TODO */
         ++jentry;
     }
+	f_log  << "500206 entries per run: " << endl;
+	f_log  << "  --run---  num"<<endl;
+	for (auto e : m_500206) f_log << "  " << e.first << "  " << e.second << endl;
 };
 
 //------------------------------------------------------------------
@@ -339,6 +426,61 @@ InputSapling::InputSapling(int argc, const char** argv) :
         chain->Add(in_file_name.c_str());
     }
     Init(chain);
+
+    // read the list of good and bad runs
+    if (map_args.count("good_run.list")){
+        // then read in the good runs
+        string read_list = map_args["good_run.list"];
+        ifstream if_file;
+        if_file.open(read_list.c_str());
+        if (!if_file.is_open()) {
+            f_log << "Warning, the good run file " << read_list << " could not be found." << endl;
+            cout  << "   no good run list obtained" << endl;
+        } else {
+            string line;
+            while (getline(if_file,line)) {
+                line.append(" ");
+                stringstream words(line);
+                TString word;
+                while (words >> word) {
+                    if (word.BeginsWith("//") || word.BeginsWith("#")) break;
+                    good_runs.push_back(word.Atoi());
+                }
+            }
+            std::sort(good_runs.begin(), good_runs.end());
+            f_log << " Read in good run list from " << read_list;
+            f_log << " Good runs (number = " << good_runs.size() << "):" <<endl;
+            for (auto i : good_runs) f_log << "  " << i << endl;
+        }
+        if_file.close();
+    }
+    // read the list of good and bad runs
+    if (map_args.count("bad_run.list")){
+        // then read in the good runs
+        string read_list = map_args["bad_run.list"];
+        ifstream if_file;
+        if_file.open(read_list.c_str());
+        if (!if_file.is_open()) {
+            f_log << "Warning, the bad run file " << read_list << " could not be found." << endl;
+            cout  << "   no bad run list obtained" << endl;
+        } else {
+            string line;
+            while (getline(if_file,line)) {
+                line.append(" ");
+                stringstream words(line);
+                TString word;
+                while (words >> word) {
+                    if (word.BeginsWith("//") || word.BeginsWith("#")) break;
+                    bad_runs.push_back(word.Atoi());
+                }
+            }
+            std::sort(bad_runs.begin(), bad_runs.end());
+            f_log << " Read in bad run list from " << read_list;
+            f_log << " Bad runs (number = " << bad_runs.size() << "):" <<endl;
+            for (auto i : bad_runs) f_log << "  " << i << endl;
+        }
+        if_file.close();
+    }
 }
 
 InputSapling::~InputSapling() {

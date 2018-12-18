@@ -1,5 +1,4 @@
 #include "InputBase.h"
-
 #include <TString.h>
 
 /* ClassImp(InputBase) */
@@ -8,7 +7,6 @@ InputBase::InputBase(int argc, const char** argv, bool has_help_msg_) :
     give_help_msg{false},
     n_inputs{argc-2}
 {
-
     if (argc == 1) {
         if (has_help_msg) {
             give_help_msg = true;
@@ -19,8 +17,17 @@ InputBase::InputBase(int argc, const char** argv, bool has_help_msg_) :
         }
     }
 
-
-    for (int i{1}; i<argc; ++i) ss_args << " " << argv[i];
+    for (int i{1}; i<argc; ++i) {
+        string str{argv[i]};
+        if (str.find("->") == string::npos) {
+            ss_args << " " << argv[i];
+        } else {
+            int i_where = str.find("->");
+            map_args[ str.substr(0, i_where) ] = str.substr(i_where+2, str.size());
+            cout << "Adding mapped input: " << str.substr(0,i_where)<<" to "<< str.substr(i_where+2,str.size()) << endl;
+            /* cout << "Mapping " << str.substr(0,i_where) << " to " << str.substr(i_where+2,str.size()) << endl; */
+        }
+    }
     open_log();
 };
 
