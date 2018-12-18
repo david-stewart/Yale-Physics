@@ -25,10 +25,6 @@
 #include "StEmcUtil/projection/StEmcPosition.h"
 #include "TreeObjects.h"
 
-
-
-/* #include "StPicoEvent/StPicoBTowHit.h" */
-
 class StPicoDst;
 class StPicoDstMaker;
 class StPicoEvent;
@@ -49,6 +45,7 @@ class EventTrees : public StMaker {
     bool            fdebug;
     bool            fmakePreCuts;
     bool            fisAu;
+
 
     std::vector<int> ftriggerid;
     float fTT_threshold;

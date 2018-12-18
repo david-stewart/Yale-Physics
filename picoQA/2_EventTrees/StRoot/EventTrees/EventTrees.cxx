@@ -14,8 +14,8 @@
 #include "fastjet/tools/Subtractor.hh"
 #include "fastjet/tools/JetMedianBackgroundEstimator.hh"
 
-#define kNMaxJets   30
-#define kNMaxTracks 75
+#define kNMaxJets   40
+#define kNMaxTracks 100
 #define kMaxRegions 20
 
 #define one_pi 3.1415926536
@@ -37,6 +37,7 @@ class MyJetDefinitionTerms {
     /* JetMedianBackgroundEstimator* bge_rm1; */
     Subtractor* subtractor;
     JetMedianBackgroundEstimator* bge_rm2;
+    Selector ptmin;
 
     MyJetDefinitionTerms(float jet_R_background){ 
         float ghost_maxrap = 4.0;
@@ -47,6 +48,7 @@ class MyJetDefinitionTerms {
         bge_rm2 = new JetMedianBackgroundEstimator (selector_rm2, jet_def_bkgd, area_def_bkgd); // <--
 
         subtractor = new Subtractor( bge_rm2 ) ;
+        ptmin = SelectorPtMin(0.2);
     };
 };
 
@@ -80,7 +82,7 @@ EventTrees::EventTrees(
     fvz_cut {30.}
 { 
     f_jet_etaMax = 1.0;// - f_jetR;
-    ftriggerid = std::vector<int> { 500001, 500006, 50020, 500206, 500216, 500904 };
+    ftriggerid = std::vector<int> { 500001, 500006, 500018, 50020, 500206, 500216, 500904 };
 };
 
 //----------------------------------------------------------------------------- 
@@ -266,10 +268,22 @@ Int_t EventTrees::Make() {
     fevent.trig_500001 = mevent->isTrigger(500001);//
     fevent.trig_500006 = mevent->isTrigger(500006);//
     fevent.trig_500018 = mevent->isTrigger(500018);//
+    fevent.trig_500018 = mevent->isTrigger(500018);//
     fevent.trig_500202 = mevent->isTrigger(500202);//
     fevent.trig_500206 = mevent->isTrigger(500206);//
     fevent.trig_500215 = mevent->isTrigger(500215);//
     fevent.trig_500904 = mevent->isTrigger(500904);//
+
+    if (!(
+           fevent.trig_500001
+        || fevent.trig_500006
+        || fevent.trig_500018
+        || fevent.trig_500018
+        || fevent.trig_500202
+        || fevent.trig_500206
+        || fevent.trig_500215
+        || fevent.trig_500904)) return kStOk;
+
     fevent.zdcX    = mevent->ZDCx();
 
     fevent.refMult = mevent->refMult();
@@ -305,6 +319,11 @@ Int_t EventTrees::Make() {
         particles[j].reset_PtYPhiM(pt, eta, phi);
         particles[j].set_user_index(i);
 
+    }
+    if (particles.size() > kNMaxTracks) {
+        cout << " Fatal, number of tracks("<<particles.size()<<") > max allowed ("<<kNMaxTracks<<")"
+        << " in event " << mevent->eventId() << endl; 
+        return kStOk; 
     }
     if (fdebug) fprintf(dlog," %-20s\n","  -> read tracks\n");
 
@@ -364,7 +383,7 @@ Int_t EventTrees::Make() {
 
     /* RegionActivities activity{particles}; */
     fevent.Et       = towlist.maxEt;
-    fevent.phi_Et   = towlist.etaEt();
+    fevent.phi_Et   = towlist.phiEt();
     fevent.eta_Et   = towlist.etaEt();
     fevent.towId_Et = towlist.TT_towID();
 
@@ -373,17 +392,28 @@ Int_t EventTrees::Make() {
     JetDefinition jet_def(antikt_algorithm, f_jetR);
     ClusterSequenceArea cs(particles, jet_def, area_def);
     vector<PseudoJet> jets_all = cs.inclusive_jets();
-    vector<PseudoJet> jets = sorted_by_pt( jets_all );
+    /* Selector ptmin = SelectorPtMin(0.2); */
+    vector<PseudoJet> jets = sorted_by_pt( f_bge->ptmin(jets_all) );
     f_bge->bge_rm2->set_particles(particles); // set background by the area of interest.
                                               // However, record all jets
-                                              //
     fevent.rho = f_bge->bge_rm2->rho();
-    fevent.njets = 0;
 
+    if (jets.size() > kNMaxJets) { 
+        cout << " Fatal, number of jets("<<jets.size()<<") > max allowed ("<<kNMaxJets<<")"
+        << " in event " << mevent->eventId() << endl; return kStOk; 
+    }
+    fevent.njets = 0; // will grow in loop
+    /* fevent.njets = 0; */
+    /* jets = sorted_by_pt(ptmin(jets)); */
+    /* jets = f_bge.ptmin(jets); */
     /* unsigned int njets = 0; */
+    /* cout << endl; */
+    /* cout << "------- new event -------------"<< endl; */
     for (unsigned int i_jet = 0; i_jet < jets.size(); ++i_jet){
+    /* cout << "------- new jet -------------"<< endl; */
+        /* cout << " pt " << jets[i_jet].pt() << endl; */
         PseudoJet& jet = jets[i_jet];
-        if ( jet.is_pure_ghost() ) { continue; }
+        /* if ( jet.is_pure_ghost() ) { continue; } */
         if ( jet.eta() > f_jet_etaMax || jet.eta() < -f_jet_etaMax) continue;
 
         AntiktJet* b_jet = (AntiktJet*) b_jets.ConstructedAt(fevent.njets); 
@@ -394,9 +424,17 @@ Int_t EventTrees::Make() {
         b_jet->pt  = jet.pt();
         b_jet->area = jet.area();
             
-        vector<PseudoJet> constituents = sorted_by_pt(jet.constituents());
-        unsigned int nch = 0;
-        b_jet->nch = nch;
+        vector<PseudoJet> constituents = sorted_by_pt(f_bge->ptmin(jet.constituents()));
+        b_jet->nch = constituents.size();
+        /* unsigned int nch = 0; */
+        /* for (auto c : constituents) { */ 
+            /* cout << "PT " << c.pt() << endl; */
+            /* if (c.pt() > 0.2) ++nch; */
+            /* else break; */
+        /* } */
+        /* b_jet->nch = nch; */
+        /* if (nch != constituents.size()) cout << "Fatal error: " << nch << " " << constituents.size() << endl; */
+        /* cout << " nch " << nch << " " << constituents.size() << endl; */
     }
     
     //fill the jet branches
