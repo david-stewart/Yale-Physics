@@ -144,3 +144,7 @@ plt.savefig('%s_Vz.pdf'%prefix)
 with open('%s_bad_runs.list'%prefix,'w') as file:
     for x in data['runId'][1:][~good_runs_TF]:
         file.write('%i\n'%x)
+
+with open('%s_good_runs.list'%prefix,'w') as file:
+    for x in data['runId'][1:][good_runs_TF]:
+        file.write('%i\n'%x)
