@@ -1,0 +1,3 @@
+main :
+	cd ../..
+	cons
