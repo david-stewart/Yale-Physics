@@ -49,6 +49,7 @@ class Run16128015 : public StMaker {
     bool            fisAu;
 
     map<string, int> m_file_names;
+    TClonesArray b_triggers;
 
 
     std::vector<int> ftriggerid;
@@ -64,8 +65,6 @@ class Run16128015 : public StMaker {
     FILE*  dlog;
 
     TTree*       ftree;
-    TTree*       fpc_tree; // a tree which will hold the pre-cut BBCsig, ZDCsig, Zvert, max_TT_Et, 
-                           // and NTracks prior to requiring a minimum TT_Et
     Event        fevent;
 
     MyJetDefinitionTerms* f_bge;

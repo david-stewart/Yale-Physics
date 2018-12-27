@@ -24,6 +24,9 @@
 #include "StEmcUtil/geometry/StEmcGeom.h"
 #include "StEmcUtil/projection/StEmcPosition.h"
 #include "TreeObjects.h"
+/* #include <map> */
+/* #include <unordered_map> */
+/* #include <unordered_map> */
 
 class StPicoDst;
 class StPicoDstMaker;
@@ -38,6 +41,8 @@ class MyJetDefinitionTerms ;
 
 class EventTrees : public StMaker {
     private:
+    /* map<string, int> m_file_names; */
+
     StPicoDstMaker* fPicoDstMaker;
     TString         fOutName;
     const char*     fbad_tower_file;

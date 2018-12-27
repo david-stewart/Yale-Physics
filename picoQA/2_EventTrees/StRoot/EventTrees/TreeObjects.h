@@ -35,6 +35,7 @@ struct Event : public TObject {
     double       bbcAdcES;  // bbc East adc
     double       zdcX;
     int          runId;      
+    int          i_file_name;
    
     double       refMult;
     double       vz;

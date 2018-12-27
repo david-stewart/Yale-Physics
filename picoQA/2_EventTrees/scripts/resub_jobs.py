@@ -15,7 +15,7 @@ if len(argv) < 2:
     print 'fatal error: requires one commnad line argument: [name] in  "root/ln_[name]"'
     exit(2)
 
-ln_dir = 'root/ln_%s'%argv[1]
+ln_dir = 'root/ln_P%s'%argv[1]
 
 skip_files = []
 for i in argv[2:]:

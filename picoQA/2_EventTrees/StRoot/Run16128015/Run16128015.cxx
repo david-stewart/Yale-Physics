@@ -54,6 +54,12 @@ class MyJetDefinitionTerms {
     };
 };
 
+struct MyInfo : public PseudoJet::UserInfoBase {
+    MyInfo(float hratio_in) : _hratio{hratio_in} {};
+    float hratio() const { return _hratio; };
+    float _hratio;
+};
+
 ClassImp(Run16128015)
 //-----------------------------------------------------------------------------
 Run16128015::Run16128015(
@@ -151,7 +157,7 @@ Int_t Run16128015::Init() {
     // e. Initialize fbge, frand, and histograms
     f_bge = new MyJetDefinitionTerms(0.4);
     /* frand = new TRandom3(0); */
-
+    /* ftree->Branch("jets", &b_triggers); */
     return kStOK;
 }
 
@@ -211,52 +217,45 @@ Int_t Run16128015::Make() {
     if (fdebug) fprintf(dlog," %-20s %-10i\n", "eventID", mevent->eventId());
     /* if (fdebug) cout << " runID " << mevent->runId() << endl; */
     fevent.runId = mevent->runId();
-    if (fevent.runId != 16128015) return kStOk;
-    fevent.eventId = mevent->eventId();
-    if (std::binary_search(fbad_run_list.begin(), fbad_run_list.end(), fevent.runId)) 
-        return kStOk; 
+    if ((fevent.runId != 16128015) || !(mevent->isTrigger(500206))) return kStOk;
+    /* if (std::binary_search(fbad_run_list.begin(), fbad_run_list.end(), fevent.runId)) */ 
+        /* return kStOk; */ 
     /* fHgram_ev_cuts->Fill(1); */
-    if (fdebug) fprintf(dlog," %-20s\n", "*passed runID");
+    /* if (fdebug) fprintf(dlog," %-20s\n", "*passed runID"); */
 
     fevent.ranking = mevent->ranking();
-    int sig = fevent.ranking > 0 ? +1 : -1;
+    /* int sig = fevent.ranking > 0 ? +1 : -1; */
     /* double ln = TMath::Log(TMath::Abs(rank)); */
     /* fHgram_ln_ranking->Fill(sig*ln); */
-    if (fdebug) fprintf(dlog," %-20s %-10.2f\n", "ranking", fevent.ranking);
-    if (sig < 0) return kStOK;
+    /* if (fdebug) fprintf(dlog," %-20s %-10.2f\n", "ranking", fevent.ranking); */
+    /* if (sig < 0) return kStOK; */
     /* fHgram_ev_cuts->Fill(3); */
+    fevent.vx = mevent->primaryVertex().x();
+    fevent.vy = mevent->primaryVertex().y();
     fevent.vz = mevent->primaryVertex().z();
+    fevent.vzVpd = mevent->vzVpd();
+    /* cout << " vpdvz " << mevent->vzVpd() << endl; */
 
-    if (TMath::Abs(fevent.vz) > fvz_cut) return kStOk;
-    if (TMath::Abs(fevent.vz - mevent->vzVpd())>3.0) return kStOk;
+    std::vector<unsigned int> triggers = mevent->triggerIds();
+    fevent.n_triggers = triggers.size();
+    fevent.triggers.Set(fevent.n_triggers);
+    for (int i{0}; i<fevent.n_triggers; ++i) fevent.triggers.AddAt(triggers[i], i);
 
-
-    fevent.trig_500001 = mevent->isTrigger(500001);//
-    fevent.trig_500006 = mevent->isTrigger(500006);//
-    fevent.trig_500018 = mevent->isTrigger(500018);//
-    fevent.trig_500202 = mevent->isTrigger(500202);//
-    fevent.trig_500206 = mevent->isTrigger(500206);//
-    fevent.trig_500215 = mevent->isTrigger(500215);//
-    fevent.trig_500904 = mevent->isTrigger(500904);//
-
-    /* if (!( */
-    /*        fevent.trig_500001 */
-    /*     || fevent.trig_500006 */
-    /*     || fevent.trig_500018 */
-    /*     || fevent.trig_500018 */
-    /*     || fevent.trig_500202 */
-    /*     || fevent.trig_500206 */
-    /*     || fevent.trig_500215 */
-    /*     || fevent.trig_500904)) return kStOk; */
+    /* if (triggers.size() > 1) { */
+    /*     int i = 0; */
+    /*     cout << "----------------"<<endl; */
+    /*     cout << "n_triggers " << triggers.size() << endl; */
+    /*     for (auto j : triggers) cout << "  " << i++ << ":  " << j << endl; */
+    /* } */
 
     fevent.zdcX    = mevent->ZDCx();
-
     fevent.refMult = mevent->refMult();
     fevent.nch = 0;
 
     vector<PseudoJet> particles;
 
-    int count_nch{0};
+    /* int count_nch{0}; */
+    bool track_over_30GeV = false;
     for (unsigned int i = 0; i < fPicoDst->numberOfTracks(); ++i){
         StPicoTrack* track = static_cast<StPicoTrack*>(fPicoDst->track(i));
         if (!track->isPrimary()) continue;
@@ -264,8 +263,13 @@ Int_t Run16128015::Make() {
         // thanks to joel mazer
         StThreeVectorF Ptrack = track->pMom();
         float pt  = Ptrack.perp();
-        if (pt > 30)   return kStOK; // cut out this event
+        fevent.track_over_30GeV = ( (pt > 30) ? true : false );
+        if (pt > 30)   track_over_30GeV = true;
         if (pt < 0.2)  continue;
+
+        float eta = Ptrack.pseudoRapidity();
+        float phi = Ptrack.phi();
+        if (abs(phi) > 10) continue;
 
         // thanks to joel mazer
         float dca = (track->dcaPoint() - mevent->primaryVertex()).mag();
@@ -276,10 +280,35 @@ Int_t Run16128015::Make() {
         float nhit_ratio = ((float)track->nHitsFit()) / (float)track->nHitsMax();
         if (nhit_ratio <= 0.52) continue;
 
-        ++count_nch;
+        particles.push_back (PseudoJet());
+        unsigned int j = particles.size() - 1;
+        particles[j].reset_PtYPhiM(pt, eta, phi);
+        particles[j].set_user_index(i);
+        particles[j].set_user_info(new MyInfo(nhit_ratio));
+
+        /* ++count_nch; */
+    }
+
+    particles = sorted_by_pt(particles);
+    fevent.ch_pt.Set(particles.size());
+    fevent.ch_eta.Set(particles.size());
+    fevent.ch_phi.Set(particles.size());
+    fevent.hit_ratio.Set(particles.size());
+
+    for (unsigned int i{0}; i<particles.size(); ++i){
+        fevent.ch_pt.AddAt(particles[i].pt(),i);
+        fevent.ch_phi.AddAt(particles[i].phi(),i);
+        fevent.ch_eta.AddAt(particles[i].eta(),i);
+        fevent.hit_ratio.AddAt(particles[i].user_info<MyInfo>().hratio(),i);
+
+        printf("i:%i pt:%f phi:%f eta:%f hratio:%f\n",
+                i, particles[i].pt(), particles[i].phi(), particles[i].eta(),
+                particles[i].user_info<MyInfo>().hratio()
+        );
     }
     //Check for there not being any +30 jets
-    fevent.nch = count_nch;
+    fevent.track_over_30GeV = track_over_30GeV;
+    fevent.nch = particles.size();
     fevent.bbcAdcES = mevent->bbcAdcEast(0);
     for (int i = 1; i < 16; ++i) fevent.bbcAdcES += mevent->bbcAdcEast(i);
     //

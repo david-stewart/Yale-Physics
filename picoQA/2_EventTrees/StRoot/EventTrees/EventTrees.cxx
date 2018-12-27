@@ -13,6 +13,7 @@
 #include "fastjet/Selector.hh"
 #include "fastjet/tools/Subtractor.hh"
 #include "fastjet/tools/JetMedianBackgroundEstimator.hh"
+#include "TChain.h"
 
 #define kNMaxJets   40
 #define kNMaxTracks 100
@@ -196,8 +197,23 @@ Int_t EventTrees::Init() {
 
 //----------------------------------------------------------------------------- 
 Int_t EventTrees::Finish() {
+    //write the file name tree
+    /* TTree* file_names = new TTree("file_names", "names of the files to which the events are correlated"); */
+    /* string f_name; */
+    /* int    i_name; */
+    /* file_names->Branch("name", &f_name); */
+    /* file_names->Branch("index", &i_name); */
+
+    /* for (auto entry : m_file_names){ */
+    /*     f_name = entry.first; */
+    /*     i_name = entry.second; */
+    /*     file_names->Fill(); */
+    /* } */
+
     fout->Write();
     fout->Close();
+
+    // write the tree of input file names
     fprintf(flog," Finished running.\n Read %lli jet events.\n\n", fEventsProcessed);
     fclose(flog);
     if (fdebug) fclose(dlog);
@@ -251,6 +267,10 @@ Int_t EventTrees::Make() {
     }
     if (!has_trigger) return kStOK;
 
+    // get the filename into the map
+    /* string if_name {((TChain*)fPicoDstMaker->chain())->GetFile()->GetName()}; */
+    /* if (m_file_names.count(if_name)==0) m_file_names[if_name] = m_file_names.size(); */
+    /* fevent.i_file_name = m_file_names[if_name]; */
 
     float rank = mevent->ranking();
     int sig = rank > 0 ? +1 : -1;

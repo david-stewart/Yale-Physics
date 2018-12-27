@@ -16,12 +16,12 @@
         set mypath=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/2_EventTrees
         set mylist=/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list
         set bdtow=$mylist/BadTowers_Comb.08.02.list
-        set bdrun=$mylist/P16_bad_runs.list
-        root4star -l -q -b EventTrees.C\(-1,\"$FILELIST\",\"$mypath/root/P16/$JOBID\",\"$bdtow\",\"$bdrun\",0\)
+        set bdrun=$mylist/P17_bad_runs.list
+        root4star -l -q -b TriggerTrees.C\(-1,\"$FILELIST\",\"$mypath/root/trig_P17_5cm/$JOBID\",\"$bdrun\",0\)
 	</command>
 	<SandBox installer="ZIP">
 		<Package>
-            <File>file:./EventTrees.C</File>
+            <File>file:./TriggerTrees.C</File>
 			<File>file:./StRoot</File>
 
 
@@ -30,13 +30,13 @@
 	</SandBox>
 	
 	<Generator>
-        <Location>./input/P16</Location>
-        <ScriptLocation>./input/P16</ScriptLocation>
-        <ListLocation>./input/P16</ListLocation>
+        <Location>./input/P17</Location>
+        <ScriptLocation>./input/P17</ScriptLocation>
+        <ListLocation>./input/P17</ListLocation>
 	</Generator>
 
-    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list/pico_P16id.list" />
+    <input URL="filelist:/gpfs/mnt/gpfs01/star/pwg/dstewart/scratch/Yale-Physics/picoQA/list/pico_P17id.list" />
 
-    <stdout URL="file:./out/P16/$JOBID" />	
-    <stderr URL="file:./err/P16/$JOBID" />
+    <stdout URL="file:./trig_out/P17/$JOBID" />	
+    <stderr URL="file:./trig_err/P17/$JOBID" />
 </job>

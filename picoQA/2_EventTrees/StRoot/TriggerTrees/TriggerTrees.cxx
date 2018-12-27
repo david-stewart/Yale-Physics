@@ -211,6 +211,7 @@ Int_t TriggerTrees::Make() {
     if (fdebug) fprintf(dlog," %-20s %-10i\n", "eventID", mevent->eventId());
     /* if (fdebug) cout << " runID " << mevent->runId() << endl; */
     fevent.runId = mevent->runId();
+    fevent.eventId = mevent->eventId();
     if (std::binary_search(fbad_run_list.begin(), fbad_run_list.end(), fevent.runId)) 
         return kStOk; 
     /* fHgram_ev_cuts->Fill(1); */
@@ -225,7 +226,7 @@ Int_t TriggerTrees::Make() {
     /* fHgram_ev_cuts->Fill(3); */
     fevent.vz = mevent->primaryVertex().z();
 
-    if (TMath::Abs(fevent.vz) > fvz_cut) return kStOk;
+    if (TMath::Abs(fevent.vz) > 5) return kStOk;
     if (TMath::Abs(fevent.vz - mevent->vzVpd())>3.0) return kStOk;
 
 
